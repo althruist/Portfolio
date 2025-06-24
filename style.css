@@ -1,0 +1,62 @@
+body {
+    background-color: rgb(255, 242, 219);
+    font-family: "Lexend";
+}
+
+header {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.548);
+    outline: 1px solid rgba(255, 255, 255, 0.815);
+    width: 60%;
+    padding: 10px;
+    border-radius: 50px;
+    margin: auto;
+}
+
+#header {
+    padding-top: 10px;
+    width: 100%;
+    margin: auto;
+}
+
+#logoHeader {
+    width: 100px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.548);
+    outline: 1px solid rgba(255, 255, 255, 0.815);
+    width: 60%;
+    font-size: larger;
+    margin: auto;
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 25px;
+}
+
+a {
+    font-weight: bolder;
+    text-decoration: none;
+    color: rgb(255, 180, 51)
+}
+
+a:hover {
+    font-weight: bolder;
+    text-decoration: none;
+    color: rgb(192, 127, 14)
+}
+
+#linksCard {
+    width: 30%;
+}
+
+.socialLink img{
+    width: 15%;
+    vertical-align: middle;
+}
+
+#altText{
+    font-size: 15px;
+    color: rgb(177, 162, 136)
+}
