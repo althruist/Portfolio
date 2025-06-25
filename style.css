@@ -1,10 +1,43 @@
+html,
 body {
-    background-color: rgb(255, 242, 219);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+#background-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('Images/Assets/Background.webp');
+    background-repeat: no-repeat;
+    background-size: 300%;
+    z-index: -1;
+    pointer-events: none;
+    transition: background-position 0.5s ease-out;
+    filter: blur(10px);
+}
+
+body {
+    padding: 0;
+    background-color: rgb(255, 255, 255);
     font-family: "Lexend";
 }
 
 header {
-    display: none;
     background-color: rgba(255, 255, 255, 0.548);
     outline: 1px solid rgba(255, 255, 255, 0.815);
     width: 60%;
@@ -23,16 +56,31 @@ header {
     width: 100px;
 }
 
+#welcomeHeader {
+    padding: 20px;
+}
+
+#welcomeHeader h1 {
+    font-size: 80px;
+}
+
+#welcomeHeader .fancyText {
+    color:white;
+}
+
 .card {
+    background-image: url(Images/Assets/Frosting.webp);
     background-color: rgba(255, 255, 255, 0.548);
     outline: 1px solid rgba(255, 255, 255, 0.815);
     width: 60%;
     font-size: larger;
     margin: auto;
-    text-align: center;
     border-radius: 20px;
     padding: 10px;
     margin-top: 25px;
+    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(50px);
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.205));
 }
 
 a {
@@ -51,12 +99,17 @@ a:hover {
     width: 30%;
 }
 
-.socialLink img{
+.socialLink img {
     width: 15%;
     vertical-align: middle;
 }
 
-#altText{
+#altText {
     font-size: 15px;
     color: rgb(177, 162, 136)
+}
+
+*::selection {
+    background-color: rgb(114, 144, 206);
+    color: rgb(244, 218, 183);
 }
