@@ -6,6 +6,10 @@ body {
     overflow-x: hidden;
 }
 
+.flex-cards {
+    display: flex;
+}
+
 #background-wrapper {
     position: fixed;
     top: 0;
@@ -61,11 +65,11 @@ header {
 }
 
 #welcomeHeader h1 {
-    font-size: 80px;
+    font-size: 40px;
 }
 
 #welcomeHeader .fancyText {
-    color:white;
+    color: white;
 }
 
 .card {
@@ -112,4 +116,117 @@ a:hover {
 *::selection {
     background-color: rgb(114, 144, 206);
     color: rgb(244, 218, 183);
+}
+
+@media (min-width: 1024px) {
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .flex-cards {
+        display: block;
+    }
+
+    #background-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('Images/Assets/Background.webp');
+        background-repeat: no-repeat;
+        background-size: 300%;
+        z-index: -1;
+        pointer-events: none;
+        transition: background-position 0.5s ease-out;
+        filter: blur(10px);
+    }
+
+    body {
+        padding: 0;
+        background-color: rgb(255, 255, 255);
+        font-family: "Lexend";
+    }
+
+    header {
+        background-color: rgba(255, 255, 255, 0.548);
+        outline: 1px solid rgba(255, 255, 255, 0.815);
+        width: 60%;
+        padding: 10px;
+        border-radius: 50px;
+        margin: auto;
+    }
+
+    #header {
+        padding-top: 10px;
+        width: 100%;
+        margin: auto;
+    }
+
+    #logoHeader {
+        width: 100px;
+    }
+
+    #welcomeHeader {
+        padding: 20px;
+    }
+
+    #welcomeHeader h1 {
+        font-size: 80px;
+    }
+
+    #welcomeHeader .fancyText {
+        color: white;
+    }
+
+    .card {
+        background-image: url(Images/Assets/Frosting.webp);
+        background-color: rgba(255, 255, 255, 0.548);
+        outline: 1px solid rgba(255, 255, 255, 0.815);
+        width: 60%;
+        font-size: larger;
+        margin: auto;
+        border-radius: 20px;
+        padding: 10px;
+        margin-top: 25px;
+        -webkit-backdrop-filter: blur(50px);
+        backdrop-filter: blur(50px);
+        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.205));
+    }
+
+    a {
+        font-weight: bolder;
+        text-decoration: none;
+        color: rgb(255, 180, 51)
+    }
+
+    a:hover {
+        font-weight: bolder;
+        text-decoration: none;
+        color: rgb(192, 127, 14)
+    }
+
+    #linksCard {
+        width: 30%;
+    }
+
+    .socialLink img {
+        width: 15%;
+        vertical-align: middle;
+    }
 }

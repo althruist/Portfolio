@@ -43,12 +43,14 @@ gsap.utils.toArray('.card').forEach(card => {
         );
 
     card.addEventListener('mouseenter', () => {
+        card.style['z-index'] = 2;
         gsap.to(card,
             { scale: 1.1, duration: 0.5, ease: 'circ.out' }
         );
     })
 
     card.addEventListener('mouseleave', () => {
+        card.style['z-index'] = 1;
         gsap.to(card,
             { scale: 1, duration: 0.5, ease: 'circ.out' }
         );
