@@ -1,9 +1,40 @@
+:root {
+    --color-primary: rgb(114, 144, 206);
+    --color-secondary: rgb(244, 218, 183);
+    --color-background: rgb(240, 245, 255);
+    --color-card: rgba(255, 255, 255, 0.548);
+    --color-card-outline: rgba(255, 255, 255, 0.815);
+    --color-link: rgb(255, 159, 69);
+    --color-text: rgb(20, 19, 18);
+    --frosting: url(Images/Assets/Frosting.webp);
+    --alt-text: rgba(83, 78, 73, 0.596);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary: rgb(34, 89, 197);
+        --color-secondary: rgb(235, 141, 19);
+        --color-background: rgb(17, 25, 41);
+        --color-card: rgba(0, 0, 0, 0.548);
+        --color-card-outline: rgba(36, 36, 36, 0.815);
+        --color-link: rgb(255, 123, 0);
+        --color-text: rgb(255, 238, 221);
+        --frosting: url(Images/Assets/FrostingDark.webp);
+        --alt-text: rgba(218, 207, 196, 0.658);
+    }
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow-x: hidden;
+    color: var(--color-text);
+}
+
+.s0 {
+    fill: var(--color-text);
 }
 
 .flex-cards {
@@ -37,23 +68,8 @@ body {
 
 body {
     padding: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--color-background);
     font-family: "Lexend";
-}
-
-header {
-    background-color: rgba(255, 255, 255, 0.548);
-    outline: 1px solid rgba(255, 255, 255, 0.815);
-    width: 60%;
-    padding: 10px;
-    border-radius: 50px;
-    margin: auto;
-}
-
-#header {
-    padding-top: 10px;
-    width: 100%;
-    margin: auto;
 }
 
 #logoHeader {
@@ -68,14 +84,10 @@ header {
     font-size: 40px;
 }
 
-#welcomeHeader .fancyText {
-    color: white;
-}
-
 .card {
-    background-image: url(Images/Assets/Frosting.webp);
-    background-color: rgba(255, 255, 255, 0.548);
-    outline: 1px solid rgba(255, 255, 255, 0.815);
+    background-image: var(--frosting);
+    background-color: var(--color-card);
+    outline: 1px solid var(--color-card-outline);
     width: 60%;
     font-size: larger;
     margin: auto;
@@ -85,6 +97,16 @@ header {
     -webkit-backdrop-filter: blur(50px);
     backdrop-filter: blur(50px);
     filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.205));
+}
+
+#header {
+    top: 20px;
+    width: 20%;
+    padding: 10px;
+    border-radius: 50px;
+    margin: auto;
+    position: sticky;
+    z-index: 1000;
 }
 
 a {
@@ -110,12 +132,12 @@ a:hover {
 
 #altText {
     font-size: 15px;
-    color: rgb(177, 162, 136)
+    color: var(--alt-text);
 }
 
 *::selection {
-    background-color: rgb(114, 144, 206);
-    color: rgb(244, 218, 183);
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 @media (min-width: 1024px) {
@@ -148,34 +170,20 @@ a:hover {
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: url('Images/Assets/Background.webp');
-        background-repeat: no-repeat;
-        background-size: 300%;
         z-index: -1;
-        pointer-events: none;
-        transition: background-position 0.5s ease-out;
-        filter: blur(10px);
     }
 
     body {
-        padding: 0;
-        background-color: rgb(255, 255, 255);
+        padding: 0px;
         font-family: "Lexend";
     }
 
-    header {
-        background-color: rgba(255, 255, 255, 0.548);
-        outline: 1px solid rgba(255, 255, 255, 0.815);
-        width: 60%;
+    #header {
+        width: 80%;
         padding: 10px;
         border-radius: 50px;
         margin: auto;
-    }
-
-    #header {
-        padding-top: 10px;
-        width: 100%;
-        margin: auto;
+        margin-top: 20px;
     }
 
     #logoHeader {
@@ -187,17 +195,10 @@ a:hover {
     }
 
     #welcomeHeader h1 {
-        font-size: 80px;
-    }
-
-    #welcomeHeader .fancyText {
-        color: white;
+        font-size: 75px;
     }
 
     .card {
-        background-image: url(Images/Assets/Frosting.webp);
-        background-color: rgba(255, 255, 255, 0.548);
-        outline: 1px solid rgba(255, 255, 255, 0.815);
         width: 60%;
         font-size: larger;
         margin: auto;
@@ -212,13 +213,11 @@ a:hover {
     a {
         font-weight: bolder;
         text-decoration: none;
-        color: rgb(255, 180, 51)
     }
 
     a:hover {
         font-weight: bolder;
         text-decoration: none;
-        color: rgb(192, 127, 14)
     }
 
     #linksCard {
