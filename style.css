@@ -1,10 +1,11 @@
 :root {
+    --color-basic: rgb(255, 255, 255);
     --color-primary: rgb(114, 144, 206);
     --color-secondary: rgb(244, 218, 183);
     --color-background: rgb(240, 245, 255);
     --color-card: rgba(255, 255, 255, 0.548);
     --color-card-outline: rgba(255, 255, 255, 0.815);
-    --color-link: rgb(255, 159, 69);
+    --color-link: rgb(69, 143, 255);
     --color-link-active: rgb(255, 205, 69);
     --color-text: rgb(20, 19, 18);
     --frosting: url(Images/Assets/Frosting.webp);
@@ -15,8 +16,9 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
+        --color-basic: rgb(0, 0, 0);
         --color-primary: rgb(34, 89, 197);
-        --color-secondary: rgb(255, 197, 7);
+        --color-secondary: rgb(51, 67, 139);
         --color-background: rgb(17, 25, 41);
         --color-card: rgba(0, 0, 0, 0.548);
         --color-card-outline: rgba(36, 36, 36, 0.815);
@@ -45,6 +47,16 @@ h1 {
 
 .logo {
     fill: var(--title-text);
+    cursor: pointer;
+}
+
+.transition {
+    fill: #fff;
+}
+
+#logoTransition {
+    width: 50vh;
+    height: 50vh;
 }
 
 .flex-cards {
@@ -100,8 +112,6 @@ body::-webkit-scrollbar {
     background-color: var(--color-card);
     outline: 1px solid var(--color-card-outline);
     width: 80%;
-    font-size: larger;
-    margin: auto;
     border-radius: 20px;
     padding: 10px;
     margin-top: 25px;
@@ -118,6 +128,7 @@ body::-webkit-scrollbar {
     margin: auto;
     position: sticky;
     z-index: 1000;
+    text-align: center;
 }
 
 a {
@@ -130,6 +141,7 @@ a {
 a:hover {
     font-weight: bolder;
     text-decoration: none;
+    cursor: pointer;
     color: var(--color-link-active);
 }
 
@@ -173,9 +185,87 @@ a:hover {
     border-radius: 15px;
 }
 
-#welcomeHeader h1{
+#welcomeHeader h1 {
     text-align: center;
     font-size: 70px;
+}
+
+#header .buttons {
+    margin: auto;
+    height: 40px;
+    display: none;
+}
+
+#transition {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 10000;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerButton {
+    position: relative;
+    background-color: var(--title-text);
+    color: var(--color-basic);
+    margin-left: 25px;
+    border-radius: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 0px;
+    overflow: hidden;
+}
+
+.headerButton span {
+    z-index: 3;
+}
+
+.headerButtonOverlay {
+    background-color: var(--color-secondary);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.socials {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 12%;
+    height: 10%;
+    border-radius: 100px;
+    background-color: var(--title-text);
+    padding: 10px;
+}
+
+.socials a {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.socialSVG {
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.socialSVG .icon {
+    fill: var(--color-secondary);
 }
 
 @media (min-width: 1024px) {
@@ -222,6 +312,21 @@ a:hover {
         border-radius: 50px;
         margin: auto;
         margin-top: 20px;
+        display: flex;
+    }
+
+    #header .buttons {
+        display: flex;
+        margin-left: 20px;
+    }
+
+    #header .buttons a {
+        height: 100%;
+        width: 100px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #logoHeader {
@@ -242,10 +347,5 @@ a:hover {
 
     #linksCard {
         width: 30%;
-    }
-
-    .socialLink img {
-        width: 15%;
-        vertical-align: middle;
     }
 }
