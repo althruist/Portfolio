@@ -21,6 +21,7 @@
 	"dependencies": {
 		"@babylonjs/viewer": "^8.32.0",
 		"@sanity/client": "^7.11.2",
-		"gsap": "^3.13.0"
+		"gsap": "^3.13.0",
+		"svelte-preprocess": "^6.0.3"
 	}
 }
