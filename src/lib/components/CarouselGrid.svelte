@@ -1,4 +1,6 @@
 <script>
+    export const ssr = false;
+
     import { gsap } from "gsap";
     import { onMount, tick } from "svelte";
     import Card from "./Card.svelte";
