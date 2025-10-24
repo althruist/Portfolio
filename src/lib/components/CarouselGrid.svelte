@@ -448,17 +448,20 @@
     .carousel-wrapper {
         position: relative;
         overflow: hidden;
-        width: 100%;
-        margin-left: 0;
+        width: 92%;
         border-radius: 0;
+        margin: auto;
+        margin-bottom: 10px;
+        margin-top: 10px;
         background-image: var(--frosting);
         background-color: transparent;
+        border-radius: 20px;
     }
 
     .carousel {
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: auto;
+        grid-auto-columns: calc((100% - 2rem) / 3);
         gap: 1rem;
     }
 

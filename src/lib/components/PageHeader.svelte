@@ -25,13 +25,6 @@
             if (isHovering) return;
             isHovering = true;
 
-            gsap.to(pageHeader, {
-                paddingTop: 20,
-                width: "95%",
-                duration: 0.5,
-                ease: "sine.out",
-            });
-
             gsap.to(pageHeader.querySelector(".name"), {
                 duration: 1,
                 scrambleText: {
@@ -68,13 +61,6 @@
             }
             
             isHovering = false;
-
-            gsap.to(pageHeader, {
-                paddingTop: 0,
-                width: "90%",
-                duration: 0.5,
-                ease: "sine.out",
-            });
 
             gsap.to(pageHeader.querySelector(".name"), {
                 duration: 1,
