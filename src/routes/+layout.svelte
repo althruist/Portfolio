@@ -10,6 +10,7 @@
 	import gsap from "gsap";
 
 	import { onMount } from "svelte";
+	import { injectAnalytics } from '@vercel/analytics/sveltekit'
 	import Page from "./+page.svelte";
 	let { children } = $props();
 
