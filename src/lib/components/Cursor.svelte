@@ -1,9 +1,14 @@
 <script>
     import { onMount } from "svelte";
     import { gsap } from "gsap";
-    import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+    let MorphSVGPlugin;
 
-    gsap.registerPlugin(MorphSVGPlugin);
+    if (typeof window !== "undefined") {
+        import("gsap/MorphSVGPlugin").then((module) => {
+            MorphSVGPlugin = module.default || module.MorphSVGPlugin;
+            gsap.registerPlugin(MorphSVGPlugin);
+        });
+    }
 
     let pointerWrapper;
 

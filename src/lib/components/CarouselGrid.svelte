@@ -4,8 +4,16 @@
     import Card from "./Card.svelte";
     import { getImage } from "$lib/logic/data";
     import { ObservablePatch } from "@sanity/client";
-    import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
     import { getCSSVariable } from "$lib/logic/globalFunctions";
+
+    let MorphSVGPlugin;
+
+    if (typeof window !== "undefined") {
+        import("gsap/MorphSVGPlugin").then((module) => {
+            MorphSVGPlugin = module.default || module.MorphSVGPlugin;
+            gsap.registerPlugin(MorphSVGPlugin);
+        });
+    }
 
     export let content = [];
     export let id;
@@ -20,8 +28,6 @@
     let carouselContainer;
     let isAnimating = false;
     let itemWidth = 0;
-
-    gsap.registerPlugin(MorphSVGPlugin);
 
     async function updateItemWidth() {
         await tick();
