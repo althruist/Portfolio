@@ -521,20 +521,56 @@
 </script>
 
 <header bind:this={header} id="header" class="card noBounce">
-	<svg
-		bind:this={logoHeader}
-		id="logoHeader"
-		version="1.2"
-		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 1000 1000"
-	>
-		<path
-			id="Color Fill 1"
-			fill-rule="evenodd"
-			class="logo interactable"
-			d="m553.9 225.8c27.9 3.4 72.2 35.2 95 48.7 84 50.1 173.4 96.9 236.2 168.2-2.6 46.3-58.8 78.4-93.7 93.7-15.5 6.9-38 14.2-47.5 27-9.6 13-13.7 29.4-26.9 38.5q-11.6 5.8-23.1 11.6c-16.8 20.5-35.7 45.4-57.8 60.3-14.8 10-28.6 24.5-43.7 32.1q-9 2.6-17.9 5.1c-19.9 17.7-36.2 59.2-68.1 62.9-40.5 4.8-58.9-43.3-80.9-62.9q-8.9-2.5-17.9-5.1c-15.1-7.6-28.9-22.1-43.7-32.1-22-14.9-41-39.8-57.8-60.3q-11.5-5.8-23.1-11.6c-13.2-9.1-17.3-25.5-26.9-38.5-9.5-12.8-32-20.1-47.5-27-35-15.4-88.7-46.8-93.7-91.1 73.6-87.1 207-159.8 314.5-213.1q9 25 18 50.1c8.3 12.3 22.7 18.4 28.2 34.6 6 17.9 9.9 48.3 14.1 64.2q2 24.4 3.9 48.8 0.6-1.3 1.3-2.6c7.6-10.9 18.8-35.9 14.1-56.5-1.4-6.3-8.4-14.3-5.1-25.6q15.4-23.8 30.8-47.5c-7.4-43.8 5.7-40.6 19.2-71.9z"
-		/>
-	</svg>
+	<div id="left">
+		<svg
+			bind:this={logoHeader}
+			id="logoHeader"
+			version="1.2"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 1000 1000"
+		>
+			<path
+				id="Color Fill 1"
+				fill-rule="evenodd"
+				class="logo interactable"
+				d="m553.9 225.8c27.9 3.4 72.2 35.2 95 48.7 84 50.1 173.4 96.9 236.2 168.2-2.6 46.3-58.8 78.4-93.7 93.7-15.5 6.9-38 14.2-47.5 27-9.6 13-13.7 29.4-26.9 38.5q-11.6 5.8-23.1 11.6c-16.8 20.5-35.7 45.4-57.8 60.3-14.8 10-28.6 24.5-43.7 32.1q-9 2.6-17.9 5.1c-19.9 17.7-36.2 59.2-68.1 62.9-40.5 4.8-58.9-43.3-80.9-62.9q-8.9-2.5-17.9-5.1c-15.1-7.6-28.9-22.1-43.7-32.1-22-14.9-41-39.8-57.8-60.3q-11.5-5.8-23.1-11.6c-13.2-9.1-17.3-25.5-26.9-38.5-9.5-12.8-32-20.1-47.5-27-35-15.4-88.7-46.8-93.7-91.1 73.6-87.1 207-159.8 314.5-213.1q9 25 18 50.1c8.3 12.3 22.7 18.4 28.2 34.6 6 17.9 9.9 48.3 14.1 64.2q2 24.4 3.9 48.8 0.6-1.3 1.3-2.6c7.6-10.9 18.8-35.9 14.1-56.5-1.4-6.3-8.4-14.3-5.1-25.6q15.4-23.8 30.8-47.5c-7.4-43.8 5.7-40.6 19.2-71.9z"
+			/>
+		</svg>
+		<nav class="buttons">
+			<a
+				bind:this={home}
+				aria-label="Home"
+				class="headerButton interactable"
+				href="/"
+				><span>Home</span>
+				<div class="headerButtonOverlay"></div>
+			</a>
+			<a
+				bind:this={portfolio}
+				aria-label="portfolio"
+				class="headerButton interactable"
+				href="/portfolio"
+				><span>Portfolio</span>
+				<div class="headerButtonOverlay"></div>
+			</a>
+			<a
+				bind:this={about}
+				aria-label="about"
+				class="headerButton interactable"
+				href="/about"
+				><span>About</span>
+				<div class="headerButtonOverlay"></div>
+			</a>
+			<a
+				bind:this={contactMe}
+				aria-label="contactMe"
+				class="headerButton interactable"
+				href="/contactme"
+				><span>Contact</span>
+				<div class="headerButtonOverlay"></div>
+			</a>
+		</nav>
+	</div>
 	<div class="buttons_mobile" bind:this={mobileButtons}>
 		<a
 			bind:this={homeMobile}
@@ -562,40 +598,6 @@
 		</a>
 		<a
 			bind:this={contactMeMobile}
-			aria-label="contactMe"
-			class="headerButton interactable"
-			href="/contactme"
-			><span>Contact</span>
-			<div class="headerButtonOverlay"></div>
-		</a>
-	</div>
-	<div class="buttons">
-		<a
-			bind:this={home}
-			aria-label="Home"
-			class="headerButton interactable"
-			href="/"
-			><span>Home</span>
-			<div class="headerButtonOverlay"></div>
-		</a>
-		<a
-			bind:this={portfolio}
-			aria-label="portfolio"
-			class="headerButton interactable"
-			href="/portfolio"
-			><span>Portfolio</span>
-			<div class="headerButtonOverlay"></div>
-		</a>
-		<a
-			bind:this={about}
-			aria-label="about"
-			class="headerButton interactable"
-			href="/about"
-			><span>About</span>
-			<div class="headerButtonOverlay"></div>
-		</a>
-		<a
-			bind:this={contactMe}
 			aria-label="contactMe"
 			class="headerButton interactable"
 			href="/contactme"
