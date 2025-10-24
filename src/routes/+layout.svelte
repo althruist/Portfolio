@@ -43,6 +43,8 @@
 		const gsapModule = await import("gsap");
 		const gsap = gsapModule.default;
 
+		injectAnalytics();
+
 		const { ScrollSmoother } = await import("gsap/ScrollSmoother");
 
 		gsap.registerPlugin(ScrollSmoother);
