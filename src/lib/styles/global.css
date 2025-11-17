@@ -460,7 +460,7 @@ a:hover {
         justify-content: space-between;
     }
 
-    #header #left {
+    #header #left{
         display: flex;
     }
 
@@ -513,7 +513,7 @@ a:hover {
         padding: 10px;
         margin-left: auto;
         margin-right: 3rem;
-        padding-right: 20px;
+        padding-right:20px;
     }
 
     .socials a {

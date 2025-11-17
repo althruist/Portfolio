@@ -1,17 +1,14 @@
 @font-face {
     font-family: "Rubik";
     src: url("../fonts/Rubik/Rubik-VariableFont_wght.ttf");
-    font-display: swap;
 }
 
 @font-face {
     font-family: "Lexend";
     src: url("../fonts/Lexend/Lexend-VariableFont_wght.ttf");
-    font-display: swap;
 }
 
 @font-face {
     font-family: "Althite";
     src: url("../fonts/Althite.ttf");
-    font-display: swap;
 }

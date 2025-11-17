@@ -3,219 +3,519 @@
 	import gsap from "gsap";
 	import { isMobile, getCSSVariable } from "$lib/logic/globalFunctions.js";
 
-	let header, logoHeader, socials, mobileButtons;
-	let home, portfolio, contactMe, about;
-	let homeMobile, portfolioMobile, contactMeMobile, aboutMobile;
-	let audiotoolSocialSVG, youtubeSocialSVG, instagramSocialSVG, linkedinSocialSVG, githubSocialSVG;
+	let header;
+	let logoHeader;
+	let socials;
+
+	let mobileButtons;
+
+	let home;
+	let portfolio;
+	let contactMe;
+	let about;
+
+	let homeMobile;
+	let portfolioMobile;
+	let contactMeMobile;
+	let aboutMobile;
+
+	let audiotoolSocialSVG;
+	let youtubeSocialSVG;
+	let instagramSocialSVG;
+	let linkedinSocialSVG;
+	let githubSocialSVG;
 
 	let dropDownIsOpen = false;
 
-	const desktopButtonsList = () => [home, portfolio, about, contactMe];
-	const mobileButtonsList = () => [homeMobile, portfolioMobile, aboutMobile, contactMeMobile];
-	const socialSVGsList = () => [
-		audiotoolSocialSVG,
-		youtubeSocialSVG,
-		instagramSocialSVG,
-		linkedinSocialSVG,
-		githubSocialSVG,
-	];
-
 	function updateThemeColors() {
-		desktopButtonsList().forEach(button => {
+		const headerButtons = [home, portfolio, about, contactMe];
+		const socialSVGs = [
+			audiotoolSocialSVG,
+			youtubeSocialSVG,
+			instagramSocialSVG,
+			linkedinSocialSVG,
+			githubSocialSVG,
+		];
+
+		headerButtons.forEach((button) => {
 			const text = button.querySelector("span");
 			gsap.killTweensOf(text);
 			gsap.set(text, { color: getCSSVariable("--color-header") });
 		});
 
-		socialSVGsList().forEach(svg => {
+		socialSVGs.forEach((svg) => {
 			const icon = svg.querySelector(".icon");
 			gsap.killTweensOf(icon);
 			gsap.set(icon, { fill: getCSSVariable("--color-header") });
 		});
 	}
 
-	function setupButtonAnimation(button, options = {}) {
-		const overlay = button.querySelector(".headerButtonOverlay");
-		const text = button.querySelector("span");
-		const isMobileButton = options.mobile;
-
-		let isHovering = false;
-
-		gsap.set(overlay, { yPercent: 100, opacity: isMobileButton ? 0 : 1 });
-
-		button.addEventListener("mouseenter", () => {
-			isHovering = true;
-			gsap.fromTo(
-				overlay,
-				{ yPercent: 100 },
-				{
-					yPercent: 0,
-					opacity: isMobileButton ? 1 : undefined,
-					borderRadius: isMobileButton ? "10px" : undefined,
-					duration: 0.4,
-					ease: "power2.out",
-					overwrite: "auto",
-				}
-			);
-
-			gsap.to(text, {
-				color: getCSSVariable("--color-basic"),
-				duration: 0.3,
-				ease: "power2.out",
-				overwrite: "auto",
-			});
-
-			gsap.to(button, { scale: 0.9, duration: 0.2 });
-		});
-
-		button.addEventListener("mousedown", () => {
-			isHovering = false;
-			gsap.to(button, { scale: 0.8, duration: 0.1 });
-		});
-
-		button.addEventListener("click", () => {
-			let tl = gsap.timeline();
-			tl.to(button, { scale: 0.7, duration: 0.1, ease: "circ.out" })
-				.to(button, { scale: 1.1, duration: 0.2, ease: "circ.Out" })
-				.to(button, { scale: isHovering ? 0.8 : isMobileButton ? 0.9 : 1, duration: 0.1 });
-		});
-
-		button.addEventListener("mouseleave", () => {
-			gsap.to(button, { scale: 1, duration: 0.2 });
-
-			gsap.fromTo(
-				overlay,
-				{ yPercent: 0 },
-				{
-					yPercent: -100,
-					duration: 0.4,
-					opacity: isMobileButton ? 0 : undefined,
-					ease: "power2.in",
-					overwrite: "auto",
-				}
-			);
-
-			gsap.to(text, { color: getCSSVariable("--color-header"), duration: 0.6, ease: "power2.out", overwrite: "auto" });
-		});
-	}
-
-	function toggleMobileDropdown() {
-		const buttons = mobileButtonsList();
-
-		if (!dropDownIsOpen) {
-			dropDownIsOpen = true;
-			gsap.set(socials, { opacity: 0 });
-
-			let tlHeader = gsap.timeline();
-			tlHeader.to(header, { y: 20, duration: 0.1, ease: "sine.out", delay: 0.1 })
-				.to(header, { marginTop: "0", borderRadius: 0, paddingLeft: 0, width: "100%", y: 0, height: "100%", duration: 0.5, ease: "circ.out" });
-
-			let tlLogo = gsap.timeline();
-			tlLogo.to(logoHeader, { y: 25, duration: 0.2, ease: "sine.inOut", onComplete: () => (mobileButtons.style.display = "grid") })
-				.to(logoHeader, { y: 0, duration: 0.5, ease: "sine.out" });
-
-			buttons.forEach((btn, i) => {
-				gsap.set(btn, { opacity: 0, height: "0%" });
-				gsap.to(btn, {
-					height: "100%",
-					opacity: 1,
-					duration: 0.5,
-					delay: 0.1 * (i + 1),
-					onComplete: () => {
-						if (i === buttons.length - 1) socials.style.display = "flex";
-					},
-				});
-			});
-
-			gsap.to(socials, { opacity: 1, delay: 0.2 });
-		} else {
-			dropDownIsOpen = false;
-			let completed = 0;
-
-			buttons.forEach((btn, i) => {
-				gsap.to(btn, {
-					height: "0%",
-					opacity: 0,
-					duration: 0.2,
-					delay: 0.1 * (i + 1),
-					onComplete: () => {
-						completed++;
-						if (completed === buttons.length) {
-							mobileButtons.style.display = "none";
-							socials.style.display = "none";
-
-							gsap.timeline()
-								.to(header, { width: "100px", borderRadius: "50px", height: "auto", duration: 0.2, ease: "circ.out" })
-								.to(header, { paddingLeft: "10px", y: "-20", duration: 0.2, ease: "circ.out" })
-								.to(header, { marginTop: "5%", y: "0", duration: 0.3, ease: "sine.out" });
-
-							gsap.timeline()
-								.to(logoHeader, { y: "-20", duration: 0.3, ease: "sine.out", delay: 0.2 })
-								.to(logoHeader, { y: "0", duration: 0.3, ease: "sine.out" });
-						}
-					},
-				});
-			});
-
-			gsap.to(socials, { opacity: 0, duration: 0.3 });
-		}
-	}
-
-	function handleResize(e) {
-		if (!logoHeader) return;
-		const logoBox = logoHeader.getBoundingClientRect();
-
-		if (e.matches) {
-			gsap.to(header, { marginTop: "5%", padding: "10px", width: logoBox.width, borderRadius: "50px", duration: 0.5, ease: "circ.out" });
-			mobileButtons.style.display = dropDownIsOpen ? "grid" : "none";
-			socials.style.display = dropDownIsOpen ? "flex" : "none";
-		} else {
-			dropDownIsOpen = false;
-			gsap.to(header, { marginTop: "0", borderRadius: "0px", width: "100%", height: "auto", y: 0, duration: 0.4, ease: "circ.out" });
-			mobileButtons.style.display = "none";
-			socials.style.display = "flex";
-			gsap.set(socials, { opacity: 1 });
-		}
-	}
-
 	onMount(() => {
 		updateThemeColors();
 
 		if (window.matchMedia) {
-			window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateThemeColors);
+			window
+				.matchMedia("(prefers-color-scheme: dark)")
+				.addEventListener("change", () => {
+					updateThemeColors();
+				});
 		}
 
-		desktopButtonsList().forEach(btn => setupButtonAnimation(btn));
-		mobileButtonsList().forEach(btn => setupButtonAnimation(btn, { mobile: true }));
+		const headerButtons = [home, portfolio, about, contactMe];
+		const headerButtonsMobile = [
+			homeMobile,
+			portfolioMobile,
+			aboutMobile,
+			contactMeMobile,
+		];
+		const socialSVGs = [
+			audiotoolSocialSVG,
+			youtubeSocialSVG,
+			instagramSocialSVG,
+			linkedinSocialSVG,
+			githubSocialSVG,
+		];
+
+		headerButtons.forEach((button) => {
+			const overlay = button.querySelector(".headerButtonOverlay");
+			const text = button.querySelector("span");
+
+			let isHovering = false;
+
+			gsap.set(overlay, { yPercent: 100 });
+
+			button.addEventListener("mouseenter", () => {
+				isHovering = true;
+				gsap.fromTo(
+					overlay,
+					{ yPercent: 100 },
+					{
+						yPercent: 0,
+						duration: 0.4,
+						ease: "power2.out",
+						overwrite: "auto",
+					},
+				);
+
+				gsap.to(text, {
+					color: getCSSVariable("--color-basic"),
+					duration: 0.3,
+					ease: "power2.out",
+					overwrite: "auto",
+				});
+
+				gsap.to(button, {
+					scale: 0.9,
+					duration: 0.2,
+				});
+			});
+
+			button.addEventListener("mousedown", () => {
+				isHovering = false;
+				gsap.to(button, {
+					scale: 0.8,
+					duration: 0.1,
+				});
+			});
+
+			button.addEventListener("click", () => {
+				let tl = gsap.timeline();
+
+				tl.to(button, {
+					scale: 0.7,
+					duration: 0.1,
+					ease: "circ.out",
+				});
+				tl.to(button, {
+					scale: 1.1,
+					duration: 0.2,
+					ease: "circ.Out",
+				});
+				if (!isHovering) {
+					tl.to(button, {
+						scale: 1,
+						duration: 0.1,
+					});
+				} else if (isHovering) {
+					tl.to(button, {
+						scale: 0.8,
+						boxShadow: "0 0 0 0px",
+						duration: 0.1,
+					});
+				}
+			});
+
+			button.addEventListener("mouseleave", () => {
+				gsap.to(button, {
+					scale: 1,
+					duration: 0.2,
+				});
+
+				gsap.fromTo(
+					overlay,
+					{ yPercent: 0 },
+					{
+						yPercent: -100,
+						duration: 0.4,
+						ease: "power2.in",
+						overwrite: "auto",
+					},
+				);
+
+				gsap.to(text, {
+					color: getCSSVariable("--color-header"),
+					duration: 0.6,
+					ease: "power2.out",
+					overwrite: "auto",
+				});
+			});
+		});
+
+		headerButtonsMobile.forEach((button) => {
+			const overlay = button.querySelector(".headerButtonOverlay");
+			const text = button.querySelector("span");
+
+			let isHovering = false;
+
+			gsap.set(overlay, { yPercent: 100, opacity: 0 });
+
+			button.addEventListener("mouseenter", () => {
+				isHovering = true;
+				gsap.fromTo(
+					overlay,
+					{ yPercent: 100 },
+					{
+						yPercent: 0,
+						borderRadius: "10px",
+						duration: 0.4,
+						opacity: 1,
+						ease: "power2.out",
+						overwrite: "auto",
+					},
+				);
+
+				gsap.to(text, {
+					color: getCSSVariable("--color-basic"),
+					duration: 0.3,
+					ease: "power2.out",
+					overwrite: "auto",
+				});
+
+				gsap.to(button, {
+					scale: 0.9,
+					duration: 0.2,
+				});
+			});
+
+			button.addEventListener("mousedown", () => {
+				isHovering = false;
+				gsap.to(button, {
+					scale: 0.8,
+					duration: 0.1,
+				});
+			});
+
+			button.addEventListener("click", () => {
+				let tl = gsap.timeline();
+
+				tl.to(button, {
+					scale: 0.7,
+					duration: 0.1,
+					ease: "circ.out",
+				});
+				tl.to(button, {
+					scale: 1.1,
+					duration: 0.2,
+					ease: "circ.Out",
+				});
+				if (!isHovering) {
+					tl.to(button, {
+						scale: 0.9,
+						duration: 0.3,
+					});
+				} else if (isHovering) {
+					tl.to(button, {
+						scale: 0.8,
+						boxShadow: "0 0 0 0px",
+						duration: 0.1,
+					});
+				}
+			});
+
+			button.addEventListener("mouseleave", () => {
+				gsap.to(button, {
+					scale: 1,
+					duration: 0.2,
+				});
+
+				gsap.fromTo(
+					overlay,
+					{ yPercent: 0 },
+					{
+						yPercent: -100,
+						duration: 0.4,
+						opacity: 0,
+						ease: "power2.in",
+						overwrite: "auto",
+					},
+				);
+
+				gsap.to(text, {
+					color: getCSSVariable("--color-header"),
+					duration: 0.6,
+					ease: "power2.out",
+					overwrite: "auto",
+				});
+			});
+		});
+
+		function handleResize(e) {
+			if (!logoHeader) return;
+
+			const logoBox = logoHeader.getBoundingClientRect();
+
+			if (e.matches) {
+				gsap.to(header, {
+					marginTop: "5%",
+					padding: "10px",
+					width: logoBox.width,
+					borderRadius: "50px",
+					duration: 0.5,
+					ease: "circ.out",
+				});
+				mobileButtons.style.display = dropDownIsOpen ? "grid" : "none";
+				socials.style.display = dropDownIsOpen ? "flex" : "none";
+			} else {
+				dropDownIsOpen = false;
+
+				gsap.to(header, {
+					marginTop: "0",
+					borderRadius: "0px",
+					width: "100%",
+					height: "auto",
+					y: 0,
+					duration: 0.4,
+					ease: "circ.out",
+				});
+
+				mobileButtons.style.display = "none";
+				socials.style.display = "flex";
+				gsap.set(socials, { opacity: 1 });
+			}
+		}
 
 		const mediaQuery = window.matchMedia("(max-width: 1023px)");
 		mediaQuery.addEventListener("change", handleResize);
 		handleResize(mediaQuery);
 
-		socialSVGsList().forEach(svg => {
+		socialSVGs.forEach((svg) => {
 			const parent = svg.parentElement;
+
 			parent.addEventListener("mouseenter", () => {
-				gsap.to(svg.querySelector(".icon"), { fill: getCSSVariable("--color-header"), duration: 0.2 });
-				gsap.to(parent, { scale: 1.3, duration: 0.2 });
+				gsap.to(svg.querySelector(".icon"), {
+					fill: getCSSVariable("--color-header"),
+					duration: 0.2,
+				});
+				gsap.to(parent, {
+					scale: 1.3,
+					duration: 0.2,
+				});
 			});
+
 			parent.addEventListener("mouseleave", () => {
-				gsap.to(svg.querySelector(".icon"), { duration: 0.2 });
-				gsap.to(parent, { scale: 1, duration: 0.2 });
+				gsap.to(svg.querySelector(".icon"), {
+					duration: 0.2,
+				});
+				gsap.to(parent, {
+					scale: 1,
+					duration: 0.2,
+				});
 			});
 		});
 
 		logoHeader.addEventListener("click", () => {
-			gsap.fromTo(logoHeader, { scale: 1 }, { scale: 0.7, duration: 0.1, ease: "sine.out", repeat: 1, yoyo: true });
-			if (isMobile()) toggleMobileDropdown();
+			gsap.fromTo(
+				logoHeader,
+				{ scale: 1 },
+				{
+					scale: 0.7,
+					duration: 0.1,
+					ease: "sine.out",
+					repeat: 1,
+					yoyo: true,
+				},
+			);
+
+			if (isMobile()) {
+				if (!dropDownIsOpen) {
+					dropDownIsOpen = true;
+
+					let timelineOpen = gsap.timeline();
+					let timelineOpen2 = gsap.timeline();
+
+					gsap.set(socials, { opacity: 0 });
+
+					timelineOpen2
+						.to(logoHeader, {
+							y: "25",
+							duration: 0.2,
+							ease: "sine.inOut",
+							onComplete: () => {
+								mobileButtons.style.display = "grid";
+							},
+						})
+						.to(logoHeader, {
+							y: "0",
+							duration: 0.5,
+							ease: "sine.out",
+						})
+						.to(socials, {
+							opacity: 1,
+						});
+
+					timelineOpen
+						.to(header, {
+							y: "20",
+							duration: 0.1,
+							ease: "sine.out",
+							delay: 0.1,
+						})
+						.to(header, {
+							marginTop: "0",
+							borderRadius: 0,
+							paddingLeft: 0,
+							width: "100%",
+							y: "0",
+							height: "100%",
+							duration: 0.5,
+							ease: "circ.out",
+						});
+					let multiplier = 0;
+					headerButtonsMobile.forEach((button) => {
+						gsap.set(button, { opacity: 0, height: "0%" });
+						multiplier++;
+						gsap.to(button, {
+							height: "100%",
+							opacity: 1,
+							duration: 0.5,
+							delay: 0.1 * multiplier,
+							onComplete: () => {
+								socials.style.display = "flex";
+							},
+						});
+					});
+				} else {
+					dropDownIsOpen = false;
+
+					let timelineClose = gsap.timeline();
+					let timelineClose2 = gsap.timeline();
+
+					let multiplier = 0;
+					let buttonsAnimated = 0;
+
+					headerButtonsMobile.forEach((button) => {
+						multiplier++;
+						gsap.to(socials, {
+							opacity: 0,
+							duration: 0.3,
+						});
+						gsap.to(button, {
+							height: "0%",
+							opacity: 0,
+							duration: 0.2,
+							delay: 0.1 * multiplier,
+							onComplete: () => {
+								buttonsAnimated++;
+
+								if (
+									buttonsAnimated ===
+									headerButtonsMobile.length
+								) {
+									mobileButtons.style.display = "none";
+									socials.style.display = "none";
+
+									timelineClose
+										.to(header, {
+											width: "100px",
+											borderRadius: "50px",
+											height: "auto",
+											duration: 0.2,
+											ease: "circ.out",
+										})
+										.to(header, {
+											paddingLeft: "10px",
+											y: "-20",
+											duration: 0.2,
+											ease: "circ.out",
+										})
+										.to(header, {
+											marginTop: "5%",
+											y: "0",
+											duration: 0.3,
+											ease: "sine.out",
+										});
+
+									timelineClose2
+										.to(logoHeader, {
+											y: "-20",
+											duration: 0.3,
+											ease: "sine.out",
+											delay: 0.2,
+										})
+										.to(logoHeader, {
+											y: "0",
+											duration: 0.3,
+											ease: "sine.out",
+										});
+								}
+							},
+						});
+					});
+				}
+				return;
+			}
+
+			transition.style.display = "flex";
+
+			gsap.to(transition, {
+				opacity: "1",
+				duration: 0.3,
+				ease: "sine.out",
+				onComplete: () => {
+					location.reload();
+				},
+			});
+
+			gsap.to(logoTransition, {
+				opacity: "1",
+				duration: 0.2,
+				scale: 1,
+				ease: "sine.out",
+			});
 		});
 
 		let hoverAnim;
 		logoHeader.addEventListener("mouseenter", () => {
-			hoverAnim = gsap.to(logoHeader.querySelector(".logo"), { x: gsap.utils.random(50, -50), y: gsap.utils.random(50, -50), yoyo: true, repeat: -1, duration: 0.3, ease: "sine.inOut" });
+			hoverAnim = gsap.to(logoHeader.querySelector(".logo"), {
+				x: gsap.utils.random(50, -50),
+				y: gsap.utils.random(50, -50),
+				yoyo: true,
+				repeat: -1,
+				duration: 0.3,
+				ease: "sine.inOut",
+			});
 		});
+
 		logoHeader.addEventListener("mouseleave", () => {
 			hoverAnim.kill();
-			gsap.to(logoHeader.querySelector(".logo"), { x: 0, y: 0, duration: 0.5, ease: "circ.out" });
+			hoverAnim = null;
+
+			gsap.to(logoHeader.querySelector(".logo"), {
+				x: 0,
+				y: 0,
+				duration: 0.5,
+				ease: "circ.out",
+			});
 		});
 	});
 </script>
