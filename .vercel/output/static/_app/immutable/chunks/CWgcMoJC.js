@@ -1,1 +1,0 @@
-import{al as t,am as u,Q as w,an as n,X as S}from"./CE3HfuoX.js";function d(i,f){return i===f||i?.[S]===f}function k(i={},f,a,c){return t(()=>{var r,s;return u(()=>{r=s,s=[],w(()=>{i!==a(...s)&&(f(i,...s),r&&d(a(...r),i)&&f(null,...r))})}),()=>{n(()=>{s&&d(a(...s),i)&&f(null,...s)})}}),i}const b="5";typeof window<"u"&&((window.__svelte??={}).v??=new Set).add(b);export{k as b};
