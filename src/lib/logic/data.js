@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
 
 export const client = createClient({
     projectId: 'xvksarfe',
@@ -7,12 +8,17 @@ export const client = createClient({
     useCdn: false,
 });
 
+const builder = imageUrlBuilder(client);
+
 export function getImage(ref) {
     if (!ref) return '';
-    const parts = ref.split('-');
-    if (parts.length < 4) return '';
-    const [, id, dimensions, format] = parts;
-    return `https://cdn.sanity.io/images/xvksarfe/production/${id}-${dimensions}.${format}`;
+
+    return builder
+        .image(ref)
+        .quality(70) 
+        .format('webp')
+        .fit('max')
+        .url();
 }
 
 export function getImageSize(ref) {

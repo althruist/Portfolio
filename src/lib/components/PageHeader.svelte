@@ -113,6 +113,6 @@
     });
 </script>
 
-<div bind:this={pageHeader} {id} class="pageHeader{className}" {style} fetchpriority="high">
+<div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
     <slot />
 </div>
