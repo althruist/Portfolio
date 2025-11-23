@@ -79,7 +79,7 @@
             <h2 class="emphasis">thanks for checking out my website!</h2>
             <img
                 class="foreground"
-                src="/src/lib/images/Assets/HeaderImages/Light/ForegroundLight.webp"
+                src="https://althruist.fyi/images/ForegroundLight.webp"
                 alt="bird"
                 draggable="false"
                 loading="lazy"
@@ -121,7 +121,11 @@
                         </div>
                     {/each}
                 </div>
-                <img id="mainImage" loading="lazy" src={getImage(post.mainImage.asset._id)} />
+                <img
+                    id="mainImage"
+                    loading="lazy"
+                    src={getImage(post.mainImage.asset._id)}
+                />
                 <p id="date">{formatDateTime(post.created)}</p>
                 <h1>{post.title}</h1>
                 {#if post.link}
