@@ -87,7 +87,7 @@
 		property="og:description"
 		content="This website brings you to a library of my works, ranging from music, digital arts, game development and more! You can also find my contact information here. Have a look! :)"
 	/>
-	<meta property="og:image" content="https://althruist.fyi/preview.jpg" />
+	<meta property="og:image" content="https://althruist.fyi/images/preview.jpg" />
 	<meta property="og:url" content="https://althruist.fyi" />
 	<meta property="og:type" content="website" />
 	<meta content="#588ccd" data-react-helmet="true" name="theme-color" />

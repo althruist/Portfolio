@@ -23,10 +23,10 @@
         const welcomeHeader = () => {
             if (isDarkMode()) {
                 fgElement.src =
-                    "/src/lib/images/Assets/HeaderImages/Dark/ForegroundDark.webp";
+                    "https://althruist.fyi/images/ForegroundDark.webp";
             } else {
                 fgElement.src =
-                    "/src/lib/images/Assets/HeaderImages/Light/ForegroundLight.webp";
+                    "https://althruist.fyi/images/ForegroundLight.webp";
             }
         };
 
