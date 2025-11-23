@@ -436,7 +436,7 @@
                         alt={post.mainImage.alt}
                     />
                     <div class="content">
-                        <h6 class="gridContentTitle">{post.title}</h6>
+                        <p class="gridContentTitle">{post.title}</p>
                     </div>
                 </Card>
             {/if}
