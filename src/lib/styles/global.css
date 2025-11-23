@@ -26,14 +26,14 @@
         --color-basic: rgb(0, 0, 0);
         --color-primary: rgb(34, 89, 197);
         --color-header: rgb(107, 176, 255);
-        --color-secondary: rgb(255, 174, 0);
+        --color-secondary: rgb(255, 139, 113);
         --color-background: rgb(17, 25, 41);
         --color-card: rgba(0, 0, 0, 0.548);
         --color-code: rgb(7, 8, 27);
         --color-code-text: rgb(218, 211, 255);
         --color-code-title: rgb(255, 246, 123);
         --color-card-outline: rgba(36, 36, 36, 0.815);
-        --color-link: rgb(255, 174, 0);
+        --color-link: rgb(183, 124, 223);
         --color-link-active: rgb(34, 89, 197);
         --color-text: rgb(255, 238, 221);
         --frosting: url(../images/Assets/FrostingDark.webp);

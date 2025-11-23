@@ -432,7 +432,7 @@
 
 									timelineClose
 										.to(header, {
-											width: "100px",
+											width: "80px",
 											borderRadius: "50px",
 											height: "auto",
 											duration: 0.2,

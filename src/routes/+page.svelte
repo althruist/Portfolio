@@ -83,6 +83,7 @@
                 alt="bird"
                 draggable="false"
                 loading="lazy"
+                fetchpriority="high"
                 bind:this={fgElement}
             />
         </div>
@@ -95,6 +96,7 @@
             bind:this={imgElement}
             id="img"
             loading="lazy"
+            fetchpriority="low"
             src={featuredImage}
             alt="preview"
             aria-label={featuredLink}
@@ -124,7 +126,9 @@
                 <img
                     id="mainImage"
                     loading="lazy"
+                    fetchpriority="low"
                     src={getImage(post.mainImage.asset._id)}
+                    alt={post.mainImage.alt}
                 />
                 <p id="date">{formatDateTime(post.created)}</p>
                 <h1>{post.title}</h1>

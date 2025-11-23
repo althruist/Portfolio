@@ -85,8 +85,9 @@
 	<meta property="og:title" content="althruist:portfolio" />
 	<meta
 		property="og:description"
-		content="This website brings you to a library of my works, ranging from music, digital arts, game development and more! You can also find my contact information here. Have a look! :)"
+		content="This website brings you to a library of althruist's works, ranging from music, digital arts, game development and more! You can also find althruist's contact information here. Have a look! :)"
 	/>
+	<meta name="description" content="This website brings you to a library of althruist's works, ranging from music, digital arts, game development and more! You can also find althruist's contact information here. Have a look! :)">
 	<meta property="og:image" content="https://althruist.fyi/images/preview.jpg" />
 	<meta property="og:url" content="https://althruist.fyi" />
 	<meta property="og:type" content="website" />
@@ -96,7 +97,7 @@
 	<meta name="twitter:title" content="althruist:portfolio" />
 	<meta
 		name="twitter:description"
-		content="This website brings you to a library of my works, ranging from music, digital arts, game development and more! You can also find my contact information here. Have a look! :)"
+		content="This website brings you to a library of althruist's works, ranging from music, digital arts, game development and more! You can also find althruist's contact information here. Have a look! :)"
 	/>
 	<meta name="twitter:image" content="https://althruist.fyi/preview.jpg" />
 </svelte:head>
