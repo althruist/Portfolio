@@ -15,7 +15,8 @@
     --frosting: url(../images/Assets/Frosting.webp);
     --alt-text: rgba(83, 78, 73, 0.596);
     --title-text: rgb(85, 61, 40);
-    --background: url(../images/Assets/Background.webp);
+    --header-background: url(../images/Assets/HeaderImages/Light/BackgroundLight.webp);
+    --header-foreground: url(../images/Assets/HeaderImages/Light/ForegroundLight.webp);
     --color-cursor: rgb(255, 242, 124);
     --color-shadow: rgba(187, 219, 255, 0.541);
 }
@@ -38,7 +39,8 @@
         --frosting: url(../images/Assets/FrostingDark.webp);
         --alt-text: rgba(218, 207, 196, 0.658);
         --title-text: rgb(202, 210, 255);
-        --background: url(../images/Assets/BackgroundDark.webp);
+        --header-background: url(../images/Assets/HeaderImages/Dark/BackgroundDark.webp);
+        --header-foreground: url(../images/Assets/HeaderImages/Dark/ForegroundDark.webp);
         --color-cursor: rgb(212, 102, 51);
         --color-shadow: rgba(53, 29, 8, 0.445);
     }
@@ -53,6 +55,7 @@ body {
     box-sizing: border-box;
     background-color: var(--color-background);
     font-family: "Lexend";
+    font-display: swap;
 }
 
 h1 {
@@ -101,15 +104,17 @@ blockquote {
 .pageHeader {
     background-color: var(--color-primary);
     height: 750px;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     color: var(--color-text);
-    margin: auto;
     align-content: center;
-    border-radius: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     position: static;
+}
+
+.headerContent {
+    position: relative;
 }
 
 .pageHeader .headerContent {
@@ -117,12 +122,12 @@ blockquote {
     margin: auto;
 }
 
-.pageHeader .headerContent p {
+/* .pageHeader .headerContent p {
     text-align: right;
     white-space: normal;
     font-size: clamp(16px, 4vw, 20px);
     overflow-wrap: break-word;
-}
+} */
 
 .card {
     position: relative;
@@ -266,10 +271,6 @@ a:hover {
     color: var(--color-secondary);
 }
 
-.emphasis {
-    font-size: 50px;
-}
-
 #date {
     color: var(--alt-text)
 }
@@ -287,26 +288,38 @@ a:hover {
     border-radius: 15px;
 }
 
+#welcomeHeader {
+    background-image: var(--header-background);
+}
+
+#welcomeHeader .foreground {
+    position: absolute;
+    scale: 0.4;
+    top: -5vh;
+    left: 0vw;
+}
+
 #welcomeHeader h1 {
     font-family: 'Althite';
-    text-align: left;
-    font-size: clamp(80px, 8vw, 200px);
+    font-size: 19vw;
     overflow-wrap: break-word;
     white-space: normal;
-    margin-top: 200px;
+    margin-top: 100px;
     margin-bottom: 0px;
-    color: var(--color-text);
+    color: rgb(255, 255, 255);
     line-height: 1.2;
+    text-align: left;
 }
 
 #welcomeHeader h2 {
     font-family: 'Althite';
     text-align: left;
-    font-size: clamp(30px, 3vw, 120px);
+    font-size: 5vw;
     margin-top: 10px;
     overflow-wrap: break-word;
     white-space: normal;
     line-height: 1.2;
+    color: rgb(255, 255, 255);
 }
 
 #header .buttons {
@@ -452,15 +465,15 @@ a:hover {
 
     #header {
         position: fixed;
-        width: 100%;
+        width: 90%;
         padding: 10px;
-        margin-top: 0px;
+        margin-top: 10px;
         display: flex;
         margin-bottom: 0;
         justify-content: space-between;
     }
 
-    #header #left{
+    #header #left {
         display: flex;
     }
 
@@ -513,7 +526,7 @@ a:hover {
         padding: 10px;
         margin-left: auto;
         margin-right: 3rem;
-        padding-right:20px;
+        padding-right: 20px;
     }
 
     .socials a {
@@ -525,5 +538,35 @@ a:hover {
         transform-origin: center;
         width: 30px;
         height: 30px;
+    }
+
+    #welcomeHeader h1 {
+        font-family: 'Althite';
+        font-size: 9.5vw;
+        overflow-wrap: break-word;
+        white-space: normal;
+        margin-top: 200px;
+        margin-bottom: 0px;
+        color: rgb(255, 255, 255);
+        line-height: 1.2;
+        text-align: left;
+    }
+
+    #welcomeHeader h2 {
+        font-family: 'Althite';
+        text-align: left;
+        font-size: 2vw;
+        margin-top: 10px;
+        overflow-wrap: break-word;
+        white-space: normal;
+        line-height: 1.2;
+        color: rgb(255,255,255);
+    }
+
+    #welcomeHeader .foreground {
+        position: absolute;
+        scale: 0.8;
+        top: 4vh;
+        left: 50vw;
     }
 }

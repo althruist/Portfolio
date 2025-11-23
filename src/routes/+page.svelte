@@ -6,6 +6,7 @@
     import Card from "$lib/components/Card.svelte";
     import CarouselGrid from "$lib/components/CarouselGrid.svelte";
     import PageHeader from "$lib/components/PageHeader.svelte";
+    import { isDarkMode } from "$lib/logic/globalFunctions";
 
     let posts = [];
     let featured = [];
@@ -16,8 +17,21 @@
     let featuredLink = "";
 
     let imgElement;
+    let fgElement;
 
     onMount(async () => {
+        const welcomeHeader = () => {
+            if (isDarkMode()) {
+                fgElement.src =
+                    "/src/lib/images/Assets/HeaderImages/Dark/ForegroundDark.webp";
+            } else {
+                fgElement.src =
+                    "/src/lib/images/Assets/HeaderImages/Light/ForegroundLight.webp";
+            }
+        };
+
+        welcomeHeader();
+
         posts = await client.fetch(
             '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,link,created,body}',
         );
@@ -41,6 +55,9 @@
         } else {
             imgElement.style.cursor = "pointer";
         }
+
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        mediaQuery.addEventListener("change", welcomeHeader);
     });
 
     const travelFeaturedLink = () => {
@@ -54,19 +71,20 @@
 
 <title>althruist:portfolio</title>
 <div id="content">
-    <PageHeader id="welcomeHeader">
+    <PageHeader id="welcomeHeader" foregroundImg={fgElement}>
         <div class="headerContent">
-            <h1 class="emphasis">hey, i'm <span class="name">kieran</span>!</h1>
+            <h1 class="emphasis">
+                hiya, i'm <span class="name">kieran</span>!
+            </h1>
             <h2 class="emphasis">thanks for checking out my website!</h2>
-            <p>
-                I am a post-secondary student, just finished my Advanced Diploma
-                and moving on to Bachelors.
-            </p>
-            <p>
-                I love game development, music, art, front-end development,
-                graphics, possibly everything related to creative technology &
-                digital art!
-            </p>
+            <img
+                class="foreground"
+                src="/src/lib/images/Assets/HeaderImages/Light/ForegroundLight.webp"
+                alt="bird"
+                draggable="false"
+                loading="lazy"
+                bind:this={fgElement}
+            />
         </div>
     </PageHeader>
 
@@ -76,6 +94,7 @@
         <img
             bind:this={imgElement}
             id="img"
+            loading="lazy"
             src={featuredImage}
             alt="preview"
             aria-label={featuredLink}
@@ -102,7 +121,7 @@
                         </div>
                     {/each}
                 </div>
-                <img id="mainImage" src={getImage(post.mainImage.asset._id)} />
+                <img id="mainImage" loading="lazy" src={getImage(post.mainImage.asset._id)} />
                 <p id="date">{formatDateTime(post.created)}</p>
                 <h1>{post.title}</h1>
                 {#if post.link}

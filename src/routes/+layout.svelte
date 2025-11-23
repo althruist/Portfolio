@@ -11,7 +11,10 @@
 
 	import { onMount } from "svelte";
 	import { injectAnalytics } from "@vercel/analytics/sveltekit";
+	import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 	import Page from "./+page.svelte";
+	import { isDarkMode } from "$lib/logic/globalFunctions";
+
 	let { children } = $props();
 
 	let background;
@@ -33,10 +36,7 @@
 	}
 
 	function updateFavicon() {
-		const isDark = window.matchMedia(
-			"(prefers-color-scheme: dark)",
-		).matches;
-		setFavicon(isDark ? darkFavicon : lightFavicon);
+		setFavicon(isDarkMode() ? darkFavicon : lightFavicon);
 	}
 
 	onMount(async () => {
@@ -44,6 +44,7 @@
 		const gsap = gsapModule.default;
 
 		injectAnalytics();
+		injectSpeedInsights();
 
 		const { ScrollSmoother } = await import("gsap/ScrollSmoother");
 
@@ -59,30 +60,6 @@
 		updateFavicon();
 		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		mediaQuery.addEventListener("change", updateFavicon);
-
-		let xPos = 0,
-			yPos = 0,
-			isAnimating = false,
-			mouseX = 0,
-			mouseY = 0;
-
-		document.addEventListener("mousemove", (e) => {
-			const { innerWidth: w, innerHeight: h } = window;
-			xPos = (mouseX / w - 0.5) * 100;
-			yPos = (mouseY / h - 0.5) * 100;
-
-			if (!isAnimating) {
-				isAnimating = true;
-				requestAnimationFrame(() => {
-					gsap.to(background, {
-						backgroundPosition: `calc(50% + ${xPos}px) calc(50% + ${yPos}px)`,
-						duration: 0.5,
-						ease: "circ.out",
-					});
-					isAnimating = false;
-				});
-			}
-		});
 
 		transition.style.display = "flex";
 

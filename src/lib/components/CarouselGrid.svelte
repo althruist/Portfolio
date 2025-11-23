@@ -298,7 +298,7 @@
 </script>
 
 <div
-    class="carousel-wrapper card fullCard noBounce"
+    class="carousel-wrapper card noBounce"
     bind:this={carouselContainer}
     {id}
 >
@@ -431,7 +431,7 @@
         {#each content as post}
             {#if post.categories && post.categories.some((category) => category.title.toLowerCase() === filter.toLowerCase())}
                 <Card className="gridItem interactable">
-                    <img
+                    <img class = "postImg"
                         src={getImage(post.mainImage.asset._id)}
                         alt={post.mainImage.alt}
                     />
@@ -448,9 +448,10 @@
     .carousel-wrapper {
         position: relative;
         overflow: hidden;
-        width: 100%;
-        margin-left: 0;
-        border-radius: 0;
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
+        border-radius: 20px;
         background-image: var(--frosting);
         background-color: transparent;
     }
@@ -458,7 +459,7 @@
     .carousel {
         display: grid;
         grid-auto-flow: column;
-        grid-auto-columns: auto;
+        grid-auto-columns: 350px;
         gap: 1rem;
     }
 
@@ -467,6 +468,8 @@
         top: 50%;
         left: 0;
         right: 0;
+        width:100%;
+        height:50px;
         transform: translateY(-50%);
         pointer-events: none;
         z-index: 3;
@@ -485,7 +488,7 @@
         border: 1px var(--color-card-outline) solid;
         box-shadow: 0px 0px 20px 2px var(--color-shadow);
         width: 50px;
-        height: 50px;
+        height: 100%;
     }
 
     .arrow.left {
@@ -493,7 +496,7 @@
     }
 
     .arrow.right {
-        right: 2.5rem;
+        right: 1rem;
     }
 
     .arrow svg {
@@ -539,5 +542,11 @@
     #seeMore svg {
         scale: 0.7;
         fill: var(--color-basic);
+    }
+
+    .postImg {
+        aspect-ratio: 1/1;
+        width: 100%;
+        height: 100%;
     }
 </style>

@@ -275,27 +275,23 @@
 			const logoBox = logoHeader.getBoundingClientRect();
 
 			if (e.matches) {
-				gsap.to(header, {
+				gsap.set(header, {
 					marginTop: "5%",
 					padding: "10px",
 					width: logoBox.width,
 					borderRadius: "50px",
-					duration: 0.5,
-					ease: "circ.out",
 				});
 				mobileButtons.style.display = dropDownIsOpen ? "grid" : "none";
 				socials.style.display = dropDownIsOpen ? "flex" : "none";
 			} else {
 				dropDownIsOpen = false;
 
-				gsap.to(header, {
-					marginTop: "0",
-					borderRadius: "0px",
-					width: "100%",
+				gsap.set(header, {
+					marginTop: "10px",
+					borderRadius: "20px",
+					width: "90%",
 					height: "auto",
 					y: 0,
-					duration: 0.4,
-					ease: "circ.out",
 				});
 
 				mobileButtons.style.display = "none";
@@ -718,6 +714,6 @@
 	}
 
 	#logoHeader {
-		width: 100px;
+		width: 80px;
 	}
 </style>
