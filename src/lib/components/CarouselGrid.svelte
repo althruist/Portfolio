@@ -2,7 +2,7 @@
     import { gsap } from "gsap";
     import { onMount, tick } from "svelte";
     import Card from "./Card.svelte";
-    import { getImage } from "$lib/logic/data";
+    import { getImage, getImageSize } from "$lib/logic/data";
     import { ObservablePatch } from "@sanity/client";
     import { getCSSVariable } from "$lib/logic/globalFunctions";
 
@@ -434,6 +434,8 @@
                     <img class = "postImg"
                         src={getImage(post.mainImage.asset._id)}
                         alt={post.mainImage.alt}
+                        width={getImageSize(post.mainImage.asset._id)[0]}
+                        height={getImageSize(post.mainImage.asset._id)[1]}
                     />
                     <div class="content">
                         <p class="gridContentTitle">{post.title}</p>
