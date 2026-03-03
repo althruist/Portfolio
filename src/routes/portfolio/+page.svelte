@@ -54,19 +54,9 @@
 
 <title>althruist:portfolio</title>
 <div id="content">
-    <PageHeader id="welcomeHeader">
+    <PageHeader id="projectHeader" style="height: 50vh;">
         <div class="headerContent">
-            <h1 class="emphasis">hey, i'm <span class="name">kieran</span>!</h1>
-            <h2 class="emphasis">thanks for checking out my website!</h2>
-            <p>
-                I am a post-secondary student, just finished my Advanced Diploma
-                and moving on to Bachelors.
-            </p>
-            <p>
-                I love game development, music, art, front-end development,
-                graphics, possibly everything related to creative technology &
-                digital art!
-            </p>
+            <h1>Projects</h1>
         </div>
     </PageHeader>
 
