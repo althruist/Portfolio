@@ -166,7 +166,7 @@
         <path
             id="cursorPath"
             d="M540,0 C241.8,0,0,241.8,0,540 s241.8,540,540,540,540-241.8,540-540S838.2,0,540,0Z"
-            fill="var(--color-cursor)"
+            fill="var(--color-secondary)"
         />
         <path
             id="cursorPathOriginal"

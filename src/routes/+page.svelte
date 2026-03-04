@@ -89,6 +89,10 @@
     </div>
   </PageHeader>
 
+  <section id="aboutSection">
+  <h1>Who am I?</h1>
+  </section>
+
   <Card class="mainCard" id="currentProject">
     <p id="date">Current Project • {featuredDate}</p>
     <h1 class="emphasis">{featuredTitle}</h1>

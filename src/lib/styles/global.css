@@ -17,7 +17,6 @@
   --title-text: rgb(85, 61, 40);
   --header-background: url(../images/Assets/HeaderImages/Light/BackgroundLight.webp);
   --header-foreground: url(../images/Assets/HeaderImages/Light/ForegroundLight.webp);
-  --color-cursor: rgb(255, 242, 124);
   --color-shadow: rgba(187, 219, 255, 0.541);
 }
 
@@ -41,7 +40,6 @@
     --title-text: rgb(202, 210, 255);
     --header-background: url(../images/Assets/HeaderImages/Dark/BackgroundDark.webp);
     --header-foreground: url(../images/Assets/HeaderImages/Dark/ForegroundDark.webp);
-    --color-cursor: rgb(212, 102, 51);
     --color-shadow: rgba(8, 11, 53, 0.445);
   }
 }
@@ -115,11 +113,9 @@ blockquote {
 
 .headerContent {
   position: relative;
-}
-
-.pageHeader .headerContent {
   width: 80%;
   margin: auto;
+  bottom: 100px;
 }
 
 /* .pageHeader .headerContent p {
@@ -430,10 +426,8 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(
-    color-mix(in srgb, var(--color-primary), transparent 100%),
-    var(--color-primary)
-  );
+  background: linear-gradient(color-mix(in srgb, var(--color-primary), transparent 100%),
+      var(--color-primary));
   padding: 1rem;
   color: white;
   display: flex;
@@ -575,8 +569,8 @@ a:hover {
   #welcomeHeader h2 {
     font-family: "Althite";
     text-align: left;
-    font-size: 1.4vw;
-    margin-top: 10px;
+    font-size: 3vw;
+    margin-top: 3rem;
     overflow-wrap: break-word;
     white-space: normal;
     line-height: 1.2;

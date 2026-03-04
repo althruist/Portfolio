@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { isMobile, getCSSVariable } from "$lib/logic/globalFunctions.js";
+  import { isMobile, getCSSVariable, scrollTo } from "$lib/logic/globalFunctions.js";
 
   let header;
   let logoHeader;
@@ -268,6 +268,8 @@
           });
         }
       });
+
+      // scrollTo("#aboutSection");
 
       button.addEventListener("mouseleave", () => {
         gsap.to(button, {
@@ -543,7 +545,7 @@
         bind:this={about}
         aria-label="about"
         class="headerButton interactable"
-        href="/about"
+        href="#aboutSection"
         ><span>About</span>
         <div class="headerButtonOverlay"></div>
       </a>
@@ -570,7 +572,7 @@
       bind:this={aboutMobile}
       aria-label="about"
       class="headerButton interactable"
-      href="/about"
+      href="#aboutSection"
       ><span>About</span>
       <div class="headerButtonOverlay"></div>
     </a>

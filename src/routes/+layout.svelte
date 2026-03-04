@@ -46,8 +46,9 @@
 
     const { ScrollTrigger } = await import("gsap/ScrollTrigger");
     const { ScrollSmoother } = await import("gsap/ScrollSmoother");
+    const { ScrollToPlugin } = await import("gsap/ScrollToPlugin");
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
     ScrollSmoother.create({
       wrapper: smoothWrapper,
