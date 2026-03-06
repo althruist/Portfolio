@@ -50,10 +50,11 @@
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: video,
         start: "top top",
-        end: "+=780",
+        end: "+=650",
         scrub: true,
         onUpdate: (self) => {
           if (video) video.currentTime = videoDuration * self.progress;
+          console.log(self.progress);
         },
       });
     };
