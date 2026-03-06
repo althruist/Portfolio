@@ -11,7 +11,7 @@
   import { injectAnalytics } from "@vercel/analytics/sveltekit";
   import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import Page from "./+page.svelte";
-  import { isDarkMode } from "$lib/logic/globalFunctions";
+  import { initGSAP, isDarkMode } from "$lib/logic/globalFunctions";
 
   let { children } = $props();
 
@@ -40,6 +40,8 @@
   onMount(async () => {
     const gsapModule = await import("gsap");
     const gsap = gsapModule.default;
+
+    await initGSAP();
 
     injectAnalytics();
     injectSpeedInsights();

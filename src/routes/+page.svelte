@@ -4,9 +4,12 @@
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { getImage } from "$lib/logic/data.js";
   import Card from "$lib/components/Card.svelte";
-  import CarouselGrid from "$lib/components/CarouselGrid.svelte";
+  import Button from "$lib/components/Button.svelte";
+  // import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { isDarkMode } from "$lib/logic/globalFunctions";
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
   let posts = [];
   let featured = [];
@@ -18,8 +21,13 @@
 
   let imgElement;
   let fgElement;
+  let content;
+
+  import headerVideo from "$lib/videos/demo.mp4";
+  let video;
 
   onMount(async () => {
+    gsap.registerPlugin(ScrollTrigger);
     const welcomeHeader = () => {
       if (isDarkMode()) {
         fgElement.src = "https://althruist.fyi/images/ForegroundDark.webp";
@@ -28,10 +36,38 @@
       }
     };
 
+    const duration = video.duration;
+    let scrollTriggerInstance;
+
+    const setupScrollScrub = () => {
+      if (!video) return;
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
+      }
+
+      const videoDuration = video.duration;
+
+      scrollTriggerInstance = ScrollTrigger.create({
+        trigger: video,
+        start: "top top",
+        end: "+=780",
+        scrub: true,
+        onUpdate: (self) => {
+          if (video) video.currentTime = videoDuration * self.progress;
+        },
+      });
+    };
+
+    if (video.readyState >= 1) {
+      setupScrollScrub();
+    } else {
+      video.addEventListener("loadedmetadata", setupScrollScrub);
+    }
+
     welcomeHeader();
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,link,created,body}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,created,body,links}',
     );
 
     featured = await client.fetch(
@@ -70,12 +106,18 @@
 <title>althruist:portfolio</title>
 <div id="content">
   <PageHeader id="welcomeHeader" foregroundImg={fgElement}>
+    <div class="video-container">
+      <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
+        <source src={headerVideo} type="video/mp4" />
+      </video>
+    </div>
     <div class="headerContent">
       <h1 class="emphasis">
         Hiya, i'm <span class="name">Kieran</span>!
       </h1>
       <h2 class="emphasis">
-        Everything I create carries meaning, intention and emotion. It's meant to feel personal, ranging from Games, 3D Renders and Music!
+        Everything I create carries meaning, intention and emotion. It's meant
+        to feel personal, ranging from Games, 3D Renders and Music!
       </h2>
       <img
         class="foreground"
@@ -90,7 +132,11 @@
   </PageHeader>
 
   <section id="aboutSection">
-  <h1>Who am I?</h1>
+    <h1>Who am I?</h1>
+  </section>
+
+  <section id="projectsSection">
+    <h1>Some cool stuff I did</h1>
   </section>
 
   <Card class="mainCard" id="currentProject">
@@ -113,20 +159,9 @@
   </Card>
 
   <div class="flexCards">
-    <!-- <Card class="card" id="linksCard">
-            <h2>flex card</h2>
-            <p id="altText">alt text</p>
-        </Card> -->
-
     {#each posts as post}
+      {console.log(post)}
       <Card id={post.slug.current}>
-        <div id="postCategories">
-          {#each post.categories as category}
-            <div>
-              <p>{category.title}</p>
-            </div>
-          {/each}
-        </div>
         <img
           id="mainImage"
           loading="lazy"
@@ -135,23 +170,49 @@
           alt={post.mainImage.alt}
         />
         <p id="date">{formatDateTime(post.created)}</p>
-        <h1>{post.title}</h1>
-        {#if post.link}
-          <a href={post.link} target="_blank">{post.link}</a>
-        {/if}
+        <div id="postCategories">
+          {#each post.categories as category}
+            <div>
+              <p>{category.title}</p>
+            </div>
+          {/each}
+        </div>
+        <h1 class="projectTitle">{post.title}</h1>
         <div class="post-body">
           {@html renderBody(post.body)}
+        </div>
+        <div class="postButtons">
+          {#each post.links as button}
+            <Button link={button.url} text={button.label} className="postButton"
+            ></Button>
+          {/each}
         </div>
       </Card>
     {/each}
   </div>
-  <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
+  <!-- <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
   <CarouselGrid content={posts} filter="renders" name="Renders"></CarouselGrid>
-  <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid>
+  <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid> -->
 </div>
 
 <style>
   #mainImage {
     width: 100%;
+  }
+
+  .video-container {
+    position: absolute; /* video stays on screen for scroll scrub */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* behind everything */
+    pointer-events: none; /* let mouse events pass through */
+  }
+
+  .video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>

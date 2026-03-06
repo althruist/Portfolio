@@ -32,7 +32,7 @@
 
         const bounceEnter = () => {
             card.style.zIndex = 2;
-            gsap.to(card, { scale: 1.1, duration: 0.5, ease: "circ.out" });
+            gsap.to(card, { scale: 1.02, duration: 0.5, ease: "circ.out" });
         };
 
         const bounceLeave = () => {
@@ -43,14 +43,14 @@
         const bounceClick = () => {
             let tlClick = gsap.timeline();
             tlClick.to(card, {
-                rotation: gsap.utils.random(-4, 4),
+                rotation: gsap.utils.random(-1, 1),
                 scale: 1,
                 duration: 0.1,
                 ease: "sine.out",
             });
             tlClick.to(card, {
                 rotation: 0,
-                scale: 1.1,
+                scale: 1.02,
                 duration: 0.2,
                 ease: "sine.out",
             });

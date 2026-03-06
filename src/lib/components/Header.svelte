@@ -1,7 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { isMobile, getCSSVariable, scrollTo } from "$lib/logic/globalFunctions.js";
+  import {
+    isMobile,
+    getCSSVariable,
+    scrollTo,
+  } from "$lib/logic/globalFunctions.js";
 
   let header;
   let logoHeader;
@@ -412,7 +416,7 @@
           padding: "10px",
           width: logoBox.width,
           borderRadius: "50px",
-		  top: '80%',
+          top: "80%",
         });
         mobileButtons.style.display = dropDownIsOpen ? "grid" : "none";
         socials.style.display = dropDownIsOpen ? "flex" : "none";
@@ -424,7 +428,7 @@
           borderRadius: "20px",
           width: "74%",
           height: "auto",
-		  top: "auto",
+          top: "auto",
           y: 0,
         });
 
@@ -537,7 +541,9 @@
         bind:this={portfolio}
         aria-label="portfolio"
         class="headerButton interactable"
-        href="/portfolio"
+        on:click={() => {
+          scrollTo("#projectsSection");
+        }}
         ><span>Portfolio</span>
         <div class="headerButtonOverlay"></div>
       </a>
@@ -545,7 +551,9 @@
         bind:this={about}
         aria-label="about"
         class="headerButton interactable"
-        href="#aboutSection"
+        on:click={() => {
+          scrollTo("#aboutSection");
+        }}
         ><span>About</span>
         <div class="headerButtonOverlay"></div>
       </a>
@@ -564,7 +572,9 @@
       bind:this={portfolioMobile}
       aria-label="portfolio"
       class="headerButton interactable"
-      href="/portfolio"
+      on:click={() => {
+        scrollTo("#projectsSection");
+      }}
       ><span>Portfolio</span>
       <div class="headerButtonOverlay"></div>
     </a>
@@ -572,7 +582,9 @@
       bind:this={aboutMobile}
       aria-label="about"
       class="headerButton interactable"
-      href="#aboutSection"
+      on:click={() => {
+        scrollTo("#aboutSection");
+      }}
       ><span>About</span>
       <div class="headerButtonOverlay"></div>
     </a>

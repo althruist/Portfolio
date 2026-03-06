@@ -77,7 +77,7 @@
       opacity: 0,
       scrollTrigger: {
         start: "top top",
-        end: '+=500',
+        end: "+=500",
         scrub: 0.5,
       },
     });
@@ -110,3 +110,10 @@
 <div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
   <slot />
 </div>
+
+<style>
+  div{
+    overflow: hidden;
+    position: relative;
+  }
+</style>

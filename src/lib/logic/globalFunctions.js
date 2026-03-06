@@ -1,7 +1,17 @@
-import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+let gsap;
+let ScrollToPlugin;
 
-gsap.registerPlugin(ScrollToPlugin);
+export async function initGSAP() {
+  if (typeof window === "undefined") return;
+
+  const gsapModule = await import("gsap");
+  const scrollModule = await import("gsap/ScrollToPlugin");
+
+  gsap = gsapModule.gsap;
+  ScrollToPlugin = scrollModule.ScrollToPlugin;
+
+  gsap.registerPlugin(ScrollToPlugin);
+}
 
 export function isMobile() {
   return window.innerWidth <= 1024;
@@ -21,5 +31,6 @@ export function getCSSVariable(variable) {
 }
 
 export function scrollTo(place) {
-  gsap.to(window, { duration: 1, scrollTo: place, ease: "power2.inOut" });
+  if (!gsap) return;
+  gsap.to(window, { duration: 0.3, scrollTo: place, ease: "sine.out" });
 }
