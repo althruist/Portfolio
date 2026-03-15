@@ -24,36 +24,6 @@
     gsap.registerPlugin(ScrambleTextPlugin);
     gsap.registerPlugin(ScrollTrigger);
 
-    const windowSize = () => {
-      if (window.innerWidth <= 424) {
-        gsap.set(foregroundImg, {
-          position: "absolute",
-          scale: 0.4,
-          top: "-5vh",
-          left: "0vw",
-        });
-      } else {
-        gsap.set(foregroundImg, {
-          position: "absolute",
-          scale: 0.8,
-          top: "4vh",
-          left: "50vw",
-        });
-      }
-    };
-
-    window.addEventListener("resize", windowSize);
-
-    gsap.to(".foreground", {
-      y: -750,
-      x: -1000,
-      scrollTrigger: {
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
-
     pageHeader.addEventListener("mouseenter", () => {
       if (isHovering) return;
       isHovering = true;
@@ -65,11 +35,6 @@
           revealDelay: 0,
           speed: 1,
         },
-      });
-
-      gsap.to(foregroundImg, {
-        opacity: 0.5,
-        duration: 0.3,
       });
     });
 
@@ -98,11 +63,6 @@
           speed: 1,
         },
       });
-
-      gsap.to(foregroundImg, {
-        opacity: 1,
-        duration: 0.3,
-      });
     });
   });
 </script>
@@ -112,7 +72,7 @@
 </div>
 
 <style>
-  div{
+  div {
     overflow: hidden;
     position: relative;
   }

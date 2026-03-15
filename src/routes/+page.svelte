@@ -20,24 +20,27 @@
   let featuredLink = "";
 
   let imgElement;
-  let fgElement;
   let content;
 
-  import headerVideo from "$lib/videos/demo.mp4";
+  import headerVideoDay from "$lib/videos/day.mp4";
+  import headerVideoNight from "$lib/videos/night.mp4";
   let video;
+  let videoSource;
+
+  function setVideo() {
+    videoSource = isDarkMode() ? headerVideoNight : headerVideoDay;
+    if (video) {
+      video.load();
+    }
+  }
 
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
-    const welcomeHeader = () => {
-      if (isDarkMode()) {
-        fgElement.src = "https://althruist.fyi/images/ForegroundDark.webp";
-      } else {
-        fgElement.src = "https://althruist.fyi/images/ForegroundLight.webp";
-      }
-    };
 
     const duration = video.duration;
     let scrollTriggerInstance;
+
+    setVideo();
 
     const setupScrollScrub = () => {
       if (!video) return;
@@ -51,10 +54,9 @@
         trigger: video,
         start: "top top",
         end: "+=650",
-        scrub: true,
+        scrub: 1,
         onUpdate: (self) => {
           if (video) video.currentTime = videoDuration * self.progress;
-          console.log(self.progress);
         },
       });
     };
@@ -64,8 +66,6 @@
     } else {
       video.addEventListener("loadedmetadata", setupScrollScrub);
     }
-
-    welcomeHeader();
 
     posts = await client.fetch(
       '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,created,body,links}',
@@ -93,6 +93,7 @@
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
+    mediaQuery.addEventListener("change", setVideo);
   });
 
   const travelFeaturedLink = () => {
@@ -106,10 +107,10 @@
 
 <title>althruist:portfolio</title>
 <div id="content">
-  <PageHeader id="welcomeHeader" foregroundImg={fgElement}>
+  <PageHeader id="welcomeHeader">
     <div class="video-container">
       <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
-        <source src={headerVideo} type="video/mp4" />
+        <source src={videoSource} type="video/mp4" />
       </video>
     </div>
     <div class="headerContent">
@@ -120,15 +121,6 @@
         Everything I create carries meaning, intention and emotion. It's meant
         to feel personal, ranging from Games, 3D Renders and Music!
       </h2>
-      <img
-        class="foreground"
-        src="https://althruist.fyi/images/ForegroundLight.webp"
-        alt="bird"
-        draggable="false"
-        loading="lazy"
-        fetchpriority="high"
-        bind:this={fgElement}
-      />
     </div>
   </PageHeader>
 
@@ -202,13 +194,13 @@
   }
 
   .video-container {
-    position: absolute; /* video stays on screen for scroll scrub */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0; /* behind everything */
-    pointer-events: none; /* let mouse events pass through */
+    z-index: 0;
+    pointer-events: none;
   }
 
   .video-container video {

@@ -115,6 +115,7 @@ blockquote {
   position: relative;
   width: 80%;
   margin: auto;
+  margin-left:2rem;
   bottom: 100px;
 }
 
