@@ -553,17 +553,6 @@
         <div class="headerButtonOverlay"></div>
       </a>
       <a
-        bind:this={portfolio}
-        aria-label="portfolio"
-        class="headerButton interactable"
-        href="/"
-        on:click={() => {
-          scrollTo("#projectsSection");
-        }}
-        ><span>Portfolio</span>
-        <div class="headerButtonOverlay"></div>
-      </a>
-      <a
         bind:this={about}
         aria-label="about"
         class="headerButton interactable"
@@ -572,6 +561,17 @@
           scrollTo("#aboutSection");
         }}
         ><span>About</span>
+        <div class="headerButtonOverlay"></div>
+      </a>
+      <a
+        bind:this={portfolio}
+        aria-label="portfolio"
+        class="headerButton interactable"
+        href="/"
+        on:click={() => {
+          scrollTo("#projectsSection");
+        }}
+        ><span>Portfolio</span>
         <div class="headerButtonOverlay"></div>
       </a>
     </nav>
@@ -586,17 +586,6 @@
       <div class="headerButtonOverlay"></div>
     </a>
     <a
-      bind:this={portfolioMobile}
-      aria-label="portfolio"
-      class="headerButton interactable"
-      href="/"
-      on:click={() => {
-        scrollTo("#projectsSection");
-      }}
-      ><span>Portfolio</span>
-      <div class="headerButtonOverlay"></div>
-    </a>
-    <a
       bind:this={aboutMobile}
       aria-label="about"
       class="headerButton interactable"
@@ -605,6 +594,17 @@
         scrollTo("#aboutSection");
       }}
       ><span>About</span>
+      <div class="headerButtonOverlay"></div>
+    </a>
+    <a
+      bind:this={portfolioMobile}
+      aria-label="portfolio"
+      class="headerButton interactable"
+      href="/"
+      on:click={() => {
+        scrollTo("#projectsSection");
+      }}
+      ><span>Portfolio</span>
       <div class="headerButtonOverlay"></div>
     </a>
   </div>

@@ -109,6 +109,8 @@
   <meta name="twitter:image" content="https://althruist.fyi/preview.jpg" />
 </svelte:head>
 
+<link rel="preload" href="/fonts/Althite.woff2" as="font" type="font/woff2" crossorigin>
+
 <div id="background-wrapper">
   <div bind:this={background} id="background"></div>
 </div>
@@ -158,6 +160,6 @@
 
   .altText{
     text-align: center;
-    color: var(--color-card-outline);
+    color: var(--color-text);
   }
 </style>

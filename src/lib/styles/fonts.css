@@ -11,7 +11,7 @@
 }
 
 @font-face {
-    font-family: "Althite", system-ui;
+    font-family: "Althite";
     font-display: swap;
     src: url("/fonts/Althite.woff2") format("woff2");;
 }
