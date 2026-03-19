@@ -107,9 +107,9 @@
 
 <title>althruist:portfolio</title>
 <div id="content">
-  <PageHeader id="welcomeHeader">
+  <PageHeader id="welcomeHeader" fetchpriority="high">
     <div class="video-container">
-      <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
+      <video bind:this={video} muted playsinline preload="auto" id="homeVideo" fetchpriority="high">
         <source src={videoSource} type="video/mp4" />
       </video>
     </div>

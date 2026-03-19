@@ -29,7 +29,7 @@
   });
 </script>
 
-<div bind:this={pageHeader} {id} class="pageHeader{className}" fetchpriority=high {style}>
+<div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
   <slot />
 </div>
 
