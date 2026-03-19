@@ -556,6 +556,7 @@
         bind:this={portfolio}
         aria-label="portfolio"
         class="headerButton interactable"
+        href="/"
         on:click={() => {
           scrollTo("#projectsSection");
         }}
@@ -566,6 +567,7 @@
         bind:this={about}
         aria-label="about"
         class="headerButton interactable"
+        href="/"
         on:click={() => {
           scrollTo("#aboutSection");
         }}
@@ -587,6 +589,7 @@
       bind:this={portfolioMobile}
       aria-label="portfolio"
       class="headerButton interactable"
+      href="/"
       on:click={() => {
         scrollTo("#projectsSection");
       }}
@@ -597,6 +600,7 @@
       bind:this={aboutMobile}
       aria-label="about"
       class="headerButton interactable"
+      href="/"
       on:click={() => {
         scrollTo("#aboutSection");
       }}

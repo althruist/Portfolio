@@ -130,6 +130,7 @@ blockquote {
 .card {
   position: relative;
   background-image: var(--frosting);
+  background-blend-mode: overlay;
   background-color: var(--color-card);
   outline: 1px solid var(--color-card-outline);
   margin: auto;
@@ -260,7 +261,7 @@ a:hover {
   vertical-align: middle;
 }
 
-#altText {
+.altText {
   font-size: 15px;
   color: var(--alt-text);
 }

@@ -120,7 +120,7 @@
   <div bind:this={content} id="content">
     {@render children?.()}
     <div bind:this={footer} class="footer card">
-      <h1>AEJAOJR</h1>
+    <p class="altText">this website is homemade :] • althruist 2025-2026 • <a href="https://github.com/althruist/Portfolio" target="_blank">check out the repository!</a></p>
     </div>
   </div>
 </div>
@@ -153,7 +153,11 @@
 
   .footer {
     width: 100%;
-    background-color: var(--color-card);
-    outline: 1px solid var(--color-card-outline);
+    border-radius: 0;
+  }
+
+  .altText{
+    text-align: center;
+    color: var(--color-card-outline);
   }
 </style>
