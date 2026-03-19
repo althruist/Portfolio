@@ -12,10 +12,10 @@
   --color-link: rgb(69, 143, 255);
   --color-link-active: rgb(255, 191, 16);
   --color-text: rgb(20, 19, 18);
-  --frosting: url("images/Frosting.webp");
+  --frosting: url("/images/Frosting.webp");
   --alt-text: rgba(83, 78, 73, 0.596);
   --title-text: rgb(40, 47, 85);
-  --header-background: url("images/HeaderImages/BackgroundLight.webp");
+  --header-background: url("/images/HeaderImages/BackgroundLight.webp");
   --color-shadow: rgba(187, 219, 255, 0.541);
 }
 
@@ -34,10 +34,10 @@
     --color-link: rgb(183, 124, 223);
     --color-link-active: rgb(34, 89, 197);
     --color-text: rgb(255, 238, 221);
-    --frosting: url("images/FrostingDark.webp");
+    --frosting: url("/images/FrostingDark.webp");
     --alt-text: rgba(218, 207, 196, 0.658);
     --title-text: rgb(202, 210, 255);
-    --header-background: url("images/HeaderImages/BackgroundDark.webp");
+    --header-background: url("/images/HeaderImages/BackgroundDark.webp");
     --color-shadow: rgba(8, 11, 53, 0.445);
   }
 }
