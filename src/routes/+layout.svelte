@@ -110,6 +110,8 @@
 </svelte:head>
 
 <link rel="preload" href="/fonts/Althite.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Lexend.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Rubik.woff2" as="font" type="font/woff2" crossorigin>
 
 <div id="background-wrapper">
   <div bind:this={background} id="background"></div>
