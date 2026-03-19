@@ -111,7 +111,7 @@ blockquote {
 
 .pageHeader {
   background-color: var(--color-primary);
-  height: 750px;
+  height: 80vh;
   width: 100%;
   overflow: hidden;
   color: var(--color-text);
@@ -126,15 +126,7 @@ blockquote {
   width: 80%;
   margin: auto;
   margin-left: 2rem;
-  bottom: 100px;
 }
-
-/* .pageHeader .headerContent p {
-    text-align: right;
-    white-space: normal;
-    font-size: clamp(16px, 4vw, 20px);
-    overflow-wrap: break-word;
-} */
 
 .card {
   position: relative;
@@ -294,22 +286,16 @@ a:hover {
 }
 
 #welcomeHeader {
+  display: flex;
+  align-items: center;
   background-image: var(--header-background);
-}
-
-#welcomeHeader .foreground {
-  position: absolute;
-  scale: 0.4;
-  top: -5vh;
-  left: 0vw;
 }
 
 #welcomeHeader h1 {
   font-family: "Althite";
-  font-size: 17vw;
+  font-size: 20vw;
   overflow-wrap: break-word;
   white-space: normal;
-  margin-top: 100px;
   margin-bottom: 0px;
   color: rgb(255, 255, 255);
   line-height: 1.2;
@@ -318,7 +304,7 @@ a:hover {
 
 #welcomeHeader h2 {
   font-family: "Althite";
-  text-align: left;
+  text-align: center;
   font-size: 4vw;
   margin-top: 10px;
   overflow-wrap: break-word;
@@ -328,24 +314,7 @@ a:hover {
 }
 
 #welcomeHeader .name {
-  font-size: 15vw;
   color: var(--color-secondary);
-}
-
-#projectHeader {
-  background-image: var(--header-background);
-}
-
-#projectHeader h1 {
-  font-family: "Althite";
-  font-size: 19vw;
-  overflow-wrap: break-word;
-  white-space: normal;
-  margin-top: 100px;
-  margin-bottom: 0px;
-  color: rgb(255, 255, 255);
-  line-height: 1.2;
-  text-align: center;
 }
 
 #header .buttons {
@@ -596,8 +565,7 @@ a:hover {
 
   #welcomeHeader h1 {
     font-family: "Althite";
-    font-size: 9.5vw;
-    overflow-wrap: break-word;
+    font-size: 12vw;
     white-space: normal;
     margin-top: 200px;
     margin-bottom: 0px;
@@ -611,28 +579,7 @@ a:hover {
     text-align: left;
     font-size: 3vw;
     margin-top: 3rem;
-    overflow-wrap: break-word;
-    white-space: normal;
     line-height: 1.2;
     color: rgb(255, 255, 255);
-  }
-
-  #welcomeHeader .foreground {
-    position: absolute;
-    scale: 0.8;
-    top: 4vh;
-    left: 50vw;
-  }
-
-  #projectHeader h1 {
-    font-family: "Althite";
-    font-size: 9.5vw;
-    overflow-wrap: break-word;
-    white-space: normal;
-    margin-top: 100px;
-    margin-bottom: 0px;
-    color: rgb(255, 255, 255);
-    line-height: 1.2;
-    text-align: center;
   }
 }
