@@ -123,6 +123,21 @@
       });
     }
 
+    const animateCard = () => {
+      const x = Math.random() * 500;
+      const y = Math.random() * 500;
+      const duration = 0.02;
+
+      gsap.to(header, {
+        backgroundPosition: `${x}px ${y}px`,
+        duration,
+        ease: "linear",
+        onComplete: animateCard,
+      });
+    };
+
+    animateCard();
+
     function closeDropdown() {
       dropDownIsOpen = false;
 
@@ -154,7 +169,7 @@
                 .to(header, {
                   width: "80px",
                   borderRadius: "50px",
-                  height: "auto",
+                  height: "80px",
                   duration: 0.2,
                   ease: "circ.out",
                   top: "80%",

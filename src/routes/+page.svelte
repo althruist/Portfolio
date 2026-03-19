@@ -128,10 +128,6 @@
     <h1>Who am I?</h1>
   </section>
 
-  <section id="projectsSection">
-    <h1>Some cool stuff I did</h1>
-  </section>
-
   <Card class="mainCard" id="currentProject">
     <p id="date">Current Project • {featuredDate}</p>
     <h1 class="emphasis">{featuredTitle}</h1>
@@ -151,38 +147,44 @@
     </div>
   </Card>
 
-  <div class="flexCards">
-    {#each posts as post}
-      {console.log(post)}
-      <Card id={post.slug.current}>
-        <img
-          id="mainImage"
-          loading="lazy"
-          fetchpriority="low"
-          src={getImage(post.mainImage.asset._id)}
-          alt={post.mainImage.alt}
-        />
-        <p id="date">{formatDateTime(post.created)}</p>
-        <div id="postCategories">
-          {#each post.categories as category}
-            <div>
-              <p>{category.title}</p>
-            </div>
-          {/each}
-        </div>
-        <h1 class="projectTitle">{post.title}</h1>
-        <div class="post-body">
-          {@html renderBody(post.body)}
-        </div>
-        <div class="postButtons">
-          {#each post.links as button}
-            <Button link={button.url} text={button.label} className="postButton"
-            ></Button>
-          {/each}
-        </div>
-      </Card>
-    {/each}
-  </div>
+  <section id="projectsSection">
+    <h1>Some cool stuff I did</h1>
+    <div class="flexCards">
+      {#each posts as post}
+        {console.log(post)}
+        <Card id={post.slug.current}>
+          <img
+            id="mainImage"
+            loading="lazy"
+            fetchpriority="low"
+            src={getImage(post.mainImage.asset._id)}
+            alt={post.mainImage.alt}
+          />
+          <p id="date">{formatDateTime(post.created)}</p>
+          <div id="postCategories">
+            {#each post.categories as category}
+              <div>
+                <p>{category.title}</p>
+              </div>
+            {/each}
+          </div>
+          <h1 class="projectTitle">{post.title}</h1>
+          <div class="post-body">
+            {@html renderBody(post.body)}
+          </div>
+          <div class="postButtons">
+            {#each post.links as button}
+              <Button
+                link={button.url}
+                text={button.label}
+                className="postButton"
+              ></Button>
+            {/each}
+          </div>
+        </Card>
+      {/each}
+    </div>
+  </section>
   <!-- <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
   <CarouselGrid content={posts} filter="renders" name="Renders"></CarouselGrid>
   <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid> -->

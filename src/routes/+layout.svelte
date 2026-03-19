@@ -19,6 +19,7 @@
   let transition;
   let logoTransition;
   let circlePointer;
+  let footer;
 
   let content;
   let smoothWrapper;
@@ -58,6 +59,22 @@
       smooth: 1,
       effects: true,
     });
+
+    const animateCard = () => {
+      const x = Math.random() * 500;
+      const y = Math.random() * 500;
+      const duration = 0.02;
+
+      if (!footer) return;
+      gsap.to(footer, {
+        backgroundPosition: `${x}px ${y}px`,
+        duration,
+        ease: "linear",
+        onComplete: animateCard,
+      });
+    };
+
+    animateCard();
 
     updateFavicon();
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -100,7 +117,12 @@
 <Cursor />
 
 <div id="smooth-wrapper" bind:this={smoothWrapper}>
-  <div bind:this={content} id="content">{@render children?.()}</div>
+  <div bind:this={content} id="content">
+    {@render children?.()}
+    <div bind:this={footer} class="footer card">
+      <h1>AEJAOJR</h1>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -127,5 +149,11 @@
     pointer-events: none;
     transition: background-position 0.5s ease-out;
     filter: blur(10px);
+  }
+
+  .footer {
+    width: 100%;
+    background-color: var(--color-card);
+    outline: 1px solid var(--color-card-outline);
   }
 </style>

@@ -1,22 +1,21 @@
 :root {
   --color-basic: rgb(255, 255, 255);
   --color-primary: rgb(114, 144, 206);
-  --color-header: rgb(136, 77, 37);
-  --color-secondary: rgb(244, 218, 183);
+  --color-header: rgb(81, 143, 168);
+  --color-secondary: rgb(161, 243, 222);
   --color-code: rgb(255, 212, 147);
   --color-code-text: rgb(20, 15, 7);
   --color-code-title: rgb(85, 48, 18);
-  --color-background: rgb(240, 245, 255);
+  --color-background: rgb(228, 237, 255);
   --color-card: rgba(255, 255, 255, 0.548);
   --color-card-outline: rgba(255, 255, 255, 0.815);
   --color-link: rgb(69, 143, 255);
   --color-link-active: rgb(255, 191, 16);
   --color-text: rgb(20, 19, 18);
-  --frosting: url(../images/Assets/Frosting.webp);
+  --frosting: url("images/Frosting.webp");
   --alt-text: rgba(83, 78, 73, 0.596);
-  --title-text: rgb(85, 61, 40);
-  --header-background: url(../images/Assets/HeaderImages/Light/BackgroundLight.webp);
-  --header-foreground: url(../images/Assets/HeaderImages/Light/ForegroundLight.webp);
+  --title-text: rgb(40, 47, 85);
+  --header-background: url("images/HeaderImages/BackgroundLight.webp");
   --color-shadow: rgba(187, 219, 255, 0.541);
 }
 
@@ -35,11 +34,10 @@
     --color-link: rgb(183, 124, 223);
     --color-link-active: rgb(34, 89, 197);
     --color-text: rgb(255, 238, 221);
-    --frosting: url(../images/Assets/FrostingDark.webp);
+    --frosting: url("images/FrostingDark.webp");
     --alt-text: rgba(218, 207, 196, 0.658);
     --title-text: rgb(202, 210, 255);
-    --header-background: url(../images/Assets/HeaderImages/Dark/BackgroundDark.webp);
-    --header-foreground: url(../images/Assets/HeaderImages/Dark/ForegroundDark.webp);
+    --header-background: url("images/HeaderImages/BackgroundDark.webp");
     --color-shadow: rgba(8, 11, 53, 0.445);
   }
 }
@@ -54,6 +52,11 @@ body {
   background-color: var(--color-background);
   font-family: "Lexend";
   font-display: swap;
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -78,6 +81,13 @@ h1 {
   justify-content: center;
   font-size: 25px;
   padding: 0;
+  transform-origin: top;
+}
+
+.flexCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 body::-webkit-scrollbar {
@@ -115,7 +125,7 @@ blockquote {
   position: relative;
   width: 80%;
   margin: auto;
-  margin-left:2rem;
+  margin-left: 2rem;
   bottom: 100px;
 }
 
@@ -296,14 +306,14 @@ a:hover {
 
 #welcomeHeader h1 {
   font-family: "Althite";
-  font-size: 19vw;
+  font-size: 17vw;
   overflow-wrap: break-word;
   white-space: normal;
   margin-top: 100px;
   margin-bottom: 0px;
   color: rgb(255, 255, 255);
   line-height: 1.2;
-  text-align: left;
+  text-align: center;
 }
 
 #welcomeHeader h2 {
@@ -315,6 +325,11 @@ a:hover {
   white-space: normal;
   line-height: 1.2;
   color: rgb(255, 255, 255);
+}
+
+#welcomeHeader .name {
+  font-size: 15vw;
+  color: var(--color-secondary);
 }
 
 #projectHeader {
@@ -478,7 +493,7 @@ a:hover {
 
 .projectTitle {
   font-size: 4rem;
-  margin:0
+  margin: 0;
 }
 
 .postButtons {
@@ -562,6 +577,10 @@ a:hover {
     margin-left: auto;
     margin-right: 3rem;
     padding-right: 20px;
+  }
+
+  .flexCards {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .socials a {
