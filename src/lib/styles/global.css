@@ -1,11 +1,9 @@
 :root {
   --color-basic: rgb(255, 255, 255);
   --color-primary: rgb(114, 144, 206);
-  --color-header: rgb(81, 143, 168);
   --color-secondary: rgb(161, 243, 222);
-  --color-code: rgb(255, 212, 147);
   --color-code-text: rgb(20, 15, 7);
-  --color-code-title: rgb(85, 48, 18);
+  --color-code-title: rgb(18, 27, 85);
   --color-background: rgb(228, 237, 255);
   --color-card: rgba(255, 255, 255, 0.548);
   --color-card-outline: rgba(255, 255, 255, 0.815);
@@ -23,13 +21,11 @@
   :root {
     --color-basic: rgb(0, 0, 0);
     --color-primary: rgb(34, 89, 197);
-    --color-header: rgb(107, 176, 255);
     --color-secondary: rgb(255, 139, 113);
     --color-background: rgb(17, 25, 41);
     --color-card: rgba(0, 0, 0, 0.548);
-    --color-code: rgb(7, 8, 27);
-    --color-code-text: rgb(218, 211, 255);
-    --color-code-title: rgb(255, 246, 123);
+    --color-code-text: rgb(180, 206, 255);
+    --color-code-title: rgb(123, 255, 176);
     --color-card-outline: rgba(31, 35, 44, 0.815);
     --color-link: rgb(183, 124, 223);
     --color-link-active: rgb(34, 89, 197);
@@ -124,11 +120,11 @@ blockquote {
   position: relative;
   width: 80%;
   margin: auto;
-  margin-left: 2rem;
 }
 
 .card {
   position: relative;
+  aspect-ratio: 1;
   background-image: var(--frosting);
   background-blend-mode: overlay;
   background-color: var(--color-card);
@@ -147,13 +143,13 @@ blockquote {
   cursor: pointer;
 }
 
-.card code {
-  background-color: var(--color-code);
+code {
+  background-color: var(--color-background);
   color: var(--color-code-text);
   padding: 20px;
   border-radius: 5px;
-  border: 2px var(--color-code-text) solid;
-  box-shadow: 0px 4px 0px var(--color-code-text);
+  border: 2px var(--color-primary) solid;
+  box-shadow: 0px 4px 0px var(--color-primary);
   margin-left: 0px;
   margin: 10px;
   padding-bottom: 15px;
@@ -168,7 +164,7 @@ code hr {
   height: 5px;
   width: 80%;
   margin: auto;
-  background-color: var(--color-code-text);
+  background-color: var(--color-primary);
 }
 
 hr {
@@ -274,6 +270,11 @@ a:hover {
 #date {
   color: var(--alt-text);
   margin-bottom: 0;
+  margin-top: 0;
+}
+
+#currentProject {
+  margin: auto;
 }
 
 #currentProject h1 {
@@ -293,7 +294,7 @@ a:hover {
 
 #welcomeHeader h1 {
   font-family: "Althite";
-  font-size: 20vw;
+  font-size: 16vw;
   overflow-wrap: break-word;
   white-space: normal;
   margin-bottom: 0px;
@@ -307,10 +308,15 @@ a:hover {
   text-align: center;
   font-size: 4vw;
   margin-top: 10px;
-  overflow-wrap: break-word;
-  white-space: normal;
   line-height: 1.2;
-  color: rgb(255, 255, 255);
+  background-color: var(--color-background);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+#welcomeHeader h2 span {
+  font-size: 2vw;
+  color: var(--color-primary);
 }
 
 #welcomeHeader .name {
@@ -326,14 +332,14 @@ a:hover {
 .headerButton {
   position: relative;
   background-color: transparent;
-  color: var(--color-header);
+  color: var(--color-primary);
   margin-left: 25px;
   border-radius: 100px;
   padding-left: 10px;
   padding-right: 10px;
   height: 0px;
   overflow: hidden;
-  box-shadow: 0 0 0 0 var(--color-header);
+  box-shadow: 0 0 0 0 var(--color-primary);
 }
 
 .headerButton span {
@@ -341,7 +347,7 @@ a:hover {
 }
 
 .headerButtonOverlay {
-  background-color: var(--color-header);
+  background-color: var(--color-primary);
   position: absolute;
   left: 0;
   bottom: 0;
@@ -359,9 +365,13 @@ a:hover {
 }
 
 .card img {
-  display: block;
-  border-radius: 10px;
+  position: absolute;
+  border-radius: 13px;
   margin: auto;
+  top: 0;
+  object-fit: cover;
+  left: 0;
+  scale: 0.95;
 }
 
 .button {
@@ -408,10 +418,8 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(
-    color-mix(in srgb, var(--color-primary), transparent 100%),
-    var(--color-primary)
-  );
+  background: linear-gradient(color-mix(in srgb, var(--color-primary), transparent 100%),
+      var(--color-primary));
   padding: 1rem;
   color: white;
   display: flex;
@@ -424,7 +432,12 @@ a:hover {
 }
 
 .socialSVG .icon {
-  fill: var(--color-header);
+  fill: var(--color-primary);
+}
+
+.goBack {
+  margin: 20px;
+  margin-left: 0;
 }
 
 .socialSVG {
@@ -460,11 +473,6 @@ a:hover {
   padding: 4px;
 }
 
-.projectTitle {
-  font-size: 200%;
-  margin: 0;
-}
-
 .postButtons {
   display: grid;
   grid-auto-flow: column;
@@ -478,6 +486,11 @@ a:hover {
   padding: 15px;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.aboutCard {
+  margin-top: 0;
+  aspect-ratio: unset;
 }
 
 @media (min-width: 1024px) {
@@ -502,6 +515,11 @@ a:hover {
     margin-right: 0;
   }
 
+
+  .headerContent {
+    margin-left: 2rem;
+  }
+
   #header .buttons a {
     height: 100%;
     width: 100px;
@@ -513,6 +531,7 @@ a:hover {
   }
 
   .card {
+    aspect-ratio: 1;
     width: 75%;
     font-size: larger;
     margin: auto;
@@ -580,6 +599,10 @@ a:hover {
     font-size: 3vw;
     margin-top: 3rem;
     line-height: 1.2;
-    color: rgb(255, 255, 255);
+  }
+
+  .aboutCard {
+    margin-top: 0;
+    aspect-ratio: unset;
   }
 }

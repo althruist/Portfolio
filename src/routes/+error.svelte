@@ -18,7 +18,7 @@
   <hr />
   <h4>{message}</h4>
   <div class="selectorButtons">
-    <Button text="Take me back!" link="/"></Button>
+    <Button text="Take me back!" link="/goback"></Button>
   </div>
 </Card>
 

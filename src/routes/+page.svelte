@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { client } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { getImage } from "$lib/logic/data.js";
@@ -18,6 +18,7 @@
   let featuredDate = "";
   let featuredImage = "";
   let featuredLink = "";
+  let featuredCategories = {};
 
   let imgElement;
   let content;
@@ -71,45 +72,53 @@
       '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,created,body,links}',
     );
 
-    featured = await client.fetch(
-      '*[_type == "featured"]{title, mainImage, categories, collaborators, link, updated, body}',
-    );
+    // featured = await client.fetch(
+    //   '*[_type == "featured"]{title, mainImage, categories, collaborators, link, updated, body}',
+    // );
 
-    if (featured.length > 0) {
-      const post = featured[0];
-      featuredTitle = post.title;
-      featuredDate = formatDateTime(post.updated);
-      featuredBody = post.body;
-      featuredImage = getImage(post.mainImage.asset._ref);
-      featuredLink = post.link;
-    }
+    // if (featured.length > 0) {
+    //   const post = featured[0];
+    //   featuredTitle = post.title;
+    //   featuredDate = formatDateTime(post.updated);
+    //   featuredBody = post.body;
+    //   featuredImage = getImage(post.mainImage.asset._ref);
+    //   featuredLink = post.link;
+    //   featuredCategories = post.categories;
+    // }
 
-    if (!featuredLink) {
-      imgElement.style.cursor = "auto";
-      featuredLink = "Image";
-    } else {
-      imgElement.style.cursor = "pointer";
-    }
+    // if (!featuredLink) {
+    //   imgElement.style.cursor = "auto";
+    //   featuredLink = "Image";
+    // } else {
+    //   imgElement.style.cursor = "pointer";
+    // }
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
     mediaQuery.addEventListener("change", setVideo);
   });
 
-  const travelFeaturedLink = () => {
-    if (featuredLink != "Image") {
-      location.href = featuredLink;
-    } else {
-      return;
-    }
-  };
+  // const travelFeaturedLink = () => {
+  //   if (featuredLink != "Image") {
+  //     location.href = featuredLink;
+  //   } else {
+  //     return;
+  //   }
+  // };
 </script>
 
 <title>althruist:portfolio</title>
 <div id="content">
   <PageHeader id="welcomeHeader" fetchpriority="high">
     <div class="video-container">
-      <video bind:this={video} muted playsinline preload="auto" id="homeVideo" fetchpriority="high">
+      <video
+        bind:this={video}
+        muted
+        playsinline
+        preload="auto"
+        id="homeVideo"
+        fetchpriority="high"
+      >
         <source src={videoSource} type="video/mp4" />
       </video>
     </div>
@@ -118,17 +127,35 @@
         Hiya, i'm <span class="name">Kieran</span>!
       </h1>
       <h2 class="emphasis">
-        Everything I create carries meaning, intention and emotion. It's meant
-        to feel personal, ranging from Games, 3D Renders and Music!
+        A Game Developer, Musician, Content Creator<br />
+        <span>(& a lil' bit of everything else :])</span>
       </h2>
     </div>
   </PageHeader>
 
   <section id="aboutSection">
-    <h1>Who am I?</h1>
+    <h1 class="sectionTitle">- Who am I? -</h1>
+    <Card hasSlug={false} className="aboutCard"
+      ><p>
+        I'm Kieran, known as althruist online. I am an 18 y/o in Malta, reading
+        for Bachelors of Science (Hons) in Digital Games Development.<br />I
+        like to do a variety of things; Ranging from 3D Art/Animation (using
+        Blender), Music-Making, Coding in several languages, Concept Art, Sound
+        Design, Photography.. anything creative you can think of I probably do
+        it!
+      </p></Card
+    >
   </section>
 
-  <Card class="mainCard" id="currentProject">
+  <!-- <Card class="mainCard" id="currentProject">
+    <div id="postCategories">
+      {#each featuredCategories as fCategory}
+      {console.log(fCategory)}
+        <div>
+          <p>{fCategory.title}</p>
+        </div>
+      {/each}
+    </div>
     <p id="date">Current Project • {featuredDate}</p>
     <h1 class="emphasis">{featuredTitle}</h1>
     <img
@@ -145,41 +172,34 @@
     <div id="body" class="post-body">
       {@html renderBody(featuredBody)}
     </div>
-  </Card>
+  </Card> -->
 
   <section id="projectsSection">
-    <h1>Some cool stuff I did</h1>
+    <h1 class="sectionTitle">- Some cool stuff I did -</h1>
     <div class="flexCards">
       {#each posts as post}
-        {console.log(post)}
-        <Card id={post.slug.current}>
-          <img
-            id="mainImage"
-            loading="lazy"
-            fetchpriority="low"
-            src={getImage(post.mainImage.asset._id)}
-            alt={post.mainImage.alt}
-          />
-          <p id="date">{formatDateTime(post.created)}</p>
-          <div id="postCategories">
-            {#each post.categories as category}
-              <div>
-                <p>{category.title}</p>
+        <Card id={post.slug.current} project={post} hasSlug={true}>
+          <div class="imageArea">
+            <img
+              id="mainImage"
+              loading="lazy"
+              fetchpriority="low"
+              src={getImage(post.mainImage.asset._id)}
+              alt={post.mainImage.alt}
+            />
+            <div class="info">
+              <div class="infoContent">
+                <p id="date">{formatDateTime(post.created)}</p>
+                <div id="postCategories">
+                  {#each post.categories as category}
+                    <div>
+                      <p>{category.title}</p>
+                    </div>
+                  {/each}
+                </div>
+                <h1 class="projectTitle">{post.title}</h1>
               </div>
-            {/each}
-          </div>
-          <h1 class="projectTitle">{post.title}</h1>
-          <div class="post-body">
-            {@html renderBody(post.body)}
-          </div>
-          <div class="postButtons">
-            {#each post.links as button}
-              <Button
-                link={button.url}
-                text={button.label}
-                className="postButton"
-              ></Button>
-            {/each}
+            </div>
           </div>
         </Card>
       {/each}
@@ -193,6 +213,15 @@
 <style>
   #mainImage {
     width: 100%;
+  }
+
+  .sectionTitle {
+    font-family: "Althite";
+    font-size: 2rem;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    white-space: nowrap;
   }
 
   .video-container {
@@ -209,5 +238,50 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .imageArea {
+    width: 30vw;
+    height: 30vw;
+  }
+
+  .info {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.512);
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+
+  .projectTitle {
+    font-size: 280%;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  .infoContent {
+    width: 100%;
+    scale: 0.9;
+  }
+
+  @media (min-width: 1024px) {
+    .sectionTitle {
+      font-family: "Althite";
+      font-size: 4rem;
+      margin: auto;
+      padding: 40px;
+      text-align: center;
+      white-space: nowrap;
+    }
   }
 </style>

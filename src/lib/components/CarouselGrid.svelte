@@ -508,7 +508,7 @@
     }
 
     .titleDIV {
-        background-color: var(--color-header);
+        background-color: var(--color-primary);
         width: 250px;
         height: 50px;
         border-radius: 50px;

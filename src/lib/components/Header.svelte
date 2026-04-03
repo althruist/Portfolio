@@ -42,13 +42,13 @@
     headerButtons.forEach((button) => {
       const text = button.querySelector("span");
       gsap.killTweensOf(text);
-      gsap.set(text, { color: getCSSVariable("--color-header") });
+      gsap.set(text, { color: getCSSVariable("--color-primary") });
     });
 
     socialSVGs.forEach((svg) => {
       const icon = svg.querySelector(".icon");
       gsap.killTweensOf(icon);
-      gsap.set(icon, { fill: getCSSVariable("--color-header") });
+      gsap.set(icon, { fill: getCSSVariable("--color-primary") });
     });
   }
 
@@ -288,8 +288,6 @@
         }
       });
 
-      // scrollTo("#aboutSection");
-
       button.addEventListener("mouseleave", () => {
         gsap.to(button, {
           scale: 1,
@@ -308,7 +306,7 @@
         );
 
         gsap.to(text, {
-          color: getCSSVariable("--color-header"),
+          color: getCSSVariable("--color-primary"),
           duration: 0.6,
           ease: "power2.out",
           overwrite: "auto",
@@ -412,7 +410,7 @@
         );
 
         gsap.to(text, {
-          color: getCSSVariable("--color-header"),
+          color: getCSSVariable("--color-primary"),
           duration: 0.6,
           ease: "power2.out",
           overwrite: "auto",
@@ -462,7 +460,7 @@
 
       parent.addEventListener("mouseenter", () => {
         gsap.to(svg.querySelector(".icon"), {
-          fill: getCSSVariable("--color-header"),
+          fill: getCSSVariable("--color-primary"),
           duration: 0.2,
         });
         gsap.to(parent, {
@@ -555,8 +553,8 @@
       <a
         bind:this={about}
         aria-label="about"
-        class="headerButton interactable"
         href="/"
+        class="headerButton interactable"
         on:click={() => {
           scrollTo("#aboutSection");
         }}
@@ -566,8 +564,8 @@
       <a
         bind:this={portfolio}
         aria-label="portfolio"
-        class="headerButton interactable"
         href="/"
+        class="headerButton interactable"
         on:click={() => {
           scrollTo("#projectsSection");
         }}
@@ -588,8 +586,8 @@
     <a
       bind:this={aboutMobile}
       aria-label="about"
-      class="headerButton interactable"
       href="/"
+      class="headerButton interactable"
       on:click={() => {
         scrollTo("#aboutSection");
       }}
@@ -599,8 +597,8 @@
     <a
       bind:this={portfolioMobile}
       aria-label="portfolio"
-      class="headerButton interactable"
       href="/"
+      class="headerButton interactable"
       on:click={() => {
         scrollTo("#projectsSection");
       }}
@@ -716,8 +714,12 @@
 
 <style>
   .logo {
-    fill: var(--color-header);
+    fill: var(--color-primary);
     cursor: pointer;
+  }
+
+  .card {
+    aspect-ratio: unset;
   }
 
   #logoHeader {
