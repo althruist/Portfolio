@@ -289,7 +289,6 @@ a:hover {
 #welcomeHeader {
   display: flex;
   align-items: center;
-  background-image: var(--header-background);
 }
 
 #welcomeHeader h1 {
