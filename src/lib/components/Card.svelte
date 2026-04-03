@@ -4,8 +4,6 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
 
-  export let project;
-
   export let card;
 
   export let id = "";
@@ -13,20 +11,11 @@
   export let style = "";
 
   let isHovering = false;
-  export let hasSlug = false;
-
-  function teleport() {
-    if (!hasSlug) {return};
-      console.log(hasSlug);
-      goto(`/projects/${project.slug.current}`);
-  }
 
   onMount(() => {
     if (className != "") {
       className = ` ${className}`;
     }
-
-    console.log(hasSlug);
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -150,12 +139,9 @@
 
 <div
   bind:this={card}
-  {hasSlug}
   {id}
   class="card{className}"
-  on:click={teleport}
   {style}
-  {project}
 >
   <slot />
 </div>

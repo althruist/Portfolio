@@ -10,15 +10,9 @@
   import { isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { goto } from "$app/navigation";
 
   let posts = [];
-  let featured = [];
-  let featuredBody = [];
-  let featuredTitle = "";
-  let featuredDate = "";
-  let featuredImage = "";
-  let featuredLink = "";
-  let featuredCategories = {};
 
   let imgElement;
   let content;
@@ -69,55 +63,20 @@
     }
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},collaborators,created,body,links}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},subcategories[]->{title},created,body,links}',
     );
-
-    // featured = await client.fetch(
-    //   '*[_type == "featured"]{title, mainImage, categories, collaborators, link, updated, body}',
-    // );
-
-    // if (featured.length > 0) {
-    //   const post = featured[0];
-    //   featuredTitle = post.title;
-    //   featuredDate = formatDateTime(post.updated);
-    //   featuredBody = post.body;
-    //   featuredImage = getImage(post.mainImage.asset._ref);
-    //   featuredLink = post.link;
-    //   featuredCategories = post.categories;
-    // }
-
-    // if (!featuredLink) {
-    //   imgElement.style.cursor = "auto";
-    //   featuredLink = "Image";
-    // } else {
-    //   imgElement.style.cursor = "pointer";
-    // }
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
     mediaQuery.addEventListener("change", setVideo);
   });
-
-  // const travelFeaturedLink = () => {
-  //   if (featuredLink != "Image") {
-  //     location.href = featuredLink;
-  //   } else {
-  //     return;
-  //   }
-  // };
 </script>
 
 <title>althruist:portfolio</title>
 <div id="content">
   <PageHeader id="welcomeHeader">
     <div class="video-container">
-      <video
-        bind:this={video}
-        muted
-        playsinline
-        preload="auto"
-        id="homeVideo"
-      >
+      <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
         <source src={videoSource} type="video/mp4" />
       </video>
     </div>
@@ -146,38 +105,13 @@
     >
   </section>
 
-  <!-- <Card class="mainCard" id="currentProject">
-    <div id="postCategories">
-      {#each featuredCategories as fCategory}
-      {console.log(fCategory)}
-        <div>
-          <p>{fCategory.title}</p>
-        </div>
-      {/each}
-    </div>
-    <p id="date">Current Project • {featuredDate}</p>
-    <h1 class="emphasis">{featuredTitle}</h1>
-    <img
-      bind:this={imgElement}
-      id="img"
-      loading="lazy"
-      fetchpriority="low"
-      src={featuredImage}
-      alt="preview"
-      aria-label={featuredLink}
-      title={featuredLink}
-      on:click={travelFeaturedLink}
-    />
-    <div id="body" class="post-body">
-      {@html renderBody(featuredBody)}
-    </div>
-  </Card> -->
 
   <section id="projectsSection">
     <h1 class="sectionTitle">- Some cool stuff I did -</h1>
     <div class="flexCards">
       {#each posts as post}
-        <Card id={post.slug.current} project={post} hasSlug={true}>
+      {console.log(post)}
+        <Card id={post.slug.current}>
           <div class="imageArea">
             <img
               id="mainImage"
@@ -188,15 +122,19 @@
             />
             <div class="info">
               <div class="infoContent">
-                <p id="date">{formatDateTime(post.created)}</p>
-                <div id="postCategories">
-                  {#each post.categories as category}
-                    <div>
-                      <p>{category.title}</p>
-                    </div>
-                  {/each}
+                <div class="infoGroup">
+                  <p id="date">{formatDateTime(post.created)}</p>
+                  <div id="postCategories">
+                    {#each post.categories as category}
+                      <div>
+                        <p>{category.title}</p>
+                      </div>
+                    {/each}
+                  </div>
+                  <h1 class="projectTitle">{post.title}</h1>
                 </div>
-                <h1 class="projectTitle">{post.title}</h1>
+                <Button id="readmore" slug={post.slug.current} text="Read More"
+                ></Button>
               </div>
             </div>
           </div>
@@ -223,6 +161,17 @@
     white-space: nowrap;
   }
 
+  #postCategories {
+    width: 20%;
+  }
+
+  #postCategories p {
+    display: flex;
+    height: 5cqh;
+    align-items: center;
+    justify-content: center;
+  }
+
   .video-container {
     position: absolute;
     top: 0;
@@ -242,35 +191,42 @@
   .imageArea {
     width: 30vw;
     height: 30vw;
+    container-type: inline-size;
   }
 
   .info {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.512);
+    background: linear-gradient(to bottom, var(--color-hovercard) 30%, transparent);
     z-index: 3;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 92%;
+    height: 92%;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 12px;
     align-items: center;
     text-align: center;
     justify-content: center;
     vertical-align: middle;
+    scale: 0.95;
+    padding: 4%;
   }
 
   .projectTitle {
-    font-size: 280%;
+    font-size: 40cqw;
     margin: 0;
-    box-sizing: border-box;
     width: 100%;
     word-wrap: break-word;
+    text-align: left;
   }
 
   .infoContent {
     width: 100%;
     scale: 0.9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
   }
 
   @media (min-width: 1024px) {
@@ -281,6 +237,14 @@
       padding: 40px;
       text-align: center;
       white-space: nowrap;
+    }
+
+    .projectTitle {
+      font-size: 14cqw;
+      margin: 0;
+      width: 100%;
+      word-wrap: break-word;
+      text-align: left;
     }
   }
 </style>

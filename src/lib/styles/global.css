@@ -6,6 +6,7 @@
   --color-code-title: rgb(18, 27, 85);
   --color-background: rgb(228, 237, 255);
   --color-card: rgba(255, 255, 255, 0.548);
+  --color-hovercard: rgba(196, 215, 255, 0.788);
   --color-card-outline: rgba(255, 255, 255, 0.815);
   --color-link: rgb(69, 143, 255);
   --color-link-active: rgb(255, 191, 16);
@@ -13,7 +14,6 @@
   --frosting: url("/images/Frosting.webp");
   --alt-text: rgba(83, 78, 73, 0.596);
   --title-text: rgb(40, 47, 85);
-  --header-background: url("/images/HeaderImages/BackgroundLight.webp");
   --color-shadow: rgba(187, 219, 255, 0.541);
 }
 
@@ -24,6 +24,7 @@
     --color-secondary: rgb(255, 139, 113);
     --color-background: rgb(17, 25, 41);
     --color-card: rgba(0, 0, 0, 0.548);
+    --color-hovercard: rgba(3, 10, 27, 0.788);
     --color-code-text: rgb(180, 206, 255);
     --color-code-title: rgb(123, 255, 176);
     --color-card-outline: rgba(31, 35, 44, 0.815);
@@ -33,7 +34,6 @@
     --frosting: url("/images/FrostingDark.webp");
     --alt-text: rgba(218, 207, 196, 0.658);
     --title-text: rgb(202, 210, 255);
-    --header-background: url("/images/HeaderImages/BackgroundDark.webp");
     --color-shadow: rgba(8, 11, 53, 0.445);
   }
 }
@@ -52,6 +52,7 @@ body {
 img {
   width: 100%;
   height: 100%;
+  border-radius: 20px;
 }
 
 h1 {
@@ -83,6 +84,7 @@ h1 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  width: 100%;
 }
 
 body::-webkit-scrollbar {
@@ -122,14 +124,18 @@ blockquote {
   margin: auto;
 }
 
+#readmore {
+  padding: 0;
+  height: 20%;
+}
+
 .card {
   position: relative;
-  aspect-ratio: 1;
   background-image: var(--frosting);
-  background-blend-mode: overlay;
   background-color: var(--color-card);
   outline: 1px solid var(--color-card-outline);
   margin: auto;
+  aspect-ratio: 1;
   width: 90%;
   border-radius: 20px;
   padding: 10px;
@@ -143,8 +149,14 @@ blockquote {
   cursor: pointer;
 }
 
+incode {
+  background-color: var(--color-card);
+  border-radius: 4px;
+  padding:4px;
+}
+
 code {
-  background-color: var(--color-background);
+  background-color: var(--color-card);
   color: var(--color-code-text);
   padding: 20px;
   border-radius: 5px;
@@ -233,6 +245,8 @@ hr {
   left: 0;
   right: 0;
   top: 80%;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 a {
@@ -268,9 +282,10 @@ a:hover {
 }
 
 #date {
-  color: var(--alt-text);
+  color: var(--color-text);
   margin-bottom: 0;
   margin-top: 0;
+  text-align: left;
 }
 
 #currentProject {
@@ -417,8 +432,10 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(color-mix(in srgb, var(--color-primary), transparent 100%),
-      var(--color-primary));
+  background: linear-gradient(
+    color-mix(in srgb, var(--color-primary), transparent 100%),
+    var(--color-primary)
+  );
   padding: 1rem;
   color: white;
   display: flex;
@@ -514,7 +531,6 @@ a:hover {
     margin-right: 0;
   }
 
-
   .headerContent {
     margin-left: 2rem;
   }
@@ -527,6 +543,10 @@ a:hover {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+  }
+  #readmore {
+    padding: 20px;
+    height: auto;
   }
 
   .card {

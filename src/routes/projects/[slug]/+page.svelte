@@ -11,20 +11,25 @@
 </script>
 
 <title>althruist:{project.title}</title>
+<img
+  id="mainImage"
+  loading="lazy"
+  fetchpriority="low"
+  src={getImage(project.mainImage.asset._id)}
+  alt={project.mainImage.alt}
+/>
 <div id="content">
-  <img
-    id="mainImage"
-    loading="lazy"
-    fetchpriority="low"
-    src={getImage(project.mainImage.asset._id)}
-    alt={project.mainImage.alt}
-  />
   <Button text="Go Back" className="goBack" link="/goback"></Button>
   <p id="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>
   <div id="postCategories">
     {#each project.categories as category}
       <p class="tag">{category.title}</p>
+    {/each}
+  </div>
+  <div id="postSubCategories">
+    {#each project.subcategories as subcategory}
+      <p class="tag1">{subcategory.title}</p>
     {/each}
   </div>
   <div class="post-body">
@@ -40,16 +45,20 @@
 
 <style>
   #content {
-    padding: 10%;
+    padding: 4%;
+    padding-top: 0;
+    padding-bottom: 0;
   }
-  img {
-    border-radius: 20px;
+
+  #mainImage {
+    border-radius: 0;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
   }
 
   #date {
     font-size: larger;
-    color: var(--color-primary);
-    opacity: 0.5;
   }
 
   #title {
@@ -66,7 +75,24 @@
     text-align: center;
   }
 
+  .tag1 {
+    padding: 10px !important;
+    background-color: var(--color-card) !important;
+    color: var(--color-text) !important;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid var(--color-card-outline)
+  }
+
   #postCategories {
+    gap: 3rem;
+  }
+  #postSubCategories {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+    width: 16%;
     gap: 3rem;
   }
 </style>

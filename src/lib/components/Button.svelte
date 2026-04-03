@@ -1,23 +1,18 @@
 <script>
+  import { onMount } from "svelte";
   import { getCSSVariable } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
-  import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
 
   export let button;
-
   export let id = "";
   export let className = "";
   export let text = "";
-  export let link;
-
-  let isHovering = false;
+  export let link; // optional external link
+  export let slug; // optional, for internal navigation
 
   onMount(() => {
-    if (className != "") {
-      className = ` ${className}`;
-    }
+    if (className != "") className = ` ${className}`;
 
     button.addEventListener("mouseenter", () => {
       gsap.to(button, {
@@ -39,11 +34,14 @@
   });
 
   function click() {
-    if (link == "/goback") {
-      window.history.back();
-      return;
+    if (slug) {
+      // Internal navigation
+      goto(`/projects/${slug}`);
+    } else if (link) {
+      // External link
+      if (link === "/goback") window.history.back();
+      else window.open(link, "_blank");
     }
-    window.open(link, "_blank");
   }
 </script>
 

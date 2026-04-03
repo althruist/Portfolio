@@ -8,14 +8,14 @@ export async function load({ params }) {
       slug,
       mainImage{asset->{_id,url},alt},
       categories[]->{title},
-      collaborators,
+      subcategories[]->{title},
       created,
       body,
       links
     }`,
     {
-      slug: params.slug
-    }
+      slug: params.slug,
+    },
   );
 
   if (!project) {
