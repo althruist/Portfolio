@@ -8,8 +8,8 @@
   export let id = "";
   export let className = "";
   export let text = "";
-  export let link; // optional external link
-  export let slug; // optional, for internal navigation
+  export let link;
+  export let slug;
 
   onMount(() => {
     if (className != "") className = ` ${className}`;
@@ -35,10 +35,8 @@
 
   function click() {
     if (slug) {
-      // Internal navigation
       goto(`/projects/${slug}`);
     } else if (link) {
-      // External link
       if (link === "/goback") window.history.back();
       else window.open(link, "_blank");
     }

@@ -6,8 +6,6 @@
   export let data;
 
   const project = data.project;
-
-  console.log(project);
 </script>
 
 <title>althruist:{project.title}</title>
@@ -23,6 +21,9 @@
   <p id="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>
   <div id="postCategories">
+    {#if project.featured}
+      <p class="tag" id="featured">Featured</p>
+    {/if}
     {#each project.categories as category}
       <p class="tag">{category.title}</p>
     {/each}
@@ -46,7 +47,6 @@
 <style>
   #content {
     padding: 4%;
-    padding-top: 0;
     padding-bottom: 0;
   }
 
@@ -82,7 +82,7 @@
     font-weight: bold;
     text-align: center;
     border-radius: 3px;
-    border: 1px solid var(--color-card-outline)
+    border: 1px solid var(--color-card-outline);
   }
 
   #postCategories {

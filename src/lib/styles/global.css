@@ -152,7 +152,7 @@ blockquote {
 incode {
   background-color: var(--color-card);
   border-radius: 4px;
-  padding:4px;
+  padding: 4px;
 }
 
 code {
@@ -432,10 +432,8 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(
-    color-mix(in srgb, var(--color-primary), transparent 100%),
-    var(--color-primary)
-  );
+  background: linear-gradient(color-mix(in srgb, var(--color-primary), transparent 100%),
+      var(--color-primary));
   padding: 1rem;
   color: white;
   display: flex;
@@ -454,6 +452,9 @@ a:hover {
 .goBack {
   margin: 20px;
   margin-left: 0;
+  position: absolute;
+  top: 380px;
+  outline: 8px solid var(--color-background);
 }
 
 .socialSVG {
@@ -509,6 +510,12 @@ a:hover {
   aspect-ratio: unset;
 }
 
+#featured {
+  background-color: var(--color-secondary) !important;
+  border: 1px solid var(--color-text);
+  outline: unset;
+}
+
 @media (min-width: 1024px) {
   #header {
     position: fixed;
@@ -544,6 +551,7 @@ a:hover {
     justify-content: center;
     text-decoration: none;
   }
+
   #readmore {
     padding: 20px;
     height: auto;
@@ -623,5 +631,9 @@ a:hover {
   .aboutCard {
     margin-top: 0;
     aspect-ratio: unset;
+  }
+
+  .goBack {
+    top: 450px;
   }
 }

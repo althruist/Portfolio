@@ -9,6 +9,7 @@ export async function load({ params }) {
       mainImage{asset->{_id,url},alt},
       categories[]->{title},
       subcategories[]->{title},
+      featured,
       created,
       body,
       links

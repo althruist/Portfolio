@@ -1,5 +1,5 @@
 <script>
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
   import { client } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { getImage } from "$lib/logic/data.js";
@@ -22,11 +22,42 @@
   let video;
   let videoSource;
 
+  const MAX_CATEGORIES = 2;
+
+  function getCategories(post) {
+    if (!post.categories) return { visible: [], hiddenCount: 0 };
+    const visible = post.categories.slice(0, MAX_CATEGORIES);
+    const hiddenCount = post.categories.length - visible.length;
+    return { visible, hiddenCount };
+  }
+
   function setVideo() {
     videoSource = isDarkMode() ? headerVideoNight : headerVideoDay;
     if (video) {
       video.load();
     }
+  }
+
+  function animateIn(e) {
+    const info = e.currentTarget.querySelector(".info");
+
+    gsap.to(info, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }
+
+  function animateOut(e) {
+    const info = e.currentTarget.querySelector(".info");
+
+    gsap.to(info, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.3,
+      ease: "power2.out",
+    });
   }
 
   onMount(async () => {
@@ -63,7 +94,7 @@
     }
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},subcategories[]->{title},created,body,links}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},featured,subcategories[]->{title},created,body,links}',
     );
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -105,14 +136,19 @@
     >
   </section>
 
-
   <section id="projectsSection">
     <h1 class="sectionTitle">- Some cool stuff I did -</h1>
     <div class="flexCards">
       {#each posts as post}
-      {console.log(post)}
+        {console.log(post)}
         <Card id={post.slug.current}>
-          <div class="imageArea">
+          <div
+            class="imageArea"
+            on:mouseenter={animateIn}
+            on:mouseleave={animateOut}
+            role="button"
+            tabindex="0"
+          >
             <img
               id="mainImage"
               loading="lazy"
@@ -125,11 +161,24 @@
                 <div class="infoGroup">
                   <p id="date">{formatDateTime(post.created)}</p>
                   <div id="postCategories">
-                    {#each post.categories as category}
+                    {#if post.featured}
                       <div>
-                        <p>{category.title}</p>
+                        <p id="featured">Featured</p>
                       </div>
-                    {/each}
+                    {/if}
+                    {#if post.categories && post.categories.length > 0}
+                      {#each getCategories(post).visible as category}
+                        <div>
+                          <p>{category.title}</p>
+                        </div>
+                      {/each}
+
+                      {#if getCategories(post).hiddenCount > 0}
+                        <div>
+                          <p>+{getCategories(post).hiddenCount}</p>
+                        </div>
+                      {/if}
+                    {/if}
                   </div>
                   <h1 class="projectTitle">{post.title}</h1>
                 </div>
@@ -196,7 +245,11 @@
 
   .info {
     position: absolute;
-    background: linear-gradient(to bottom, var(--color-hovercard) 30%, transparent);
+    background: linear-gradient(
+      to bottom,
+      var(--color-hovercard) 30%,
+      transparent
+    );
     z-index: 3;
     top: 0;
     left: 0;
@@ -210,6 +263,7 @@
     vertical-align: middle;
     scale: 0.95;
     padding: 4%;
+    opacity: 0;
   }
 
   .projectTitle {
