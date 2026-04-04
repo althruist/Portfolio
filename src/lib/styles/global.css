@@ -443,6 +443,15 @@ a:hover {
   object-fit: cover;
 }
 
+.model-viewer{
+  display: block;
+  width:70%;
+  height: 100%;
+  scale: 1;
+  aspect-ratio: 1;
+  margin: auto;
+}
+
 .content {
   position: absolute;
   bottom: 0;
@@ -465,14 +474,6 @@ a:hover {
 
 .socialSVG .icon {
   fill: var(--color-primary);
-}
-
-.goBack {
-  margin: 20px;
-  margin-left: 0;
-  position: absolute;
-  top: 380px;
-  outline: 8px solid var(--color-background);
 }
 
 .socialSVG {
@@ -532,6 +533,14 @@ a:hover {
   background-color: var(--color-secondary) !important;
   border: 1px solid var(--color-text);
   outline: unset;
+}
+
+.goBack {
+  margin: 20px;
+  margin-left: 0;
+  position: absolute;
+  top: 380px;
+  outline: 8px solid var(--color-background);
 }
 
 @media (min-width: 1024px) {

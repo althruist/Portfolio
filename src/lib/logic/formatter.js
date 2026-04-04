@@ -1,4 +1,4 @@
-import { getImage, getImageSize } from "./data";
+import { getImage, getImageSize, getModel } from "./data";
 
 function escapeHTML(str) {
   if (typeof str !== "string") return "";
@@ -148,7 +148,7 @@ export function renderBody(body) {
       finalArray.push(
         `<img src=${getImage(paragraph.asset._ref)} width=${imageSize[0]} height=${imageSize[1]} alt="${paragraph.alt}">`,
       );
-    } else if (paragraph._type === "video") {
+    } else if (paragraph._type === "videoEmbed") {
       if (currentList) {
         finalArray.push(`</${currentList}>`);
         currentList = null;
@@ -184,6 +184,30 @@ export function renderBody(body) {
       </div>
     `);
       }
+    } else if (paragraph._type === "model3d") {
+      if (currentList) {
+        finalArray.push(`</${currentList}>`);
+        currentList = null;
+        currentLevel = 0;
+      }
+
+      const modelUrl = getModel(paragraph.asset._ref);
+
+      finalArray.push(`
+    <model-viewer 
+      src="${modelUrl}" 
+      alt="${paragraph.alt || ""}" 
+      auto-rotate 
+      crossorigin="auto"
+      camera-controls
+      ar
+      field-of-view="10deg"
+      class="model-viewer"
+      autorotate
+      rotation-per-second="30deg"
+      exposure="1"
+    ></model-viewer>
+  `);
     }
   });
 

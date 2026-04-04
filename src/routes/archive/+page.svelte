@@ -17,6 +17,20 @@
   let imgElement;
   let content;
 
+  let selectedCategory = "All";
+
+  $: allCategories = [
+    "All",
+    ...new Set(posts.flatMap((p) => p.categories?.map((c) => c.title) || [])),
+  ];
+
+  $: filteredPosts =
+    selectedCategory === "All"
+      ? posts
+      : posts.filter((post) =>
+          post.categories?.some((cat) => cat.title === selectedCategory),
+        );
+
   import headerVideoDay from "$lib/videos/day.mp4";
   import headerVideoNight from "$lib/videos/night.mp4";
   let video;
@@ -92,6 +106,11 @@
 
     setVideo();
 
+    const exposure = isDarkMode() ? 1.8 : 1;
+    document
+      .querySelectorAll("model-viewer")
+      .forEach((v) => (v.exposure = exposure));
+
     const setupScrollScrub = () => {
       if (!video) return;
       if (scrollTriggerInstance) {
@@ -135,7 +154,7 @@
   });
 </script>
 
-<title>althruist:portfolio</title>
+<title>althruist:archive</title>
 <div id="content">
   <PageHeader id="welcomeHeader">
     <div class="video-container">
@@ -144,92 +163,82 @@
       </video>
     </div>
     <div class="headerContent">
-      <h1 class="emphasis">
-        Hiya, i'm <span class="name">Kieran</span>!
-      </h1>
-      <h2 class="emphasis">
-        A Game Developer, Musician, Content Creator<br />
-        <span>(& a lil' bit of everything else :])</span>
-      </h2>
+      <h1 class="emphasis">Archive</h1>
     </div>
   </PageHeader>
 
-  <section id="aboutSection">
-    <h1 class="sectionTitle">- Who am I? -</h1>
-    <Card hasSlug={false} className="aboutCard"
-      ><p>
-        I'm Kieran, known as althruist online. I am an 18 y/o in Malta, reading
-        for Bachelors of Science (Hons) in Digital Games Development.<br />I
-        like to do a variety of things; Ranging from 3D Art/Animation (using
-        Blender), Music-Making, Coding in several languages, Concept Art, Sound
-        Design, Photography.. anything creative you can think of I probably do
-        it!
-      </p></Card
-    >
-  </section>
-
-  <section id="projectsSection">
-    <h1 class="sectionTitle">- Some cool stuff I did -</h1>
-    <div class="flexCards">
-      {#each posts as post}
-        {#if post.homepage}
-          <Card id={post.slug.current}>
-            <div
-              class="imageArea"
-              on:mouseenter={animateIn}
-              on:mouseleave={animateOut}
-              role="button"
-              tabindex="0"
-            >
-              <img
-                id="mainImage"
-                loading="lazy"
-                fetchpriority="low"
-                src={getImage(post.mainImage.asset._id)}
-                alt={post.mainImage.alt}
-              />
-              <div class="info">
-                <div class="infoContent">
-                  <div class="infoGroup">
-                    <p id="date">{formatDateTime(post.created)}</p>
-                    <div id="postCategories">
-                      {#if post.featured}
-                        <div>
-                          <p id="featured">Featured</p>
-                        </div>
-                      {/if}
-                      {#if post.categories && post.categories.length > 0}
-                        {#each getCategories(post).visible as category}
-                          <div>
-                            <p>{category.title}</p>
-                          </div>
-                        {/each}
-
-                        {#if getCategories(post).hiddenCount > 0}
-                          <div>
-                            <p>+{getCategories(post).hiddenCount}</p>
-                          </div>
-                        {/if}
-                      {/if}
-                    </div>
-                    <h1 class="projectTitle">{post.title}</h1>
-                  </div>
-                  <Button
-                    id="readmore"
-                    slug={post.slug.current}
-                    text="Read More"
-                  ></Button>
-                </div>
-              </div>
-            </div>
-          </Card>
-        {/if}
-      {/each}
-    </div>
-  </section>
   <!-- <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
   <CarouselGrid content={posts} filter="renders" name="Renders"></CarouselGrid>
   <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid> -->
+
+  <section id="projectsSection">
+    <h1 class="sectionTitle">- {selectedCategory} -</h1>
+
+    <!-- Category Filter Bar -->
+    <div class="categoryFilters">
+      {#each allCategories as category}
+        <Button
+          text={category}
+          active={selectedCategory === category}
+          disableNavigation={true}
+          on:click={() => (selectedCategory = category)}
+        />
+      {/each}
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="flexCards">
+      {#each filteredPosts as post}
+        <Card id={post.slug.current}>
+          <div
+            class="imageArea"
+            on:mouseenter={animateIn}
+            on:mouseleave={animateOut}
+            role="button"
+            tabindex="0"
+          >
+            <img
+              id="mainImage"
+              loading="lazy"
+              fetchpriority="low"
+              src={getImage(post.mainImage.asset._id)}
+              alt={post.mainImage.alt}
+            />
+            <div class="info">
+              <div class="infoContent">
+                <div class="infoGroup">
+                  <p id="date">{formatDateTime(post.created)}</p>
+                  <div id="postCategories">
+                    {#if post.featured}
+                      <div>
+                        <p id="featured">Featured</p>
+                      </div>
+                    {/if}
+                    {#if post.categories && post.categories.length > 0}
+                      {#each getCategories(post).visible as category}
+                        <div>
+                          <p>{category.title}</p>
+                        </div>
+                      {/each}
+
+                      {#if getCategories(post).hiddenCount > 0}
+                        <div>
+                          <p>+{getCategories(post).hiddenCount}</p>
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
+                  <h1 class="projectTitle">{post.title}</h1>
+                </div>
+                <Button id="readmore" slug={post.slug.current} text="Read More"
+                ></Button>
+              </div>
+            </div>
+          </div>
+        </Card>
+      {/each}
+    </div>
+  </section>
 </div>
 
 <style>
@@ -255,6 +264,14 @@
     height: 5cqh;
     align-items: center;
     justify-content: center;
+  }
+
+  .categoryFilters {
+    justify-content: center;
+    display: flex;
+    gap: 3rem;
+    width: 100%;
+    flex-wrap: wrap;
   }
 
   .video-container {

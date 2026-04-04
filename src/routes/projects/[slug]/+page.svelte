@@ -2,22 +2,52 @@
   import Button from "$lib/components/Button.svelte";
   import { getImage } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
+  import gsap from "gsap";
+  import { onMount } from "svelte";
 
   export let data;
 
+  let mainImage;
+
   const project = data.project;
+
+  function onEnter() {
+    gsap.to(mainImage, {
+      filter: "blur(10px)",
+      duration: 0.3,
+    });
+  }
+
+  function onLeave() {
+    gsap.to(mainImage, {
+      filter: "blur(0px)",
+      duration: 0.3,
+    });
+  }
+
+  onMount(async () => {
+    await import("@google/model-viewer")
+  })
 </script>
 
+{console.log(project)}
 <title>althruist:{project.title}</title>
 <img
   id="mainImage"
+  bind:this={mainImage}
   loading="lazy"
   fetchpriority="low"
   src={getImage(project.mainImage.asset._id)}
   alt={project.mainImage.alt}
 />
 <div id="content">
-  <Button text="Go Back" className="goBack" link="/goback"></Button>
+  <Button
+    text="Go Back"
+    className="goBack"
+    link="/goback"
+    on:mouseenter={onEnter}
+    on:mouseleave={onLeave}
+  ></Button>
   <p id="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>
   <div id="postCategories">
@@ -62,9 +92,10 @@
   }
 
   #title {
-    font-size: 400%;
+    font-size: 300%;
     margin-top: 0;
     margin-bottom: 15px;
+    width: 100%;
   }
 
   .tag {
@@ -96,5 +127,11 @@
     width: 100%;
     gap: 1rem;
     align-items: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    #title {
+      font-size: 300%;
+    }
   }
 </style>
