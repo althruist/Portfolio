@@ -5,6 +5,7 @@
     isMobile,
     getCSSVariable,
     scrollTo,
+    playSound,
   } from "$lib/logic/globalFunctions.js";
 
   let header;
@@ -229,6 +230,7 @@
 
       button.addEventListener("mouseenter", () => {
         isHovering = true;
+        playSound("hover");
         gsap.fromTo(
           overlay,
           { yPercent: 100 },
@@ -254,6 +256,7 @@
       });
 
       button.addEventListener("mousedown", () => {
+        playSound("openLink");
         isHovering = false;
         gsap.to(button, {
           scale: 0.8,
@@ -329,6 +332,7 @@
       });
 
       button.addEventListener("mouseenter", () => {
+        playSound("hover");
         isHovering = true;
         gsap.fromTo(
           overlay,
@@ -357,6 +361,7 @@
       });
 
       button.addEventListener("mousedown", () => {
+        playSound("openLink");
         isHovering = false;
         gsap.to(button, {
           scale: 0.8,
@@ -459,6 +464,7 @@
       const parent = svg.parentElement;
 
       parent.addEventListener("mouseenter", () => {
+        playSound("hover");
         gsap.to(svg.querySelector(".icon"), {
           fill: getCSSVariable("--color-primary"),
           duration: 0.2,
@@ -467,6 +473,10 @@
           scale: 1.3,
           duration: 0.2,
         });
+      });
+
+      parent.addEventListener("mousedown", () => {
+        playSound("openLink");
       });
 
       parent.addEventListener("mouseleave", () => {
@@ -481,6 +491,7 @@
     });
 
     logoHeader.addEventListener("click", () => {
+      playSound("openLink");
       gsap.fromTo(
         logoHeader,
         { scale: 1 },
@@ -501,6 +512,7 @@
 
     let hoverAnim;
     logoHeader.addEventListener("mouseenter", () => {
+      playSound("hover");
       hoverAnim = gsap.to(logoHeader.querySelector(".logo"), {
         x: gsap.utils.random(50, -50),
         y: gsap.utils.random(50, -50),

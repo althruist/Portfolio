@@ -1,6 +1,6 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte";
-  import { getCSSVariable } from "$lib/logic/globalFunctions";
+  import { getCSSVariable, playSound } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { goto } from "$app/navigation";
 
@@ -43,6 +43,13 @@
   class="button interactable {className} {active ? 'active' : ''}"
   value={text}
   on:mousedown={() => {
+    if (id == "readmore") {
+      playSound("openCard");
+    } else if (className == "goBack") {
+      playSound("closeCard");
+    } else {
+      playSound("click");
+    }
     gsap.to(button, {
       backgroundColor: getCSSVariable("--color-primary"),
       scale: 0.8,
@@ -51,6 +58,7 @@
     });
   }}
   on:mouseenter={() => {
+    playSound("hover");
     dispatch("mouseenter");
     gsap.to(button, {
       backgroundColor: active

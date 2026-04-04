@@ -26,6 +26,7 @@
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
 		"gsap": "^3.13.0",
+		"howler": "^2.2.4",
 		"svelte-preprocess": "^6.0.3"
 	}
 }

@@ -3,6 +3,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import { playSound } from "$lib/logic/globalFunctions";
 
   export let card;
 
@@ -48,6 +49,7 @@
     };
 
     const bounceEnter = () => {
+      playSound("cardHover");
       card.style.zIndex = 2;
       gsap.to(card, { scale: 1.02, duration: 0.5, ease: "circ.out" });
     };
@@ -58,6 +60,7 @@
     };
 
     const bounceClick = () => {
+      playSound("cardClick")
       let tlClick = gsap.timeline();
       tlClick.to(card, {
         rotation: gsap.utils.random(-1, 1),
@@ -137,11 +140,6 @@
   });
 </script>
 
-<div
-  bind:this={card}
-  {id}
-  class="card{className}"
-  {style}
->
+<div bind:this={card} {id} class="card{className}" {style}>
   <slot />
 </div>

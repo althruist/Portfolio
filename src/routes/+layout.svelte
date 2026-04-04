@@ -11,7 +11,12 @@
   import { injectAnalytics } from "@vercel/analytics/sveltekit";
   import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import Page from "./+page.svelte";
-  import { getCSSVariable, initGSAP, isDarkMode } from "$lib/logic/globalFunctions";
+  import {
+    getCSSVariable,
+    initGSAP,
+    isDarkMode,
+    playSound,
+  } from "$lib/logic/globalFunctions";
 
   let { children } = $props();
 
@@ -94,6 +99,7 @@
       const parent = svg.parentElement;
 
       parent.addEventListener("mouseenter", () => {
+        playSound("hover");
         gsap.to(svg.querySelector(".icon"), {
           fill: getCSSVariable("--color-primary"),
           duration: 0.2,
@@ -102,6 +108,10 @@
           scale: 1.3,
           duration: 0.2,
         });
+      });
+
+      parent.addEventListener("mousedown", () => {
+        playSound("openLink");
       });
 
       parent.addEventListener("mouseleave", () => {
