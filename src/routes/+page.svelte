@@ -40,24 +40,50 @@
 
   function animateIn(e) {
     const info = e.currentTarget.querySelector(".info");
+    const img = info.parentElement.querySelector("#mainImage");
+    const button = info.querySelector("input");
 
     gsap.to(info, {
       opacity: 1,
       scale: 1,
       duration: 0.3,
       ease: "power2.out",
+      onComplete: () => {
+        if (button) button.disabled = false;
+      },
+    });
+
+    gsap.to(img, {
+      filter: "blur(10px)",
+      ease: "power2.out",
+      duration: 0.3,
     });
   }
 
   function animateOut(e) {
     const info = e.currentTarget.querySelector(".info");
+    const button = info.querySelector("input");
+    const img = info.parentElement.querySelector("#mainImage");
+
+    console.log(img);
 
     gsap.to(info, {
       opacity: 0,
       scale: 0.9,
       duration: 0.3,
       ease: "power2.out",
+      onComplete: () => {
+        if (button) button.disabled = true;
+      },
     });
+
+    gsap.to(img, {
+      filter: "blur(0px)",
+      ease: "power2.out",
+      duration: 0.3,
+    });
+
+    if (button) button.disabled = true;
   }
 
   onMount(async () => {
@@ -94,8 +120,16 @@
     }
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},featured,subcategories[]->{title},created,body,links}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links}',
     );
+
+    posts.sort((a, b) => {
+      if ((b.featured === true) !== (a.featured === true)) {
+        return (b.featured === true) - (a.featured === true);
+      }
+
+      return new Date(b.created) - new Date(a.created);
+    });
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
@@ -140,54 +174,59 @@
     <h1 class="sectionTitle">- Some cool stuff I did -</h1>
     <div class="flexCards">
       {#each posts as post}
-        {console.log(post)}
-        <Card id={post.slug.current}>
-          <div
-            class="imageArea"
-            on:mouseenter={animateIn}
-            on:mouseleave={animateOut}
-            role="button"
-            tabindex="0"
-          >
-            <img
-              id="mainImage"
-              loading="lazy"
-              fetchpriority="low"
-              src={getImage(post.mainImage.asset._id)}
-              alt={post.mainImage.alt}
-            />
-            <div class="info">
-              <div class="infoContent">
-                <div class="infoGroup">
-                  <p id="date">{formatDateTime(post.created)}</p>
-                  <div id="postCategories">
-                    {#if post.featured}
-                      <div>
-                        <p id="featured">Featured</p>
-                      </div>
-                    {/if}
-                    {#if post.categories && post.categories.length > 0}
-                      {#each getCategories(post).visible as category}
+        {#if post.homepage}
+          {console.log(post)}
+          <Card id={post.slug.current}>
+            <div
+              class="imageArea"
+              on:mouseenter={animateIn}
+              on:mouseleave={animateOut}
+              role="button"
+              tabindex="0"
+            >
+              <img
+                id="mainImage"
+                loading="lazy"
+                fetchpriority="low"
+                src={getImage(post.mainImage.asset._id)}
+                alt={post.mainImage.alt}
+              />
+              <div class="info">
+                <div class="infoContent">
+                  <div class="infoGroup">
+                    <p id="date">{formatDateTime(post.created)}</p>
+                    <div id="postCategories">
+                      {#if post.featured}
                         <div>
-                          <p>{category.title}</p>
-                        </div>
-                      {/each}
-
-                      {#if getCategories(post).hiddenCount > 0}
-                        <div>
-                          <p>+{getCategories(post).hiddenCount}</p>
+                          <p id="featured">Featured</p>
                         </div>
                       {/if}
-                    {/if}
+                      {#if post.categories && post.categories.length > 0}
+                        {#each getCategories(post).visible as category}
+                          <div>
+                            <p>{category.title}</p>
+                          </div>
+                        {/each}
+
+                        {#if getCategories(post).hiddenCount > 0}
+                          <div>
+                            <p>+{getCategories(post).hiddenCount}</p>
+                          </div>
+                        {/if}
+                      {/if}
+                    </div>
+                    <h1 class="projectTitle">{post.title}</h1>
                   </div>
-                  <h1 class="projectTitle">{post.title}</h1>
+                  <Button
+                    id="readmore"
+                    slug={post.slug.current}
+                    text="Read More"
+                  ></Button>
                 </div>
-                <Button id="readmore" slug={post.slug.current} text="Read More"
-                ></Button>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        {/if}
       {/each}
     </div>
   </section>
@@ -256,7 +295,7 @@
     width: 92%;
     height: 92%;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 20px;
     align-items: center;
     text-align: center;
     justify-content: center;

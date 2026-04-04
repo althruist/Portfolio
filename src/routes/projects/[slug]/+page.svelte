@@ -62,37 +62,39 @@
   }
 
   #title {
-    font-size: 5rem;
+    font-size: 400%;
     margin-top: 0;
     margin-bottom: 15px;
   }
 
   .tag {
+    width: auto !important;
     padding: 10px !important;
     background-color: var(--color-primary) !important;
     color: var(--color-text) !important;
     font-weight: bold;
-    text-align: center;
+    margin-bottom: 0;
   }
 
   .tag1 {
-    padding: 10px !important;
+    padding: 20px !important;
     background-color: var(--color-card) !important;
     color: var(--color-text) !important;
     font-weight: bold;
     text-align: center;
     border-radius: 3px;
     border: 1px solid var(--color-card-outline);
+    align-items: center;
+    display: flex;
+    margin-bottom: 0;
   }
 
-  #postCategories {
-    gap: 3rem;
-  }
+  #postCategories,
   #postSubCategories {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: auto;
-    width: 16%;
-    gap: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+    align-items: flex-start;
   }
 </style>

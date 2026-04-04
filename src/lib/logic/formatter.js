@@ -64,7 +64,7 @@ export function renderBody(body) {
   const finalArray = [];
   let currentList = null;
   let currentLevel = 0;
-  
+
   body.forEach((paragraph) => {
     let innerHTML = "";
     if (paragraph._type === "block") {
@@ -148,6 +148,42 @@ export function renderBody(body) {
       finalArray.push(
         `<img src=${getImage(paragraph.asset._ref)} width=${imageSize[0]} height=${imageSize[1]} alt="${paragraph.alt}">`,
       );
+    } else if (paragraph._type === "video") {
+      if (currentList) {
+        finalArray.push(`</${currentList}>`);
+        currentList = null;
+        currentLevel = 0;
+      }
+
+      const url = paragraph.url;
+      let embedUrl = "";
+
+      if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        const videoIdMatch = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+        if (videoIdMatch) {
+          embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+        }
+      } else if (url.includes("vimeo.com")) {
+        const videoIdMatch = url.match(/vimeo\.com\/(\d+)/);
+        if (videoIdMatch) {
+          embedUrl = `https://player.vimeo.com/video/${videoIdMatch[1]}`;
+        }
+      } else {
+        embedUrl = url;
+      }
+
+      if (embedUrl) {
+        finalArray.push(`
+      <div class="video-embed">
+        <iframe 
+          src="${embedUrl}" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+        ></iframe>
+      </div>
+    `);
+      }
     }
   });
 

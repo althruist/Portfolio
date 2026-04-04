@@ -19,6 +19,8 @@ export async function load({ params }) {
     },
   );
 
+  console.log(project);
+
   if (!project) {
     throw error(404, "Not found");
   }
