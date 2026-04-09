@@ -137,6 +137,7 @@
     property="og:description"
     content="This website brings you to a library of althruist's works, ranging from music, digital arts, game development and more! You can also find althruist's contact information here. Have a look! :)"
   />
+  <meta http-equiv="Permissions-Policy" content="xr-spatial-tracking=(self)" />
   <meta
     name="description"
     content="This website brings you to a library of althruist's works, ranging from music, digital arts, game development and more! You can also find althruist's contact information here. Have a look! :)"

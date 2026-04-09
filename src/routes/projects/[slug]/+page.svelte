@@ -26,8 +26,8 @@
   }
 
   onMount(async () => {
-    await import("@google/model-viewer")
-  })
+    await import("@google/model-viewer");
+  });
 </script>
 
 {console.log(project)}

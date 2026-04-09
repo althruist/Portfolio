@@ -148,7 +148,7 @@ export function renderBody(body) {
       finalArray.push(
         `<img src=${getImage(paragraph.asset._ref)} width=${imageSize[0]} height=${imageSize[1]} alt="${paragraph.alt}">`,
       );
-    } else if (paragraph._type === "videoEmbed") {
+    } else if (paragraph._type === "video") {
       if (currentList) {
         finalArray.push(`</${currentList}>`);
         currentList = null;

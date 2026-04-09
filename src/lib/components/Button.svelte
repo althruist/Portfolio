@@ -100,3 +100,11 @@
     dispatch("click", e);
   }}
 />
+
+<style>
+  input {
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+  }
+</style>
