@@ -105,9 +105,6 @@
         scrollTriggerInstance.kill();
       }
 
-      const videoDuration = video.duration;
-      const videoDuration2 = aboutVideo.duration;
-
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: video,
         start: "top top",
@@ -115,7 +112,7 @@
         scrub: 1,
         onUpdate: (self) => {
           if (!video || !isFinite(video.duration)) return;
-          video.currentTime = videoDuration * self.progress;
+          video.currentTime = video.duration * self.progress;
         },
       });
 
@@ -126,7 +123,7 @@
         scrub: 1,
         onUpdate: (self) => {
           if (!aboutVideo || !isFinite(aboutVideo.duration)) return;
-          aboutVideo.currentTime = videoDuration2 * self.progress;
+          aboutVideo.currentTime = aboutVideo.duration * self.progress;
         },
       });
     };
