@@ -1,5 +1,4 @@
 <script>
-    import AudioPlayer from "$lib/components/AudioPlayer.svelte";
   import Button from "$lib/components/Button.svelte";
   import { getImage } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
@@ -63,9 +62,6 @@
     {#each project.subcategories as subcategory}
       <p class="tag1">{subcategory.title}</p>
     {/each}
-  </div>
-  <div class=audioSection>
-    <AudioPlayer></AudioPlayer>
   </div>
   <div class="post-body">
     {@html renderBody(project.body)}

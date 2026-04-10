@@ -5,7 +5,6 @@
   import { getImage } from "$lib/logic/data.js";
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
-  // import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
@@ -19,8 +18,14 @@
 
   import headerVideoDay from "$lib/videos/day.mp4";
   import headerVideoNight from "$lib/videos/night.mp4";
+  import aboutVideoDay from "$lib/videos/idleday.mp4";
+  import aboutVideoNight from "$lib/videos/idlenight.mp4";
+
   let video;
+  let aboutVideo;
+
   let videoSource;
+  let aboutVideoSource;
 
   const MAX_CATEGORIES = 2;
 
@@ -33,8 +38,12 @@
 
   function setVideo() {
     videoSource = isDarkMode() ? headerVideoNight : headerVideoDay;
+    aboutVideoSource = isDarkMode() ? aboutVideoNight : aboutVideoDay;
     if (video) {
       video.load();
+    }
+    if (aboutVideoSource) {
+      aboutVideo.load();
     }
   }
 
@@ -86,19 +95,18 @@
 
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
-
-    const duration = video.duration;
     let scrollTriggerInstance;
 
     setVideo();
 
     const setupScrollScrub = () => {
-      if (!video) return;
+      if (!video || !aboutVideo) return;
       if (scrollTriggerInstance) {
         scrollTriggerInstance.kill();
       }
 
       const videoDuration = video.duration;
+      const videoDuration2 = aboutVideo.duration;
 
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: video,
@@ -106,15 +114,28 @@
         end: "+=650",
         scrub: 1,
         onUpdate: (self) => {
-          if (video) video.currentTime = videoDuration * self.progress;
+          if (!video || !isFinite(video.duration)) return;
+          video.currentTime = videoDuration * self.progress;
+        },
+      });
+
+      scrollTriggerInstance = ScrollTrigger.create({
+        trigger: aboutVideo,
+        start: "-=400",
+        end: "+=800",
+        scrub: 1,
+        onUpdate: (self) => {
+          if (!aboutVideo || !isFinite(aboutVideo.duration)) return;
+          aboutVideo.currentTime = videoDuration2 * self.progress;
         },
       });
     };
 
-    if (video.readyState >= 1) {
+    if (video.readyState >= 1 && aboutVideo.readyState >= 1) {
       setupScrollScrub();
     } else {
       video.addEventListener("loadedmetadata", setupScrollScrub);
+      aboutVideo.addEventListener("loadedmetadata", setupScrollScrub);
     }
 
     posts = await client.fetch(
@@ -156,16 +177,33 @@
 
   <section id="aboutSection">
     <h1 class="sectionTitle">- Who am I? -</h1>
-    <Card hasSlug={false} className="aboutCard"
-      ><p>
-        I'm Kieran, known as althruist online. I am an 18 y/o in Malta, reading
-        for Bachelors of Science (Hons) in Digital Games Development.<br />I
-        like to do a variety of things; Ranging from 3D Art/Animation (using
-        Blender), Music-Making, Coding in several languages, Concept Art, Sound
-        Design, Photography.. anything creative you can think of I probably do
-        it!
-      </p></Card
-    >
+    <Card hasSlug={false} className="aboutCard">
+      <div id="aboutLayout">
+        <video
+          bind:this={aboutVideo}
+          muted
+          playsinline
+          preload="auto"
+          id="aboutVideo"
+        >
+          <source src={aboutVideoSource} type="video/mp4" />
+        </video>
+        <p id="aboutText">
+          I'm <span class="highlightedText">Kieran</span>, known as
+          <span class="highlightedText">althruist</span>
+          online. I am an 18 y/o in Malta, reading for
+          <span class="highlightedText"
+            >Bachelors of Science (Hons) in Digital Games Development.</span
+          ><br />I like to do a variety of things; <br /><br /> Ranging from
+          <span class="highlightedText">3D Art/Animation </span> (using
+          Blender), <span class="highlightedText"> Music-Making, Coding </span>
+          in several languages,
+          <span class="highlightedText">
+            Concept Art, Sound Design, Photography</span
+          >.. anything creative you can think of I probably do it!
+        </p>
+      </div>
+    </Card>
   </section>
 
   <section id="projectsSection">
@@ -227,14 +265,25 @@
       {/each}
     </div>
   </section>
-  <!-- <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
-  <CarouselGrid content={posts} filter="renders" name="Renders"></CarouselGrid>
-  <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid> -->
 </div>
 
 <style>
   #mainImage {
     width: 100%;
+  }
+
+  #aboutVideo {
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+    border-radius: 20px;
+  }
+
+  #aboutLayout {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
 
   .sectionTitle {
@@ -277,6 +326,15 @@
     width: 30vw;
     height: 30vw;
     container-type: inline-size;
+  }
+
+  #aboutText {
+    font-size: 1.3rem;
+  }
+
+  .highlightedText {
+    font-size: 1.8rem;
+    color: var(--color-primary);
   }
 
   .info {
@@ -327,6 +385,10 @@
       padding: 40px;
       text-align: center;
       white-space: nowrap;
+    }
+
+    #aboutLayout {
+      flex-direction: row;
     }
 
     .projectTitle {
