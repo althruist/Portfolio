@@ -1,4 +1,4 @@
-import { getImage, getImageSize, getModel } from "./data";
+import { getImage, getImageSize, getAsset } from "./data";
 
 function escapeHTML(str) {
   if (typeof str !== "string") return "";
@@ -64,6 +64,8 @@ export function renderBody(body) {
   const finalArray = [];
   let currentList = null;
   let currentLevel = 0;
+
+  console.log(body);
 
   body.forEach((paragraph) => {
     let innerHTML = "";
@@ -148,6 +150,22 @@ export function renderBody(body) {
       finalArray.push(
         `<img src=${getImage(paragraph.asset._ref)} width=${imageSize[0]} height=${imageSize[1]} alt="${paragraph.alt}">`,
       );
+    } else if (paragraph._type === "audio") {
+      if (currentList) {
+        finalArray.push(`</${currentList}>`);
+        currentList = null;
+        currentLevel = 0;
+      }
+
+      const url = getAsset(paragraph.asset._ref);
+      console.log(url);
+
+      finalArray.push(`
+    <audio controls class="audio-player">
+      <source src="${url}" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  `);
     } else if (paragraph._type === "video") {
       if (currentList) {
         finalArray.push(`</${currentList}>`);
@@ -191,7 +209,7 @@ export function renderBody(body) {
         currentLevel = 0;
       }
 
-      const modelUrl = getModel(paragraph.asset._ref);
+      const modelUrl = getAsset(paragraph.asset._ref);
 
       finalArray.push(`
     <model-viewer 

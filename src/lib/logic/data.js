@@ -1,9 +1,12 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 
+  const projectId = "xvksarfe";
+  const dataset = "production";
+
 export const client = createClient({
-  projectId: "xvksarfe",
-  dataset: "production",
+  projectId: projectId,
+  dataset: dataset,
   apiVersion: "2025-09-17",
   useCdn: false,
 });
@@ -23,9 +26,7 @@ export function getImageSize(ref) {
   return parts[2].split("x");
 }
 
-export function getModel(ref) {
-  const [, id, ext] = ref.split("-"); // ["file", "6f955f28170aa3462d562127af332fd00894deb4", "glb"]
-  const projectId = "xvksarfe"; // your real project ID
-  const dataset = "production"; // your real dataset
+export function getAsset(ref) {
+  const [, id, ext] = ref.split("-");
   return `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.${ext}`;
 }
