@@ -161,7 +161,7 @@
     });
 </script>
 
-<div bind:this={pointerWrapper} class="pointer-wrapper">
+<div bind:this={pointerWrapper} class="pointer-wrapper no-print">
     <svg viewBox="0 0 1080 1080">
         <path
             id="cursorPath"

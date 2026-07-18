@@ -1,6 +1,5 @@
 <script>
   import { page } from "$app/state";
-  import { isMobile } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
   import { ScrollTrigger } from "gsap/ScrollTrigger";

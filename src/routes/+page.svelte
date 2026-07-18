@@ -162,10 +162,10 @@
       </video>
     </div>
     <div class="headerContent">
-      <h1 class="emphasis">
+      <h1 class="emphasis noSelect">
         Hiya, i'm <span class="name">Kieran</span>!
       </h1>
-      <h2 class="emphasis">
+      <h2 class="emphasis noSelect">
         A Game Developer, Musician, Content Creator<br />
         <span>(& a lil' bit of everything else :])</span>
       </h2>
@@ -173,7 +173,7 @@
   </PageHeader>
 
   <section id="aboutSection">
-    <h1 class="sectionTitle">- Who am I? -</h1>
+    <h1 class="sectionTitle noSelect">- Who am I? -</h1>
     <Card hasSlug={false} className="aboutCard">
       <div id="aboutLayout">
         <video
@@ -181,11 +181,13 @@
           muted
           playsinline
           preload="auto"
+          disablepictureinpicture
+          controlslist="nodownload noplaybackrate"
           id="aboutVideo"
         >
           <source src={aboutVideoSource} type="video/mp4" />
         </video>
-        <p id="aboutText">
+        <p id="aboutText" class="noSelect">
           I'm <span class="highlightedText">Kieran</span>, known as
           <span class="highlightedText">althruist</span>
           online. I am an 18 y/o in Malta, reading for
@@ -204,7 +206,7 @@
   </section>
 
   <section id="projectsSection">
-    <h1 class="sectionTitle">- Some cool stuff I did -</h1>
+    <h1 class="sectionTitle noSelect">- Some cool stuff I did -</h1>
     <div class="flexCards">
       {#each posts as post}
         {#if post.homepage}
@@ -223,9 +225,9 @@
                 src={getImage(post.mainImage.asset._id)}
                 alt={post.mainImage.alt}
               />
-              <div class="info">
-                <div class="infoContent">
-                  <div class="infoGroup">
+              <div class="info noSelect">
+                <div class="infoContent noSelect">
+                  <div class="infoGroup noSelect">
                     <p id="date">{formatDateTime(post.created)}</p>
                     <div id="postCategories">
                       {#if post.featured}
@@ -247,7 +249,7 @@
                         {/if}
                       {/if}
                     </div>
-                    <h1 class="projectTitle">{post.title}</h1>
+                    <h1 class="projectTitle noSelect">{post.title}</h1>
                   </div>
                   <Button
                     id="readmore"
@@ -270,7 +272,7 @@
   }
 
   #aboutVideo {
-    width: 250px;
+    width: 90%;
     height: 250px;
     margin: 20px;
     border-radius: 20px;
@@ -330,7 +332,7 @@
   }
 
   .highlightedText {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: var(--color-primary);
   }
 
@@ -374,6 +376,12 @@
     height: 100%;
   }
 
+  #aboutLayout video {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
   @media (min-width: 1024px) {
     .sectionTitle {
       font-family: "Althite";
@@ -382,10 +390,6 @@
       padding: 40px;
       text-align: center;
       white-space: nowrap;
-    }
-
-    #aboutLayout {
-      flex-direction: row;
     }
 
     .projectTitle {

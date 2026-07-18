@@ -1,14 +1,15 @@
 <script>
   import Button from "$lib/components/Button.svelte";
+  import Card from "$lib/components/Card.svelte";
   import { getImage } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
+  import { scrollTo } from "$lib/logic/globalFunctions.js";
   import gsap from "gsap";
   import { onMount } from "svelte";
 
   export let data;
 
   let mainImage;
-
   const project = data.project;
 
   function onEnter() {
@@ -25,13 +26,76 @@
     });
   }
 
+  let activeSection = "";
+
   onMount(async () => {
     await import("@google/model-viewer");
+
+    let TOC = document.querySelector(".tableOfContents");
+    let TOCTitle = document.querySelector("#tocTitle");
+
+    TOC.addEventListener("mouseenter", () => {
+      if (window.innerWidth >= 1024) {
+        gsap.to(TOC, {
+          top: "82%",
+          duration: 0.3,
+          ease: "circ.out",
+        });
+        gsap.to(TOCTitle, {
+          marginTop: "15px",
+          duration: 0.4,
+          ease: "circ.out",
+        });
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 1024) {
+        gsap.set(TOCTitle, {
+          marginTop: "15px"
+        })
+      }
+    })
+
+    TOC.addEventListener("mouseleave", () => {
+      if (window.innerWidth >= 1024) {
+        gsap.to(TOC, {
+          top: "95%",
+          duration: 0.3,
+          ease: "circ.out",
+        });
+        gsap.to(TOCTitle, {
+          marginTop: "-7px",
+          duration: 0.4,
+          ease: "circ.out",
+        });
+      }
+    });
+
+    const sections = document.querySelectorAll("section");
+
+    const options = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activeSection = entry.target.id;
+        }
+      });
+    }, options);
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
   });
 </script>
 
-{console.log(project)}
 <title>althruist:{project.title}</title>
+
 <img
   id="mainImage"
   bind:this={mainImage}
@@ -63,6 +127,24 @@
       <p class="tag1">{subcategory.title}</p>
     {/each}
   </div>
+  <Card className="noBounce tableOfContents">
+    <h3 class="altText" id="tocTitle">Table Of Contents</h3>
+    <div class="tofButtons">
+      {#each project.body as body}
+        {#if body._type === "section"}
+          <Button
+            text={body.sectiontitle}
+            className="tofButton"
+            active={activeSection ===
+              body.sectiontitle.toString().replaceAll(" ", "")}
+            on:click={() => {
+              scrollTo(`#${body.sectiontitle.toString().replaceAll(" ", "")}`);
+            }}
+          ></Button>
+        {/if}
+      {/each}
+    </div>
+  </Card>
   <div class="post-body">
     {@html renderBody(project.body)}
   </div>
@@ -76,8 +158,9 @@
 
 <style>
   #content {
-    padding: 4%;
-    padding-bottom: 0;
+    padding: 10%;
+    padding-top:4%;
+    padding-bottom: 4%;
   }
 
   #mainImage {

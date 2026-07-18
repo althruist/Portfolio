@@ -65,11 +65,12 @@ export function renderBody(body) {
   let currentList = null;
   let currentLevel = 0;
 
-  console.log(body);
-
   body.forEach((paragraph) => {
     let innerHTML = "";
-    if (paragraph._type === "block") {
+    if (paragraph._type === "section") {
+      finalArray.push(`<hr><section id=${paragraph.sectiontitle.toString().replaceAll(" ", "")}><h1 class="sectionPost">${paragraph.sectiontitle}</h1></section>`);
+    }
+    else if (paragraph._type === "block") {
       innerHTML = paragraph.children
         .map((child) => renderMarks(child, paragraph.markDefs))
         .join("");
@@ -106,7 +107,6 @@ export function renderBody(body) {
           closeTag = "</blockquote>";
           break;
       }
-
       if (paragraph.listItem) {
         const listTag = paragraph.listItem === "bullet" ? "ul" : "ol";
         const level = paragraph.level || 1;
@@ -158,7 +158,6 @@ export function renderBody(body) {
       }
 
       const url = getAsset(paragraph.asset._ref);
-      console.log(url);
 
       finalArray.push(`
     <audio controls class="audio-player">

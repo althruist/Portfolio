@@ -18,6 +18,8 @@
     playSound,
   } from "$lib/logic/globalFunctions";
 
+  import Lenis from "lenis";
+
   let { children } = $props();
 
   let background;
@@ -67,17 +69,19 @@
     injectSpeedInsights();
 
     const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-    const { ScrollSmoother } = await import("gsap/ScrollSmoother");
     const { ScrollToPlugin } = await import("gsap/ScrollToPlugin");
 
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    ScrollSmoother.create({
-      wrapper: smoothWrapper,
-      content: content,
-      smooth: 1,
-      effects: true,
+    const lenis = new Lenis({duration:1});
+
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1400);
     });
+    gsap.ticker.lagSmoothing(0);
 
     const animateCard = () => {
       const x = Math.random() * 500;
@@ -191,9 +195,9 @@
 <div id="smooth-wrapper" bind:this={smoothWrapper}>
   <div bind:this={content} id="content">
     {@render children?.()}
-    <div bind:this={footer} class="footer card">
-      <p class="altText">
-        this website is homemade :] • althruist 2025-2026 • <a
+    <div bind:this={footer} class="footer card no-print">
+      <p class="altText noSelect">
+        this website is homemade :] • © althruist 2025-2026 • <a
           href="https://github.com/althruist/Portfolio"
           target="_blank">check out the repository!</a
         >

@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import {
-    isMobile,
     getCSSVariable,
     scrollTo,
     playSound,
@@ -16,11 +15,13 @@
 
   let home;
   let portfolio;
-  let about;
+  let archive;
+  let cv;
 
   let homeMobile;
   let portfolioMobile;
-  let aboutMobile;
+  let archiveMobile;
+  let cvMobile;
 
   let audiotoolSocialSVG;
   let youtubeSocialSVG;
@@ -31,7 +32,7 @@
   let dropDownIsOpen = false;
 
   function updateThemeColors() {
-    const headerButtons = [home, portfolio, about];
+    const headerButtons = [home, portfolio, archive, cv];
     const socialSVGs = [
       audiotoolSocialSVG,
       youtubeSocialSVG,
@@ -210,8 +211,13 @@
       dropDownIsOpen ? closeDropdown() : openDropdown();
     }
 
-    const headerButtons = [home, portfolio, about];
-    const headerButtonsMobile = [homeMobile, portfolioMobile, aboutMobile];
+    const headerButtons = [home, portfolio, archive, cv];
+    const headerButtonsMobile = [
+      homeMobile,
+      portfolioMobile,
+      archiveMobile,
+      cvMobile,
+    ];
     const socialSVGs = [
       audiotoolSocialSVG,
       youtubeSocialSVG,
@@ -444,7 +450,7 @@
         gsap.set(header, {
           marginTop: "10px",
           borderRadius: "20px",
-          width: "74%",
+          width: "85%",
           height: "auto",
           top: "auto",
           y: 0,
@@ -504,7 +510,7 @@
         },
       );
 
-      if (isMobile()) {
+      if (window.innerWidth <= 1024) {
         toggleDropdown();
         return;
       }
@@ -537,7 +543,7 @@
   });
 </script>
 
-<header bind:this={header} id="header" class="card noBounce">
+<header bind:this={header} id="header" class="card noBounce no-print">
   <div id="left">
     <svg
       bind:this={logoHeader}
@@ -557,7 +563,7 @@
       <a
         bind:this={home}
         aria-label="Home"
-        class="headerButton interactable"
+        class="headerButton interactable noSelect"
         href="/"
         ><span>Home</span>
         <div class="headerButtonOverlay"></div>
@@ -566,7 +572,7 @@
         bind:this={portfolio}
         aria-label="portfolio"
         href="/"
-        class="headerButton interactable"
+        class="headerButton interactable noSelect"
         on:click={() => {
           scrollTo("#projectsSection");
         }}
@@ -574,11 +580,19 @@
         <div class="headerButtonOverlay"></div>
       </a>
       <a
-        bind:this={about}
+        bind:this={archive}
         aria-label="archive"
         href="/archive"
-        class="headerButton interactable"
+        class="headerButton interactable noSelect"
         ><span>Archive</span>
+        <div class="headerButtonOverlay"></div>
+      </a>
+      <a
+        bind:this={cv}
+        aria-label="cv"
+        href="/cv"
+        class="headerButton interactable noSelect"
+        ><span>CV</span>
         <div class="headerButtonOverlay"></div>
       </a>
     </nav>
@@ -587,7 +601,7 @@
     <a
       bind:this={homeMobile}
       aria-label="Home"
-      class="headerButton interactable"
+      class="headerButton interactable noSelect"
       href="/"
       ><span>Home</span>
       <div class="headerButtonOverlay"></div>
@@ -596,7 +610,7 @@
       bind:this={portfolioMobile}
       aria-label="portfolio"
       href="/"
-      class="headerButton interactable"
+      class="headerButton interactable noSelect"
       on:click={() => {
         scrollTo("#projectsSection");
       }}
@@ -604,11 +618,19 @@
       <div class="headerButtonOverlay"></div>
     </a>
     <a
-      bind:this={aboutMobile}
+      bind:this={archiveMobile}
       aria-label="archive"
       href="/archive"
-      class="headerButton interactable"
+      class="headerButton interactable noSelect"
       ><span>Archive</span>
+      <div class="headerButtonOverlay"></div>
+    </a>
+    <a
+      bind:this={cvMobile}
+      aria-label="cv"
+      href="/cv"
+      class="headerButton interactable noSelect"
+      ><span>CV</span>
       <div class="headerButtonOverlay"></div>
     </a>
   </div>
@@ -635,7 +657,7 @@
     </a>
     <a
       aria-label="Audiotool"
-      href="https://www.audiotool.com/user/Akridiki"
+      href="https://www.audiotool.com/user/akridiki"
       target="_blank"
       rel="noopener noreferrer"
     >

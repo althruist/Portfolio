@@ -14,11 +14,6 @@ export async function initGSAP() {
 
   gsap.registerPlugin(ScrollToPlugin);
 }
-
-export function isMobile() {
-  return window.innerWidth <= 1024;
-}
-
 export function isDarkMode() {
   return (
     window.matchMedia &&
@@ -54,5 +49,5 @@ export function getCSSVariable(variable) {
 
 export function scrollTo(place) {
   if (!gsap) return;
-  gsap.to(window, { duration: 0.3, scrollTo: place, ease: "sine.out" });
+  gsap.to(window, { duration: 0.3, scrollTo: {y: place, offsetY: 140}, ease: "sine.out" });
 }

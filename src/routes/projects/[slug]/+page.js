@@ -12,7 +12,7 @@ export async function load({ params }) {
       featured,
       created,
       body,
-      links
+      links,
     }`,
     {
       slug: params.slug,
