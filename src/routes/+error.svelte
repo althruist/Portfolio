@@ -9,11 +9,18 @@
     default:
       message = page.error.message;
     case 404:
-      message = "Sorry, this page doesn't seem like it exists. :(";
+      message = "Sorry, this page doesn't exist. :(";
   }
 </script>
 
-<Card style="text-align: center; margin-top:200px;">
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<Card className="fourohfour" style="text-align: center;">
   <h1>{page.status}</h1>
   <hr />
   <h4>{message}</h4>
@@ -22,9 +29,20 @@
   </div>
 </Card>
 
+<br />
+<br />
+<br />
+<br />
+
 <style>
   h1 {
-    font-size: 100px;
+    font-size: 14vw;
+  }
+
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 7vw;
+    }
   }
 
   .selectorButtons {

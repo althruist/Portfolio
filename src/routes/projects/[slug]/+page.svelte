@@ -52,10 +52,14 @@
     window.addEventListener("resize", () => {
       if (window.innerWidth < 1024) {
         gsap.set(TOCTitle, {
-          marginTop: "15px"
-        })
+          marginTop: "15px",
+        });
+      } else {
+        gsap.set(TOCTitle, {
+          marginTop: "-7px",
+        });
       }
-    })
+    });
 
     TOC.addEventListener("mouseleave", () => {
       if (window.innerWidth >= 1024) {
@@ -159,7 +163,7 @@
 <style>
   #content {
     padding: 10%;
-    padding-top:4%;
+    padding-top: 4%;
     padding-bottom: 4%;
   }
 

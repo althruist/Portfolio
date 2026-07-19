@@ -180,6 +180,11 @@ blockquote {
   box-shadow: 0px 0px 10px var(--color-shadow);
 }
 
+.fourohfour {
+  aspect-ratio: unset;
+  width: 95%;
+}
+
 .interactable {
   cursor: pointer;
 }
@@ -729,6 +734,11 @@ a:hover {
 
   #tocTitle {
     margin-top: -7px;
+  }
+
+  .fourohfour {
+    aspect-ratio: unset;
+    width: 50%;
   }
 
   .tofButtons {
