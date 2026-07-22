@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { client } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { getImage } from "$lib/logic/data.js";
@@ -26,6 +26,8 @@
 
   let videoSource;
   let aboutVideoSource;
+
+  let labsSection;
 
   const MAX_CATEGORIES = 2;
 
@@ -99,6 +101,22 @@
 
     setVideo();
 
+    const animateCard = () => {
+      const x = Math.random() * 500;
+      const y = Math.random() * 500;
+      const duration = 0.02;
+
+      if (!labsSection) return;
+      gsap.to(labsSection, {
+        backgroundPosition: `${x}px ${y}px`,
+        duration,
+        ease: "linear",
+        onComplete: animateCard,
+      });
+    };
+
+    animateCard();
+
     const setupScrollScrub = () => {
       if (!video || !aboutVideo) return;
       if (scrollTriggerInstance) {
@@ -118,8 +136,9 @@
 
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: aboutVideo,
-        start: "-=400",
-        end: "+=800",
+        start: "top+=100px bottom",
+        end: "bottom+=400px bottom",
+        invalidateOnRefresh: true,
         scrub: 1,
         onUpdate: (self) => {
           if (!aboutVideo || !isFinite(aboutVideo.duration)) return;
@@ -146,10 +165,11 @@
 
       return new Date(b.created) - new Date(a.created);
     });
-
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
     mediaQuery.addEventListener("change", setVideo);
+    await tick();
+    ScrollTrigger.refresh();
   });
 </script>
 
@@ -163,7 +183,7 @@
     </div>
     <div class="headerContent">
       <h1 class="emphasis noSelect">
-        Hiya, i'm <span class="name">Kieran</span>!
+        Heya, i'm <span class="name">Kieran</span>!
       </h1>
       <h2 class="emphasis noSelect">
         A Game Developer, Musician, Content Creator<br />
@@ -172,41 +192,8 @@
     </div>
   </PageHeader>
 
-  <section id="aboutSection">
-    <h1 class="sectionTitle noSelect">- Who am I? -</h1>
-    <Card hasSlug={false} className="aboutCard">
-      <div id="aboutLayout">
-        <video
-          bind:this={aboutVideo}
-          muted
-          playsinline
-          preload="auto"
-          disablepictureinpicture
-          controlslist="nodownload noplaybackrate"
-          id="aboutVideo"
-        >
-          <source src={aboutVideoSource} type="video/mp4" />
-        </video>
-        <p id="aboutText" class="noSelect">
-          I'm <span class="highlightedText">Kieran</span>, known as
-          <span class="highlightedText">althruist</span>
-          online. I am an 18 y/o in Malta, reading for
-          <span class="highlightedText"
-            >Bachelors of Science (Hons) in Digital Games Development.</span
-          ><br />I like to do a variety of things; <br /><br /> Ranging from
-          <span class="highlightedText">3D Art/Animation </span> (using
-          Blender), <span class="highlightedText"> Music-Making, Coding </span>
-          in several languages,
-          <span class="highlightedText">
-            Concept Art, Sound Design, Photography</span
-          >.. anything creative you can think of I probably do it!
-        </p>
-      </div>
-    </Card>
-  </section>
-
   <section id="projectsSection">
-    <h1 class="sectionTitle noSelect">- Some cool stuff I did -</h1>
+    <h1 class="sectionTitle noSelect">highlighted projects</h1>
     <div class="flexCards">
       {#each posts as post}
         {#if post.homepage}
@@ -254,7 +241,7 @@
                   <Button
                     id="readmore"
                     slug={post.slug.current}
-                    text="Read More"
+                    text="read more"
                   ></Button>
                 </div>
               </div>
@@ -263,6 +250,76 @@
         {/if}
       {/each}
     </div>
+  </section>
+
+  <section id="aboutSection">
+    <h1 class="sectionTitle noSelect">who am i?</h1>
+    <Card hasSlug={false} className="aboutCard">
+      <div id="aboutLayout">
+        <video
+          bind:this={aboutVideo}
+          muted
+          playsinline
+          preload="auto"
+          disablepictureinpicture
+          controlslist="nodownload noplaybackrate"
+          on:contextmenu|preventDefault
+          id="aboutVideo"
+        >
+          <source src={aboutVideoSource} type="video/mp4" />
+        </video>
+        <p id="aboutText" class="noSelect">
+          I'm <span class="highlightedText">Kieran</span>, known as
+          <span class="highlightedText">althruist</span>
+          online. I am from Malta and I'm currently reading for a
+          <span class="highlightedText"
+            >Bachelor of Science (Hons) in Digital Games Development</span
+          >. <br /><br /> Ever since I got my
+          <span class="highlightedText"> laptop (9 years ago!)</span>, I have
+          been experimenting with my craft in
+          <span class="highlightedText">
+            game development, Blender and music</span
+          >. Now that I'm studying for the very thing I've always wished for,
+          i'm expanding my own brand/identity and slowly creating the things I
+          always envisioned during car rides!
+        </p>
+
+        <h1>my values (as a multidisciplinary person)</h1>
+        <div id="valuesSection">
+          <Card className="valuesCard"
+            ><h1>originality</h1>
+            <p>
+              I believe that game development is an art. I build my projects
+              with original assets, sometimes curated for said games, but slowly
+              evolving to my own style.
+            </p></Card
+          >
+          <Card className="valuesCard"
+            ><h1>no ai generation</h1>
+            <p>
+              I value the human aspect when designing anything, including games.
+              While I might use AI for quick troubleshooting, I never use
+              generative AI to create assets for me.
+            </p></Card
+          >
+          <Card className="valuesCard"
+            ><h1>system reuse</h1>
+            <p>
+              Efficiency matters, so when I work on projects, I try my best to
+              make things as modular and reusable as possible, allowing me to
+              make robust frameworks that scale across multiple projects.
+            </p></Card
+          >
+        </div>
+      </div>
+    </Card>
+  </section>
+
+  <section id="labs" class="card" bind:this={labsSection}>
+    <h1 class="sectionTitle noSelect" id="wanttoknowmoresection">
+      want to know more about what i do?
+    </h1>
+    <Button text="go to labs" link="/labs" id="gotolabs"></Button>
   </section>
 </div>
 
@@ -276,6 +333,12 @@
     height: 250px;
     margin: 20px;
     border-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  #aboutSection h1 {
+    font-family: Althite;
   }
 
   #aboutLayout {
@@ -285,9 +348,20 @@
     display: flex;
   }
 
+  #labs {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    aspect-ratio: unset;
+    width: 100%;
+    border-radius: 0;
+    padding: 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
   .sectionTitle {
     font-family: "Althite";
-    font-size: 2rem;
+    font-size: 6vw;
     margin: auto;
     padding: 20px;
     text-align: center;
@@ -319,6 +393,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   .imageArea {
@@ -329,6 +408,9 @@
 
   #aboutText {
     font-size: 1.3rem;
+    padding: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .highlightedText {
@@ -380,6 +462,11 @@
     width: 100%;
     height: auto;
     margin: 0;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   @media (min-width: 1024px) {
@@ -398,6 +485,23 @@
       width: 100%;
       word-wrap: break-word;
       text-align: left;
+    }
+
+    #labs {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    #wanttoknowmoresection {
+      text-align: left;
+      width: 30%;
+      margin: 0;
+      text-wrap-mode: wrap;
+      text-wrap-style: auto;
+      line-height: 65px;
     }
   }
 </style>

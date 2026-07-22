@@ -52,9 +52,11 @@ body {
 }
 
 img {
+  display: block;
   width: 100%;
   height: 100%;
   border-radius: 20px;
+  justify-content: center;
 }
 
 h1 {
@@ -68,6 +70,12 @@ h1 {
   grid-auto-rows: auto;
   gap: 0.75rem;
   justify-items: end;
+}
+
+#gotolabs {
+  display: block;
+  width: 80%;
+  margin: auto;
 }
 
 .buttons_mobile a {
@@ -365,14 +373,13 @@ a:hover {
   font-size: 4vw;
   margin-top: 10px;
   line-height: 1.2;
-  background-color: var(--color-background);
   padding: 20px;
   border-radius: 20px;
 }
 
 #welcomeHeader h2 span {
   font-size: 2vw;
-  color: var(--color-primary);
+  color: var(--color-secondary);
 }
 
 #welcomeHeader .name {
@@ -541,7 +548,7 @@ a:hover {
   grid-auto-columns: auto;
   gap: 1rem;
   width: 100%;
-  margin-bottom: 5px;
+  margin-top: 30px;
 }
 
 .postButton {
@@ -553,6 +560,7 @@ a:hover {
 .aboutCard {
   margin-top: 0;
   aspect-ratio: unset;
+  padding: 0;
 }
 
 #featured {
@@ -594,8 +602,26 @@ a:hover {
   border-radius: 12px;
 }
 
+.categoryFilters {
+  display: flex;
+  justify-content: center;
+  aspect-ratio: unset;
+  height: auto;
+  gap: 3rem;
+  width: 80%;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 #tocTitle {
   margin-top: 15px;
+}
+
+.valuesCard {
+  width: 100px;
+  aspect-ratio: unset;
 }
 
 @media (min-width: 1024px) {
@@ -617,10 +643,6 @@ a:hover {
     display: flex;
     margin-left: 0px;
     margin-right: 0;
-  }
-
-  .headerContent {
-    margin-left: 2rem;
   }
 
   #header .buttons a {
@@ -657,8 +679,24 @@ a:hover {
     border-radius: 0px;
   }
 
+  .headerContent {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    margin-left: 80px;
+  }
+
   #linksCard {
     width: 30%;
+  }
+
+  img {
+    display: block;
+    width: 70%;
+    height: 100%;
+    border-radius: 20px;
+    margin: auto;
+    justify-content: center;
   }
 
   .socials {
@@ -693,9 +731,9 @@ a:hover {
 
   #welcomeHeader h1 {
     font-family: "Althite";
-    font-size: 12vw;
+    font-size: 9vw;
     white-space: normal;
-    margin-top: 200px;
+    margin-top: 140px;
     margin-bottom: 0px;
     color: rgb(255, 255, 255);
     line-height: 1.2;
@@ -706,13 +744,14 @@ a:hover {
     font-family: "Althite";
     text-align: left;
     font-size: 3vw;
-    margin-top: 3rem;
+    margin-top: 1rem;
     line-height: 1.2;
   }
 
   .aboutCard {
     margin-top: 0;
     aspect-ratio: unset;
+    padding: 0;
   }
 
   .goBack {
@@ -753,6 +792,43 @@ a:hover {
     margin: 10px;
     padding: 0.7rem;
     border-radius: 12px;
+  }
+
+  .categoryFilters {
+    display: flex;
+    justify-content: center;
+    aspect-ratio: unset;
+    height: auto;
+    gap: 3rem;
+    width: 80%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+
+  #gotolabs {
+    display: block;
+    width: auto;
+    margin: 0;
+  }
+
+  .valuesCard {
+    width: auto;
+    aspect-ratio: unset;
+    margin: 30px;
+  }
+
+  .valuesCard h1{
+    text-align: center;
+  }
+
+  .valuesCard p{
+    text-align: center;
+  }
+
+  #valuesSection{
+    display: flex;
   }
 }
 

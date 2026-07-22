@@ -154,7 +154,7 @@
   });
 </script>
 
-<title>althruist:archive</title>
+<title>althruist:labs</title>
 <div id="content">
   <PageHeader id="welcomeHeader">
     <div class="video-container">
@@ -163,19 +163,20 @@
       </video>
     </div>
     <div class="headerContent">
-      <h1 class="emphasis">Archive</h1>
+      <h1 class="noSelect">labs</h1>
+      <h2 class="emphasis noSelect">
+      all my projects in one spot!
+      </h2>
     </div>
   </PageHeader>
 
-  <!-- <CarouselGrid content={posts} filter="music" name="Music"></CarouselGrid>
-  <CarouselGrid content={posts} filter="renders" name="Renders"></CarouselGrid>
-  <CarouselGrid content={posts} filter="games" name="Games"></CarouselGrid> -->
-
   <section id="projectsSection">
-    <h1 class="sectionTitle">- {selectedCategory} -</h1>
+    <h1 class="sectionTitle">
+      you selected '{selectedCategory.toLowerCase()}'
+    </h1>
 
     <!-- Category Filter Bar -->
-    <div class="categoryFilters">
+    <Card className="categoryFilters">
       {#each allCategories as category}
         <Button
           text={category}
@@ -184,7 +185,7 @@
           on:click={() => (selectedCategory = category)}
         />
       {/each}
-    </div>
+    </Card>
 
     <!-- Cards Grid -->
     <div class="flexCards">
@@ -266,14 +267,6 @@
     justify-content: center;
   }
 
-  .categoryFilters {
-    justify-content: center;
-    display: flex;
-    gap: 3rem;
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
   .video-container {
     position: absolute;
     top: 0;
@@ -288,6 +281,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   .imageArea {

@@ -27,8 +27,8 @@ const sounds = {
   openLink: new Howl({ src: ["/sounds/openlink.mp3"], volume: 0.1 }),
   openCard: new Howl({ src: ["/sounds/opencard.mp3"], volume: 0.1 }),
   cardHover: new Howl({ src: ["/sounds/cardhover.mp3"], volume: 0.1 }),
-  closeCard: new Howl({ src: ["/sounds/closecard.mp3"], volume: 0.1}),
-  cardClick: new Howl({ src: ["/sounds/cardclick.mp3"], volume: 0.1}),
+  closeCard: new Howl({ src: ["/sounds/closecard.mp3"], volume: 0.1 }),
+  cardClick: new Howl({ src: ["/sounds/cardclick.mp3"], volume: 0.1 }),
 };
 
 export function playSound(name, options = {}) {
@@ -49,5 +49,21 @@ export function getCSSVariable(variable) {
 
 export function scrollTo(place) {
   if (!gsap) return;
-  gsap.to(window, { duration: 0.3, scrollTo: {y: place, offsetY: 140}, ease: "sine.out" });
+  gsap.to(window, {
+    duration: 0.3,
+    scrollTo: { y: place, offsetY: 140 },
+    ease: "sine.out",
+  });
+}
+
+export function mouseMove(event) {
+  const item = event.currentTarget;
+  const rect = item.getBoundingClientRect();
+
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // Pass coordinates into CSS variables
+  item.style.setProperty("--x", `${x}px`);
+  item.style.setProperty("--y", `${y}px`);
 }

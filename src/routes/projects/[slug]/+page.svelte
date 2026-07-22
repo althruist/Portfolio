@@ -34,6 +34,8 @@
     let TOC = document.querySelector(".tableOfContents");
     let TOCTitle = document.querySelector("#tocTitle");
 
+    console.log(project)
+
     TOC.addEventListener("mouseenter", () => {
       if (window.innerWidth >= 1024) {
         gsap.to(TOC, {
@@ -110,7 +112,7 @@
 />
 <div id="content">
   <Button
-    text="Go Back"
+    text="go back"
     className="goBack"
     link="/goback"
     on:mouseenter={onEnter}

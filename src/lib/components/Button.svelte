@@ -14,6 +14,7 @@
   export let slug;
   export let disableNavigation = false;
   export let active = false;
+  export let newTab = true;
 
   $: if (button) {
     gsap.to(button, {
@@ -30,8 +31,17 @@
     if (slug) {
       goto(`/projects/${slug}`);
     } else if (link) {
-      if (link === "/goback") window.history.back();
-      else window.open(link, "_blank");
+      if (link.startsWith("/")) {
+        if (link === "/goback") {
+          window.history.back();
+        } else {
+          goto(link);
+        }
+      } else if (newTab) {
+        window.open(link, "_blank");
+      } else {
+        window.location.href = link;
+      }
     }
   }
 </script>

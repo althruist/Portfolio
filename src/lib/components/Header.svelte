@@ -15,13 +15,13 @@
 
   let home;
   let portfolio;
-  let archive;
-  let cv;
+  let labs;
+  let about;
 
   let homeMobile;
   let portfolioMobile;
-  let archiveMobile;
-  let cvMobile;
+  let labsMobile;
+  let aboutMobile;
 
   let audiotoolSocialSVG;
   let youtubeSocialSVG;
@@ -32,7 +32,7 @@
   let dropDownIsOpen = false;
 
   function updateThemeColors() {
-    const headerButtons = [home, portfolio, archive, cv];
+    const headerButtons = [home, portfolio, labs, about];
     const socialSVGs = [
       audiotoolSocialSVG,
       youtubeSocialSVG,
@@ -211,12 +211,12 @@
       dropDownIsOpen ? closeDropdown() : openDropdown();
     }
 
-    const headerButtons = [home, portfolio, archive, cv];
+    const headerButtons = [home, portfolio, labs, about];
     const headerButtonsMobile = [
       homeMobile,
       portfolioMobile,
-      archiveMobile,
-      cvMobile,
+      labsMobile,
+      aboutMobile,
     ];
     const socialSVGs = [
       audiotoolSocialSVG,
@@ -249,7 +249,7 @@
         );
 
         gsap.to(text, {
-          color: getCSSVariable("--color-basic"),
+          color: getCSSVariable("--color-background"),
           duration: 0.3,
           ease: "power2.out",
           overwrite: "auto",
@@ -354,7 +354,7 @@
         );
 
         gsap.to(text, {
-          color: getCSSVariable("--color-basic"),
+          color: getCSSVariable("--color-background"),
           duration: 0.3,
           ease: "power2.out",
           overwrite: "auto",
@@ -565,7 +565,7 @@
         aria-label="Home"
         class="headerButton interactable noSelect"
         href="/"
-        ><span>Home</span>
+        ><span>home</span>
         <div class="headerButtonOverlay"></div>
       </a>
       <a
@@ -576,23 +576,26 @@
         on:click={() => {
           scrollTo("#projectsSection");
         }}
-        ><span>Portfolio</span>
+        ><span>portfolio</span>
         <div class="headerButtonOverlay"></div>
       </a>
       <a
-        bind:this={archive}
-        aria-label="archive"
-        href="/archive"
+        bind:this={labs}
+        aria-label="labs"
+        href="/labs"
         class="headerButton interactable noSelect"
-        ><span>Archive</span>
+        ><span>labs</span>
         <div class="headerButtonOverlay"></div>
       </a>
       <a
-        bind:this={cv}
-        aria-label="cv"
-        href="/cv"
+        bind:this={about}
+        aria-label="about"
+        href="/"
+        on:click={() => {
+          scrollTo("#aboutSection");
+        }}
         class="headerButton interactable noSelect"
-        ><span>CV</span>
+        ><span>about</span>
         <div class="headerButtonOverlay"></div>
       </a>
     </nav>
@@ -603,7 +606,7 @@
       aria-label="Home"
       class="headerButton interactable noSelect"
       href="/"
-      ><span>Home</span>
+      ><span>home</span>
       <div class="headerButtonOverlay"></div>
     </a>
     <a
@@ -614,23 +617,26 @@
       on:click={() => {
         scrollTo("#projectsSection");
       }}
-      ><span>Portfolio</span>
+      ><span>portfolio</span>
       <div class="headerButtonOverlay"></div>
     </a>
     <a
-      bind:this={archiveMobile}
-      aria-label="archive"
-      href="/archive"
+      bind:this={labsMobile}
+      aria-label="labs"
+      href="/labs"
       class="headerButton interactable noSelect"
-      ><span>Archive</span>
+      ><span>labs</span>
       <div class="headerButtonOverlay"></div>
     </a>
     <a
-      bind:this={cvMobile}
-      aria-label="cv"
-      href="/cv"
+      bind:this={aboutMobile}
+      aria-label="about"
+      href="/"
+      on:click={() => {
+        scrollTo("#aboutSection");
+      }}
       class="headerButton interactable noSelect"
-      ><span>CV</span>
+      ><span>about</span>
       <div class="headerButtonOverlay"></div>
     </a>
   </div>
