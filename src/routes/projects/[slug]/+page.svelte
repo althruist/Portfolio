@@ -7,7 +7,7 @@
   import gsap from "gsap";
   import { onMount } from "svelte";
 
-  export let data;
+  let { data } = $props();
 
   let mainImage;
   const project = data.project;
@@ -26,7 +26,7 @@
     });
   }
 
-  let activeSection = "";
+  let activeSection = $state("");
 
   onMount(async () => {
     await import("@google/model-viewer");
@@ -34,7 +34,7 @@
     let TOC = document.querySelector(".tableOfContents");
     let TOCTitle = document.querySelector("#tocTitle");
 
-    console.log(project)
+    console.log(project);
 
     TOC.addEventListener("mouseenter", () => {
       if (window.innerWidth >= 1024) {

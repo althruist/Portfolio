@@ -63,7 +63,6 @@ export function mouseMove(event) {
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
-  // Pass coordinates into CSS variables
   item.style.setProperty("--x", `${x}px`);
   item.style.setProperty("--y", `${y}px`);
 }

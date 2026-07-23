@@ -6,25 +6,29 @@
 
   const dispatch = createEventDispatcher();
 
-  export let button;
-  export let id = "";
-  export let className = "";
-  export let text = "";
-  export let link;
-  export let slug;
-  export let disableNavigation = false;
-  export let active = false;
-  export let newTab = true;
+  let {
+    button = $bindable(),
+    id = "",
+    className = "",
+    text = "",
+    link,
+    slug,
+    disableNavigation = false,
+    active = false,
+    newTab = true,
+  } = $props();
 
-  $: if (button) {
-    gsap.to(button, {
-      backgroundColor: active
-        ? getCSSVariable("--color-secondary")
-        : getCSSVariable("--color-primary"),
-      duration: 0.2,
-      ease: "circ.out",
-    });
-  }
+  $effect(() => {
+    if (button) {
+      gsap.to(button, {
+        backgroundColor: active
+          ? getCSSVariable("--color-secondary")
+          : getCSSVariable("--color-primary"),
+        duration: 0.2,
+        ease: "circ.out",
+      });
+    }
+  });
 
   function click() {
     if (disableNavigation) return;
@@ -52,7 +56,7 @@
   {id}
   class="button interactable {className} {active ? 'active' : ''}"
   value={text}
-  on:mousedown={() => {
+  onmousedown={() => {
     if (id == "readmore") {
       playSound("openCard");
     } else if (className == "goBack") {
@@ -67,7 +71,7 @@
       ease: "circ.out",
     });
   }}
-  on:mouseenter={() => {
+  onmouseenter={() => {
     playSound("hover");
     dispatch("mouseenter");
     gsap.to(button, {
@@ -79,7 +83,7 @@
       ease: "circ.out",
     });
   }}
-  on:mouseup={() => {
+  onmouseup={() => {
     gsap
       .timeline()
       .to(button, {
@@ -94,7 +98,7 @@
         ease: "sine.out",
       });
   }}
-  on:mouseleave={() => {
+  onmouseleave={() => {
     dispatch("mouseleave");
     gsap.to(button, {
       backgroundColor: active
@@ -105,7 +109,7 @@
       ease: "circ.out",
     });
   }}
-  on:click={(e) => {
+  onclick={(e) => {
     click();
     dispatch("click", e);
   }}

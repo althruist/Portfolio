@@ -428,6 +428,20 @@ a:hover {
   margin-top: 1rem;
 }
 
+.socials.footer {
+  margin-right: auto;
+  display: flex;
+  padding: 2rem;
+  padding-top: 1rem;
+}
+
+.socials.getintouch {
+  display: flex;
+  align-self: center;
+  scale:1.4;
+  margin: auto;
+}
+
 .card img {
   position: absolute;
   border-radius: 13px;
@@ -620,8 +634,21 @@ a:hover {
 }
 
 .valuesCard {
-  width: 100px;
   aspect-ratio: unset;
+  margin-bottom: 30px;
+}
+
+.valuesCard h1 {
+  text-align: center;
+}
+
+.valuesCard p {
+  text-align: center;
+}
+
+#valuesSection {
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 1024px) {
@@ -814,31 +841,21 @@ a:hover {
   }
 
   .valuesCard {
-    width: auto;
-    aspect-ratio: unset;
+    width: 50%;
+    aspect-ratio: 1/1;
     margin: 30px;
   }
 
-  .valuesCard h1{
+  .valuesCard h1 {
     text-align: center;
   }
 
-  .valuesCard p{
+  .valuesCard p {
     text-align: center;
   }
 
-  #valuesSection{
+  #valuesSection {
     display: flex;
-  }
-}
-
-@page {
-  size: A4;
-  margin: 0;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
+    flex-direction: row;
   }
 }

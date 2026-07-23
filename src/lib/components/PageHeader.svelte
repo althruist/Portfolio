@@ -5,11 +5,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
 
-  export let pageHeader;
-
-  export let id = "";
-  export let className = "";
-  export let style = "";
+  let {pageHeader = $bindable(), id="", className = "", style=""} = $props();
 
   onMount(() => {
     if (className != "") {

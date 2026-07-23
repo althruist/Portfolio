@@ -11,6 +11,9 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { goto } from "$app/navigation";
 
+  import deerLight from "$lib/images/deer/deerlight.png";
+  import deerDark from "$lib/images/deer/deerdark.png";
+
   let posts = [];
 
   let imgElement;
@@ -20,12 +23,14 @@
   import headerVideoNight from "$lib/videos/night.mp4";
   import aboutVideoDay from "$lib/videos/idleday.mp4";
   import aboutVideoNight from "$lib/videos/idlenight.mp4";
+  import Socials from "$lib/components/Socials.svelte";
 
   let video;
   let aboutVideo;
 
   let videoSource;
   let aboutVideoSource;
+  let deerSource;
 
   let labsSection;
 
@@ -38,9 +43,10 @@
     return { visible, hiddenCount };
   }
 
-  function setVideo() {
+  function setThemeMedia() {
     videoSource = isDarkMode() ? headerVideoNight : headerVideoDay;
     aboutVideoSource = isDarkMode() ? aboutVideoNight : aboutVideoDay;
+    deerSource = isDarkMode() ? deerDark : deerLight;
     if (video) {
       video.load();
     }
@@ -99,7 +105,7 @@
     gsap.registerPlugin(ScrollTrigger);
     let scrollTriggerInstance;
 
-    setVideo();
+    setThemeMedia();
 
     const animateCard = () => {
       const x = Math.random() * 500;
@@ -167,7 +173,7 @@
     });
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", welcomeHeader);
-    mediaQuery.addEventListener("change", setVideo);
+    mediaQuery.addEventListener("change", setThemeMedia);
     await tick();
     ScrollTrigger.refresh();
   });
@@ -268,15 +274,15 @@
         >
           <source src={aboutVideoSource} type="video/mp4" />
         </video>
-        <p id="aboutText" class="noSelect">
+        <p class="noSelect aboutText">
           I'm <span class="highlightedText">Kieran</span>, known as
           <span class="highlightedText">althruist</span>
           online. I am from Malta and I'm currently reading for a
           <span class="highlightedText"
             >Bachelor of Science (Hons) in Digital Games Development</span
           >. <br /><br /> Ever since I got my
-          <span class="highlightedText"> laptop (9 years ago!)</span>, I have
-          been experimenting with my craft in
+          <span class="highlightedText"> first laptop (9 years ago!)</span>, I
+          have been experimenting with my craft in
           <span class="highlightedText">
             game development, Blender and music</span
           >. Now that I'm studying for the very thing I've always wished for,
@@ -284,26 +290,25 @@
           always envisioned during car rides!
         </p>
 
-        <h1>my values (as a multidisciplinary person)</h1>
+        <h1>my work ethic</h1>
         <div id="valuesSection">
           <Card className="valuesCard"
             ><h1>originality</h1>
             <p>
               I believe that game development is an art. I build my projects
-              with original assets, sometimes curated for said games, but slowly
-              evolving to my own style.
+              with original assets, slowly evolving to my own style.
             </p></Card
           >
           <Card className="valuesCard"
-            ><h1>no ai generation</h1>
+            ><h1>handcrafted quality</h1>
             <p>
               I value the human aspect when designing anything, including games.
-              While I might use AI for quick troubleshooting, I never use
-              generative AI to create assets for me.
+              While I might use modern tools like AI for troubleshooting, I
+              never use generative AI to create assets for me.
             </p></Card
           >
           <Card className="valuesCard"
-            ><h1>system reuse</h1>
+            ><h1>modular architecture</h1>
             <p>
               Efficiency matters, so when I work on projects, I try my best to
               make things as modular and reusable as possible, allowing me to
@@ -311,11 +316,38 @@
             </p></Card
           >
         </div>
+        <p class="aboutText">
+          I've always been a creative nerd. When I was younger, playing games
+          made up most of my free time. This passion started off playing <span
+            class="highlightedText">Minecraft</span
+          >
+          on my PlayStation 4, where I loved making new buildings and exploring (I
+          still do!). Then I moved on to
+          <span class="highlightedText">Roblox</span>
+          which I still work on from time to time making small projects. It's also
+          my first time seeing what coding is like!
+        </p>
+        <br />
+        <p class="aboutText">
+          Nowadays, in my free time, I like to either work on different projects
+          on Blender, take photos, play games, make music, hang out with friends
+          or take a walk, usually in nature areas!
+        </p>
+        <div id="intouchSection">
+          <h1 id="intouch">want to get in touch?</h1>
+          <Socials variant="getintouch"></Socials>
+        </div>
       </div>
     </Card>
   </section>
 
   <section id="labs" class="card" bind:this={labsSection}>
+    <img
+      id="deerImg"
+      src={deerSource}
+      alt="Deer"
+      on:contextmenu|preventDefault
+    />
     <h1 class="sectionTitle noSelect" id="wanttoknowmoresection">
       want to know more about what i do?
     </h1>
@@ -406,7 +438,7 @@
     container-type: inline-size;
   }
 
-  #aboutText {
+  .aboutText {
     font-size: 1.3rem;
     padding: 20px;
     margin-top: 0;
@@ -469,6 +501,10 @@
     );
   }
 
+  #deerImg {
+    display: none;
+  }
+
   @media (min-width: 1024px) {
     .sectionTitle {
       font-family: "Althite";
@@ -477,6 +513,29 @@
       padding: 40px;
       text-align: center;
       white-space: nowrap;
+    }
+
+    #deerImg {
+      display: block;
+      width: 300px;
+      aspect-ratio: 1/1;
+      mask-image: linear-gradient(rgba(0, 0, 0, 255) 0%, rgba(0, 0, 0, 0) 100%);
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    #intouchSection{
+      display: flex;
+    }
+
+    #intouch {
+      font-size: 8rem;
+      line-height: 1;
+      margin-left: 20px;
+      width:60%;
     }
 
     .projectTitle {

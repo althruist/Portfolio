@@ -5,11 +5,7 @@
   import { goto } from "$app/navigation";
   import { playSound } from "$lib/logic/globalFunctions";
 
-  export let card;
-
-  export let id = "";
-  export let className = "";
-  export let style = "";
+  let { card = $bindable(), id = "", className = "", style = "" } = $props();
 
   let isHovering = false;
 
@@ -60,7 +56,7 @@
     };
 
     const bounceClick = () => {
-      playSound("cardClick")
+      playSound("cardClick");
       let tlClick = gsap.timeline();
       tlClick.to(card, {
         rotation: gsap.utils.random(-1, 1),
