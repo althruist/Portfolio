@@ -1,19 +1,8 @@
-let gsap;
+import gsap from "gsap";
 let ScrollToPlugin;
 
 import { Howl } from "howler";
 
-export async function initGSAP() {
-  if (typeof window === "undefined") return;
-
-  const gsapModule = await import("gsap");
-  const scrollModule = await import("gsap/ScrollToPlugin");
-
-  gsap = gsapModule.gsap;
-  ScrollToPlugin = scrollModule.ScrollToPlugin;
-
-  gsap.registerPlugin(ScrollToPlugin);
-}
 export function isDarkMode() {
   return (
     window.matchMedia &&
@@ -32,6 +21,12 @@ const sounds = {
 };
 
 export function playSound(name, options = {}) {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  if (audioCtx.state === "suspended") {
+    return;
+  }
+
   const sound = sounds[name];
   if (!sound) return;
 
@@ -65,4 +60,27 @@ export function mouseMove(event) {
 
   item.style.setProperty("--x", `${x}px`);
   item.style.setProperty("--y", `${y}px`);
+}
+
+export function addNoise(node) {
+  const animateCard = () => {
+    const x = Math.random() * 500;
+    const y = Math.random() * 500;
+    const duration = 0.02;
+
+    gsap.to(node, {
+      backgroundPosition: `${x}px ${y}px`,
+      duration,
+      ease: "linear",
+      onComplete: animateCard,
+    });
+  };
+
+  animateCard();
+
+  return {
+    destroy() {
+      gsap.killTweensOf(node);
+    },
+  };
 }

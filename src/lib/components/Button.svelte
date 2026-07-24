@@ -18,6 +18,14 @@
     newTab = true,
   } = $props();
 
+  function resetColors() {
+    gsap.set(button, {
+      backgroundColor: active
+        ? getCSSVariable("--color-secondary")
+        : getCSSVariable("--color-primary"),
+    });
+  }
+
   $effect(() => {
     if (button) {
       gsap.to(button, {
@@ -28,6 +36,9 @@
         ease: "circ.out",
       });
     }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", resetColors);
   });
 
   function click() {
@@ -120,5 +131,9 @@
     white-space: normal;
     word-wrap: break-word;
     text-align: center;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
   }
 </style>

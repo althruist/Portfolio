@@ -3,9 +3,9 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import { playSound } from "$lib/logic/globalFunctions";
+  import { addNoise, playSound } from "$lib/logic/globalFunctions";
 
-  let { card = $bindable(), id = "", className = "", style = "" } = $props();
+  let {children, card = $bindable(), id = "", className = "", style = "" } = $props();
 
   let isHovering = false;
 
@@ -15,22 +15,6 @@
     }
 
     gsap.registerPlugin(ScrollTrigger);
-
-    const animateCard = () => {
-      const x = Math.random() * 500;
-      const y = Math.random() * 500;
-      const duration = 0.02;
-
-      if (!card) return;
-      gsap.to(card, {
-        backgroundPosition: `${x}px ${y}px`,
-        duration,
-        ease: "linear",
-        onComplete: animateCard,
-      });
-    };
-
-    animateCard();
 
     const addBounce = () => {
       card.addEventListener("mouseenter", bounceEnter);
@@ -136,6 +120,6 @@
   });
 </script>
 
-<div bind:this={card} {id} class="card{className}" {style}>
-  <slot />
+<div bind:this={card} {id} class="card{className}" {style} use:addNoise>
+{@render children?.()}
 </div>

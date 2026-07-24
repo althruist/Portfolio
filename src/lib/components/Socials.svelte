@@ -1,32 +1,22 @@
 <script>
   import {
-    initGSAP,
     playSound,
     getCSSVariable,
   } from "$lib/logic/globalFunctions";
   import { onMount } from "svelte";
+  import gsap from "gsap";
 
-  let audiotoolSocialSVG;
-  let youtubeSocialSVG;
-  let instagramSocialSVG;
-  let linkedinSocialSVG;
-  let githubSocialSVG;
+  let { variant = "default", container = $bindable() } = $props();
 
-  let { variant = "default", container = $bindable()} = $props();
+  function resetColors(item) {
+    gsap.set(item, {
+      fill: getCSSVariable("--color-primary"),
+    });
+  }
 
   onMount(async () => {
-    const gsapModule = await import("gsap");
-    const gsap = gsapModule.default;
-
-    await initGSAP();
-
-    const socialSVGs = [
-      audiotoolSocialSVG,
-      youtubeSocialSVG,
-      instagramSocialSVG,
-      linkedinSocialSVG,
-      githubSocialSVG,
-    ];
+    
+    const socialSVGs = Array.from(container.querySelectorAll(".socialSVG"));
 
     socialSVGs.forEach((svg) => {
       const parent = svg.parentElement;
@@ -57,6 +47,11 @@
         });
       });
     });
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    socialSVGs.forEach((svg) => {
+      mediaQuery.addEventListener("change", resetColors(svg));
+    });
   });
 </script>
 
@@ -68,7 +63,6 @@
     rel="noopener noreferrer"
   >
     <svg
-      bind:this={linkedinSocialSVG}
       class="socialSVG interactable"
       id="linkedinLogo"
       version="1.2"
@@ -88,7 +82,6 @@
     rel="noopener noreferrer"
   >
     <svg
-      bind:this={audiotoolSocialSVG}
       class="socialSVG interactable"
       id="audiotoolLogo"
       version="1.2"
@@ -109,7 +102,6 @@
     rel="noopener noreferrer"
   >
     <svg
-      bind:this={youtubeSocialSVG}
       class="socialSVG interactable"
       id="youtubeLogo"
       version="1.2"
@@ -130,7 +122,6 @@
     rel="noopener noreferrer"
   >
     <svg
-      bind:this={instagramSocialSVG}
       class="socialSVG interactable"
       id="instagramLogo"
       version="1.2"
@@ -150,7 +141,6 @@
     rel="noopener noreferrer"
   >
     <svg
-      bind:this={githubSocialSVG}
       class="socialSVG interactable"
       id="githubLogo"
       version="1.2"

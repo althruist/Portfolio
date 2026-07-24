@@ -5,7 +5,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
 
-  let {pageHeader = $bindable(), id="", className = "", style=""} = $props();
+  let {children, pageHeader = $bindable(), id="", className = "", style=""} = $props();
 
   onMount(() => {
     if (className != "") {
@@ -25,7 +25,7 @@
 </script>
 
 <div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
-  <slot />
+{@render children?.()}
 </div>
 
 <style>

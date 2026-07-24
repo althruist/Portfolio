@@ -12,12 +12,12 @@
   import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import Page from "./+page.svelte";
   import {
+  addNoise,
     getCSSVariable,
-    initGSAP,
     isDarkMode,
     playSound,
   } from "$lib/logic/globalFunctions";
-  
+
   import Lenis from "lenis";
   import Socials from "$lib/components/Socials.svelte";
 
@@ -50,8 +50,6 @@
     const gsapModule = await import("gsap");
     const gsap = gsapModule.default;
 
-    await initGSAP();
-
     injectAnalytics();
     injectSpeedInsights();
 
@@ -60,8 +58,7 @@
 
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    const lenis = new Lenis({duration:1});
-
+    const lenis = new Lenis({ duration: 1 });
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -69,22 +66,6 @@
       lenis.raf(time * 1400);
     });
     gsap.ticker.lagSmoothing(0);
-
-    const animateCard = () => {
-      const x = Math.random() * 500;
-      const y = Math.random() * 500;
-      const duration = 0.02;
-
-      if (!footer) return;
-      gsap.to(footer, {
-        backgroundPosition: `${x}px ${y}px`,
-        duration,
-        ease: "linear",
-        onComplete: animateCard,
-      });
-    };
-
-    animateCard();
 
     updateFavicon();
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -152,7 +133,7 @@
 <div id="smooth-wrapper" bind:this={smoothWrapper}>
   <div bind:this={content} id="content">
     {@render children?.()}
-    <div bind:this={footer} class="footer card">
+    <div bind:this={footer} class="footer card" use:addNoise>
       <p class="altText noSelect">
         this website is homemade :] • © althruist 2025-2026 • <a
           href="https://github.com/althruist/Portfolio"

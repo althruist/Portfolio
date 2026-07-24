@@ -301,9 +301,13 @@ code hr {
 
 a {
   font-weight: bolder;
-  text-decoration: none 3px;
+  text-decoration: underline dashed 1.5px;
   color: var(--color-link);
   transition: ease-out 0.1s;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 a:hover {
@@ -362,16 +366,17 @@ a:hover {
   overflow-wrap: break-word;
   white-space: normal;
   margin-bottom: 0px;
-  color: rgb(255, 255, 255);
+  color: var(--color-text);
   line-height: 1.2;
   text-align: center;
 }
 
 #welcomeHeader h2 {
+  color: var(--color-text);
   font-family: "Althite";
   text-align: center;
   font-size: 4vw;
-  margin-top: 10px;
+  margin-top: 0px;
   line-height: 1.2;
   padding: 20px;
   border-radius: 20px;
@@ -438,8 +443,10 @@ a:hover {
 .socials.getintouch {
   display: flex;
   align-self: center;
-  scale:1.4;
+  scale: 1.4;
   margin: auto;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .card img {
@@ -762,7 +769,6 @@ a:hover {
     white-space: normal;
     margin-top: 140px;
     margin-bottom: 0px;
-    color: rgb(255, 255, 255);
     line-height: 1.2;
     text-align: left;
   }
@@ -771,7 +777,6 @@ a:hover {
     font-family: "Althite";
     text-align: left;
     font-size: 3vw;
-    margin-top: 1rem;
     line-height: 1.2;
   }
 
@@ -852,6 +857,10 @@ a:hover {
 
   .valuesCard p {
     text-align: center;
+  }
+
+  .socials.getintouch {
+    padding-left: 20px;
   }
 
   #valuesSection {

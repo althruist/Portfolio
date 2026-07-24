@@ -5,7 +5,6 @@
   import { getImage } from "$lib/logic/data.js";
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
-  // import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
@@ -31,8 +30,8 @@
           post.categories?.some((cat) => cat.title === selectedCategory),
         );
 
-  import headerVideoDay from "$lib/videos/day.mp4";
-  import headerVideoNight from "$lib/videos/night.mp4";
+  import headerVideoDay from "$lib/videos/labsday.mp4";
+  import headerVideoNight from "$lib/videos/labsnight.mp4";
   let video;
   let videoSource;
 
@@ -122,7 +121,7 @@
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: video,
         start: "top top",
-        end: "+=650",
+        end: "+=950",
         scrub: 1,
         onUpdate: (self) => {
           if (video) video.currentTime = videoDuration * self.progress;
@@ -164,9 +163,7 @@
     </div>
     <div class="headerContent">
       <h1 class="noSelect">labs</h1>
-      <h2 class="emphasis noSelect">
-      all my projects in one spot!
-      </h2>
+      <h2 class="emphasis noSelect">all my projects in one spot!</h2>
     </div>
   </PageHeader>
 

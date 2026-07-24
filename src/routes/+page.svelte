@@ -6,7 +6,7 @@
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import { isDarkMode } from "$lib/logic/globalFunctions";
+  import { addNoise, isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { goto } from "$app/navigation";
@@ -106,22 +106,6 @@
     let scrollTriggerInstance;
 
     setThemeMedia();
-
-    const animateCard = () => {
-      const x = Math.random() * 500;
-      const y = Math.random() * 500;
-      const duration = 0.02;
-
-      if (!labsSection) return;
-      gsap.to(labsSection, {
-        backgroundPosition: `${x}px ${y}px`,
-        duration,
-        ease: "linear",
-        onComplete: animateCard,
-      });
-    };
-
-    animateCard();
 
     const setupScrollScrub = () => {
       if (!video || !aboutVideo) return;
@@ -341,7 +325,7 @@
     </Card>
   </section>
 
-  <section id="labs" class="card" bind:this={labsSection}>
+  <section id="labs" class="card" bind:this={labsSection} use:addNoise>
     <img
       id="deerImg"
       src={deerSource}
@@ -533,7 +517,7 @@
 
     #intouch {
       font-size: 8rem;
-      line-height: 1;
+      line-height: 1.4;
       margin-left: 20px;
       width:60%;
     }
