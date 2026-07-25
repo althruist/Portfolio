@@ -67,7 +67,7 @@
   {id}
   class="button interactable {className} {active ? 'active' : ''}"
   value={text}
-  onmousedown={() => {
+  onpointerdown={() => {
     if (id == "readmore") {
       playSound("openCard");
     } else if (className == "goBack") {
@@ -82,9 +82,8 @@
       ease: "circ.out",
     });
   }}
-  onmouseenter={() => {
+  onpointerenter={() => {
     playSound("hover");
-    dispatch("mouseenter");
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-primary")
@@ -94,7 +93,7 @@
       ease: "circ.out",
     });
   }}
-  onmouseup={() => {
+  onpointerup={() => {
     gsap
       .timeline()
       .to(button, {
@@ -109,8 +108,7 @@
         ease: "sine.out",
       });
   }}
-  onmouseleave={() => {
-    dispatch("mouseleave");
+  onpointerleave={() => {
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-secondary")
