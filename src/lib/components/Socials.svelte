@@ -21,7 +21,7 @@
     socialSVGs.forEach((svg) => {
       const parent = svg.parentElement;
 
-      parent.addEventListener("mouseenter", () => {
+      parent.addEventListener("pointerenter", () => {
         playSound("hover");
         gsap.to(svg.querySelector(".icon"), {
           fill: getCSSVariable("--color-primary"),
@@ -33,11 +33,11 @@
         });
       });
 
-      parent.addEventListener("mousedown", () => {
+      parent.addEventListener("pointerdown", () => {
         playSound("openLink");
       });
 
-      parent.addEventListener("mouseleave", () => {
+      parent.addEventListener("pointerleave", () => {
         gsap.to(svg.querySelector(".icon"), {
           duration: 0.2,
         });

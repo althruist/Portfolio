@@ -188,8 +188,8 @@
         <Card id={post.slug.current}>
           <div
             class="imageArea"
-            on:mouseenter={animateIn}
-            on:mouseleave={animateOut}
+            onmouseenter={animateIn}
+            onmouseleave={animateOut}
             role="button"
             tabindex="0"
           >

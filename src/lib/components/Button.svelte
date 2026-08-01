@@ -14,10 +14,10 @@
     disableNavigation = false,
     active = false,
     newTab = true,
-    onmouseenter,
-    onmousedown,
-    onmouseleave,
-    onmouseup,
+    onpointerenter,
+    onpointerdown,
+    onpointerleave,
+    onpointerup,
     onclick
   } = $props();
 
@@ -70,8 +70,8 @@
   {id}
   class="button interactable {className} {active ? 'active' : ''}"
   value={text}
-  onmousedown={() => {
-    onmousedown?.();
+  onpointerdown={() => {
+    onpointerdown?.();
     if (id == "readmore") {
       playSound("openCard");
     } else if (className == "goBack") {
@@ -86,8 +86,8 @@
       ease: "circ.out",
     });
   }}
-  onmouseenter={() => {
-    onmouseenter?.();
+  onpointerenter={() => {
+    onpointerenter?.();
     playSound("hover");
     gsap.to(button, {
       backgroundColor: active
@@ -98,8 +98,8 @@
       ease: "circ.out",
     });
   }}
-  onmouseup={() => {
-    onmouseup?.();
+  onpointerup={() => {
+    onpointerup?.();
     gsap
       .timeline()
       .to(button, {
@@ -114,8 +114,8 @@
         ease: "sine.out",
       });
   }}
-  onmouseleave={() => {
-    onmouseleave?.();
+  onpointerleave={() => {
+    onpointerleave?.();
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-secondary")

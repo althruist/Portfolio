@@ -6,10 +6,11 @@
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import { addNoise, isDarkMode } from "$lib/logic/globalFunctions";
+  import { addNoise, isDarkMode, disableContextMenu } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { goto } from "$app/navigation";
+
 
   import deerLight from "$lib/images/deer/deerlight.png";
   import deerDark from "$lib/images/deer/deerdark.png";
@@ -190,8 +191,8 @@
           <Card id={post.slug.current}>
             <div
               class="imageArea"
-              on:mouseenter={animateIn}
-              on:mouseleave={animateOut}
+              onmouseenter={animateIn}
+              onmouseleave={animateOut}
               role="button"
               tabindex="0"
             >
@@ -253,7 +254,7 @@
           preload="auto"
           disablepictureinpicture
           controlslist="nodownload noplaybackrate"
-          on:contextmenu|preventDefault
+          oncontextmenu={disableContextMenu}
           id="aboutVideo"
         >
           <source src={aboutVideoSource} type="video/mp4" />
@@ -330,7 +331,7 @@
       id="deerImg"
       src={deerSource}
       alt="Deer"
-      on:contextmenu|preventDefault
+      oncontextmenu={disableContextMenu}
     />
     <h1 class="sectionTitle noSelect" id="wanttoknowmoresection">
       want to know more about what i do?

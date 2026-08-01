@@ -84,3 +84,7 @@ export function addNoise(node) {
     },
   };
 }
+
+export function disableContextMenu(event) {
+  event.preventDefault();
+}

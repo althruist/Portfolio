@@ -13,7 +13,6 @@
   const project = data.project;
 
   function onEnter() {
-    console.log("person is in!")
     gsap.to(mainImage, {
       filter: "blur(10px)",
       duration: 0.3,
@@ -21,7 +20,6 @@
   }
 
   function onLeave() {
-    console.log("person is out!")
     gsap.to(mainImage, {
       filter: "blur(0px)",
       duration: 0.3,
@@ -36,11 +34,8 @@
     let TOC = document.querySelector(".tableOfContents");
     let TOCTitle = document.querySelector("#tocTitle");
 
-    console.log(project);
-
-    TOC.addEventListener("mouseenter", () => {
+    TOC.addEventListener("pointerenter", () => {
       if (window.innerWidth >= 1024) {
-        console.log(TOC.offsetHeight)
         gsap.to(TOC, {
           top: `calc(82% + ${-TOC.offsetHeight + 110}px)`,
           duration: 0.3,
@@ -66,7 +61,7 @@
       }
     });
 
-    TOC.addEventListener("mouseleave", () => {
+    TOC.addEventListener("pointerleave", () => {
       if (window.innerWidth >= 1024) {
         gsap.to(TOC, {
           top: "95%",
@@ -118,8 +113,8 @@
     text="go back"
     className="goBack"
     link="/goback"
-    onmouseenter={onEnter}
-    onmouseleave={onLeave}
+    onpointerenter={onEnter}
+    onpointerleave={onLeave}
   ></Button>
   <p id="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>

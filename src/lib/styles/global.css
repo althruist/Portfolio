@@ -443,10 +443,20 @@ a:hover {
 .socials.getintouch {
   display: flex;
   align-self: center;
-  scale: 1.4;
+  scale: 1;
   margin: auto;
   padding-top: 20px;
   padding-bottom: 40px;
+}
+
+.socials.getintouch a {
+  width:50px;
+  height:50px;
+}
+
+.socials.getintouch svg {
+  width:50px;
+  height:50px;
 }
 
 .card img {

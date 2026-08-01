@@ -179,7 +179,7 @@
 
       gsap.set(overlay, { yPercent: 100 });
 
-      button.addEventListener("mouseenter", () => {
+      button.addEventListener("pointerenter", () => {
         isHovering = true;
         playSound("hover");
         gsap.fromTo(
@@ -209,7 +209,7 @@
         });
       });
 
-      button.addEventListener("mousedown", () => {
+      button.addEventListener("pointerdown", () => {
         playSound("openLink");
         isHovering = false;
         gsap.to(button, {
@@ -256,7 +256,7 @@
         }
       });
 
-      button.addEventListener("mouseleave", () => {
+      button.addEventListener("pointerleave", () => {
         gsap.to(button, {
           scale: 1,
           duration: 0.2,
@@ -433,7 +433,7 @@
     });
 
     let hoverAnim;
-    logoHeader.addEventListener("mouseenter", () => {
+    logoHeader.addEventListener("pointerenter", () => {
       playSound("hover");
       hoverAnim = gsap.to(logoHeader.querySelector(".logo"), {
         x: gsap.utils.random(50, -50),
@@ -445,7 +445,7 @@
       });
     });
 
-    logoHeader.addEventListener("mouseleave", () => {
+    logoHeader.addEventListener("pointerleave", () => {
       hoverAnim.kill();
       hoverAnim = null;
 

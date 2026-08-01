@@ -7,8 +7,6 @@
 
   let {children, card = $bindable(), id = "", className = "", style = "" } = $props();
 
-  let isHovering = false;
-
   onMount(() => {
     if (className != "") {
       className = ` ${className}`;
@@ -17,14 +15,14 @@
     gsap.registerPlugin(ScrollTrigger);
 
     const addBounce = () => {
-      card.addEventListener("mouseenter", bounceEnter);
-      card.addEventListener("mouseleave", bounceLeave);
+      card.addEventListener("pointerenter", bounceEnter);
+      card.addEventListener("pointerleave", bounceLeave);
       card.addEventListener("click", bounceClick);
     };
 
     const removeBounce = () => {
-      card.removeEventListener("mouseenter", bounceEnter);
-      card.removeEventListener("mouseleave", bounceLeave);
+      card.removeEventListener("pointerenter", bounceEnter);
+      card.removeEventListener("pointerleave", bounceLeave);
       card.removeEventListener("click", bounceClick);
     };
 
@@ -88,35 +86,6 @@
       { scale: 0.9, opacity: 0, y: 50 },
       { scale: 1.1, opacity: 1, y: 0, duration: 0.3 },
     ).to(card, { scale: 1, duration: 0.5 });
-
-    if (id == "welcomeHeader") {
-      card.addEventListener("mouseenter", () => {
-        if (isHovering) return;
-        isHovering = true;
-        gsap.to(card.querySelector(".name"), {
-          duration: 1,
-          scrambleText: {
-            text: "althruist",
-            chars: "kailetrhaunist",
-            revealDelay: 0,
-            speed: 1,
-          },
-        });
-      });
-
-      card.addEventListener("mouseleave", () => {
-        isHovering = false;
-        gsap.to(card.querySelector(".name"), {
-          duration: 1,
-          scrambleText: {
-            text: "kieran",
-            chars: "kailetrhaunist",
-            revealDelay: 0,
-            speed: 1,
-          },
-        });
-      });
-    }
   });
 </script>
 

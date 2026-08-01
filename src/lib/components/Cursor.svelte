@@ -33,7 +33,7 @@
         let currentX = 0,
             currentY = 0;
 
-        document.addEventListener("mousemove", (e) => {
+        document.addEventListener("pointermove", (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
@@ -51,7 +51,7 @@
         const attachListeners = () => {
             document.querySelectorAll(".interactable").forEach((el) => {
                 if (!el.dataset.listenerAdded) {
-                    el.addEventListener("mouseenter", () => {
+                    el.addEventListener("pointerenter", () => {
                         gsap.killTweensOf(pointerWrapper);
                         gsap.killTweensOf("#cursorPath");
 
@@ -69,7 +69,7 @@
                         });
                     });
 
-                    el.addEventListener("mouseleave", () => {
+                    el.addEventListener("pointerleave", () => {
                         gsap.killTweensOf(pointerWrapper);
                         gsap.killTweensOf("#cursorPath");
 
