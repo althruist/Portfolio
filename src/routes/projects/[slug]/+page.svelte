@@ -13,6 +13,7 @@
   const project = data.project;
 
   function onEnter() {
+    console.log("person is in!")
     gsap.to(mainImage, {
       filter: "blur(10px)",
       duration: 0.3,
@@ -20,6 +21,7 @@
   }
 
   function onLeave() {
+    console.log("person is out!")
     gsap.to(mainImage, {
       filter: "blur(0px)",
       duration: 0.3,
@@ -38,8 +40,9 @@
 
     TOC.addEventListener("mouseenter", () => {
       if (window.innerWidth >= 1024) {
+        console.log(TOC.offsetHeight)
         gsap.to(TOC, {
-          top: "82%",
+          top: `calc(82% + ${-TOC.offsetHeight + 110}px)`,
           duration: 0.3,
           ease: "circ.out",
         });
@@ -115,8 +118,8 @@
     text="go back"
     className="goBack"
     link="/goback"
-    on:mouseenter={onEnter}
-    on:mouseleave={onLeave}
+    onmouseenter={onEnter}
+    onmouseleave={onLeave}
   ></Button>
   <p id="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>
@@ -143,7 +146,7 @@
             className="tofButton"
             active={activeSection ===
               body.sectiontitle.toString().replaceAll(" ", "")}
-            on:click={() => {
+            onclick={() => {
               scrollTo(`#${body.sectiontitle.toString().replaceAll(" ", "")}`);
             }}
           ></Button>

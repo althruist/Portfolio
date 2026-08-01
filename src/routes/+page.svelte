@@ -355,6 +355,7 @@
 
   #aboutSection h1 {
     font-family: Althite;
+    font-size: 3rem;
   }
 
   #aboutLayout {
@@ -377,11 +378,11 @@
 
   .sectionTitle {
     font-family: "Althite";
-    font-size: 6vw;
+    font-size: 10vw;
     margin: auto;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
-    white-space: nowrap;
+    white-space: wrap;
   }
 
   #postCategories {
@@ -511,15 +512,8 @@
       -ms-user-select: none;
     }
 
-    #intouchSection{
+    #intouchSection {
       display: flex;
-    }
-
-    #intouch {
-      font-size: 8rem;
-      line-height: 1.4;
-      margin-left: 20px;
-      width:60%;
     }
 
     .projectTitle {
@@ -545,6 +539,18 @@
       text-wrap-mode: wrap;
       text-wrap-style: auto;
       line-height: 65px;
+    }
+
+    #aboutSection h1 {
+      font-family: Althite;
+      font-size: 3rem;
+    }
+
+    #intouch {
+      font-size: 8rem !important;
+      line-height: 1.4;
+      margin-left: 20px;
+      width: 60%;
     }
   }
 </style>

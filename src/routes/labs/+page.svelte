@@ -172,19 +172,17 @@
       you selected '{selectedCategory.toLowerCase()}'
     </h1>
 
-    <!-- Category Filter Bar -->
     <Card className="categoryFilters">
       {#each allCategories as category}
         <Button
           text={category}
           active={selectedCategory === category}
           disableNavigation={true}
-          on:click={() => (selectedCategory = category)}
+          onclick={() => (selectedCategory = category)}
         />
       {/each}
     </Card>
 
-    <!-- Cards Grid -->
     <div class="flexCards">
       {#each filteredPosts as post}
         <Card id={post.slug.current}>

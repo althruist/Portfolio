@@ -4,8 +4,6 @@
   import gsap from "gsap";
   import { goto } from "$app/navigation";
 
-  const dispatch = createEventDispatcher();
-
   let {
     button = $bindable(),
     id = "",
@@ -16,6 +14,11 @@
     disableNavigation = false,
     active = false,
     newTab = true,
+    onmouseenter,
+    onmousedown,
+    onmouseleave,
+    onmouseup,
+    onclick
   } = $props();
 
   function resetColors() {
@@ -68,6 +71,7 @@
   class="button interactable {className} {active ? 'active' : ''}"
   value={text}
   onmousedown={() => {
+    onmousedown?.();
     if (id == "readmore") {
       playSound("openCard");
     } else if (className == "goBack") {
@@ -83,8 +87,8 @@
     });
   }}
   onmouseenter={() => {
+    onmouseenter?.();
     playSound("hover");
-    dispatch("mouseenter");
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-primary")
@@ -95,6 +99,7 @@
     });
   }}
   onmouseup={() => {
+    onmouseup?.();
     gsap
       .timeline()
       .to(button, {
@@ -110,7 +115,7 @@
       });
   }}
   onmouseleave={() => {
-    dispatch("mouseleave");
+    onmouseleave?.();
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-secondary")
@@ -120,9 +125,9 @@
       ease: "circ.out",
     });
   }}
-  onclick={(e) => {
+  onclick={() => {
+    onclick?.();
     click();
-    dispatch("click", e);
   }}
 />
 

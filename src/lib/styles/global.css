@@ -791,7 +791,7 @@ a:hover {
   }
 
   .tableOfContents {
-    width: max-content;
+    width: 80%;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
