@@ -146,7 +146,7 @@
     }
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links, screenshots}',
     );
 
     posts.sort((a, b) => {
@@ -157,7 +157,7 @@
       return new Date(b.created) - new Date(a.created);
     });
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", welcomeHeader);
+    mediaQuery.addEventListener("change", heroHeader);
     mediaQuery.addEventListener("change", setThemeMedia);
     await tick();
     ScrollTrigger.refresh();
@@ -166,7 +166,7 @@
 
 <title>althruist:portfolio</title>
 <div id="content">
-  <PageHeader id="welcomeHeader">
+  <PageHeader id="heroHeader" className="heroHeader">
     <div class="video-container">
       <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
         <source src={videoSource} type="video/mp4" />
@@ -206,7 +206,7 @@
               <div class="info noSelect">
                 <div class="infoContent noSelect">
                   <div class="infoGroup noSelect">
-                    <p id="date">{formatDateTime(post.created)}</p>
+                    <p class="date">{formatDateTime(post.created)}</p>
                     <div id="postCategories">
                       {#if post.featured}
                         <div>

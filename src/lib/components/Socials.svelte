@@ -1,8 +1,5 @@
 <script>
-  import {
-    playSound,
-    getCSSVariable,
-  } from "$lib/logic/globalFunctions";
+  import { playSound, getCSSVariable } from "$lib/logic/globalFunctions";
   import { onMount } from "svelte";
   import gsap from "gsap";
 
@@ -15,7 +12,6 @@
   }
 
   onMount(async () => {
-    
     const socialSVGs = Array.from(container.querySelectorAll(".socialSVG"));
 
     socialSVGs.forEach((svg) => {
@@ -154,3 +150,49 @@
     </svg>
   </a>
 </div>
+
+<style>
+  .socials {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .socials.footer {
+    margin-right: auto;
+    display: flex;
+    padding: 2rem;
+    padding-top: 1rem;
+  }
+
+  .socials.getintouch {
+    display: flex;
+    align-self: center;
+    scale: 1;
+    margin: auto;
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .socials.getintouch a {
+    width: 50px;
+    height: 50px;
+  }
+
+  .socials.getintouch svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .socialSVG .icon {
+    fill: var(--color-primary);
+  }
+
+  .socialSVG {
+    margin: auto;
+    width: 32px;
+    height: 32px;
+  }
+</style>

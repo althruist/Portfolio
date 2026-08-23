@@ -5,7 +5,13 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
 
-  let {children, pageHeader = $bindable(), id="", className = "", style=""} = $props();
+  let {
+    children,
+    pageHeader = $bindable(),
+    id = "",
+    className = "",
+    style = "",
+  } = $props();
 
   onMount(() => {
     if (className != "") {
@@ -25,12 +31,24 @@
 </script>
 
 <div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
-{@render children?.()}
+  {@render children?.()}
 </div>
 
 <style>
   div {
     overflow: hidden;
     position: relative;
+  }
+
+  .pageHeader {
+    background-color: var(--color-background);
+    height: 80vh;
+    width: 100%;
+    overflow: hidden;
+    color: var(--color-text);
+    align-content: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    position: static;
   }
 </style>

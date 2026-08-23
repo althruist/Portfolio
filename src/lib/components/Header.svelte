@@ -553,6 +553,27 @@
 </header>
 
 <style>
+  .buttons_mobile {
+    width: 100%;
+    height: 50%;
+    display: none;
+    grid-auto-rows: auto;
+    gap: 0.75rem;
+    justify-items: end;
+  }
+
+  .buttons_mobile a {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    padding: 0;
+    transform-origin: top;
+  }
+
   .logo {
     fill: var(--color-primary);
     cursor: pointer;
@@ -569,4 +590,20 @@
   #logoHeader {
     width: 80px;
   }
+
+  #header {
+  position: fixed;
+  width: 20%;
+  height: auto;
+  padding: 10px;
+  border-radius: 50px;
+  z-index: 1000;
+  text-align: center;
+  margin: 5% auto;
+  left: 0;
+  right: 0;
+  top: 80%;
+  will-change: transform;
+  transform: translateZ(0);
+}
 </style>

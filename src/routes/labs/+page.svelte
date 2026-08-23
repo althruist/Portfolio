@@ -32,6 +32,7 @@
 
   import headerVideoDay from "$lib/videos/labsday.mp4";
   import headerVideoNight from "$lib/videos/labsnight.mp4";
+  import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   let video;
   let videoSource;
 
@@ -136,7 +137,7 @@
     }
 
     posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links}',
+      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links, screenshots}',
     );
 
     posts.sort((a, b) => {
@@ -148,14 +149,14 @@
     });
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", welcomeHeader);
+    mediaQuery.addEventListener("change", heroHeader);
     mediaQuery.addEventListener("change", setVideo);
   });
 </script>
 
 <title>althruist:labs</title>
 <div id="content">
-  <PageHeader id="welcomeHeader">
+  <PageHeader id="heroHeader" className="heroHeader">
     <div class="video-container">
       <video bind:this={video} muted playsinline preload="auto" id="homeVideo">
         <source src={videoSource} type="video/mp4" />
@@ -203,7 +204,7 @@
             <div class="info">
               <div class="infoContent">
                 <div class="infoGroup">
-                  <p id="date">{formatDateTime(post.created)}</p>
+                  <p class="date">{formatDateTime(post.created)}</p>
                   <div id="postCategories">
                     {#if post.featured}
                       <div>

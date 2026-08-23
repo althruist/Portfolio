@@ -13,6 +13,7 @@ export async function load({ params }) {
       created,
       body,
       links,
+      screenshots
     }`,
     {
       slug: params.slug,

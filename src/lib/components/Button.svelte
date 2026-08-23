@@ -18,7 +18,7 @@
     onpointerdown,
     onpointerleave,
     onpointerup,
-    onclick
+    onclick,
   } = $props();
 
   function resetColors() {
@@ -140,5 +140,23 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     user-select: none;
+  }
+
+  .button {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 25px;
+    border: 0px;
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .button.outline {
+    background-color: var(--color-card);
+    color: var(--color-primary);
   }
 </style>

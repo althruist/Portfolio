@@ -63,31 +63,10 @@ h1 {
   color: var(--title-text);
 }
 
-.buttons_mobile {
-  width: 100%;
-  height: 50%;
-  display: none;
-  grid-auto-rows: auto;
-  gap: 0.75rem;
-  justify-items: end;
-}
-
 #gotolabs {
   display: block;
   width: 80%;
   margin: auto;
-}
-
-.buttons_mobile a {
-  width: 100%;
-  height: 100%;
-  border-radius: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  padding: 0;
-  transform-origin: top;
 }
 
 .flexCards {
@@ -112,33 +91,17 @@ blockquote {
   border-radius: 4px;
 }
 
-.mainCard {
-  padding: 20px;
-}
-
-.pageHeader {
-  background-color: var(--color-background);
-  height: 80vh;
-  width: 100%;
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
   overflow: hidden;
-  color: var(--color-text);
-  align-content: center;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  position: static;
 }
 
 .headerContent {
   position: relative;
   width: 80%;
   margin: auto;
-}
-
-.video-embed {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
 }
 
 .video-embed iframe {
@@ -238,41 +201,6 @@ code hr {
   background-color: var(--color-primary);
 }
 
-.post-body {
-  white-space: pre-line;
-}
-
-.post-body h2 {
-  color: var(--color-text);
-}
-
-.post-body h3 {
-  color: var(--color-text);
-}
-
-.post-body h4 {
-  color: var(--color-text);
-}
-
-.post-body h5 {
-  color: var(--color-text);
-}
-
-.post-body h6 {
-  color: var(--color-text);
-}
-
-#dropdownView {
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  display: grid;
-}
-
-#dropdownView .buttons {
-  display: block;
-}
-
 .codeLanguage {
   text-align: right;
   width: 95%;
@@ -281,22 +209,6 @@ code hr {
   font-size: 20px;
   font-weight: bold;
   color: var(--color-code-title);
-}
-
-#header {
-  position: fixed;
-  width: 20%;
-  height: auto;
-  padding: 10px;
-  border-radius: 50px;
-  z-index: 1000;
-  text-align: center;
-  margin: 5% auto;
-  left: 0;
-  right: 0;
-  top: 80%;
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 a {
@@ -316,15 +228,6 @@ a:hover {
   color: var(--color-link-active);
 }
 
-#linksCard {
-  width: 30%;
-}
-
-.socialLink img {
-  width: 15%;
-  vertical-align: middle;
-}
-
 .altText {
   font-size: 15px;
   color: var(--alt-text);
@@ -335,32 +238,19 @@ a:hover {
   color: var(--color-secondary);
 }
 
-#date {
+.date {
   color: var(--color-text);
   margin-bottom: 0;
   margin-top: 0;
   text-align: left;
 }
 
-#currentProject {
-  margin: auto;
-}
-
-#currentProject h1 {
-  margin-top: 0px;
-}
-
-#currentProject img {
-  width: 100%;
-  border-radius: 15px;
-}
-
-#welcomeHeader {
+.heroHeader {
   display: flex;
   align-items: center;
 }
 
-#welcomeHeader h1 {
+.heroHeader h1 {
   font-family: "Althite";
   font-size: 16vw;
   overflow-wrap: break-word;
@@ -371,7 +261,7 @@ a:hover {
   text-align: center;
 }
 
-#welcomeHeader h2 {
+.heroHeader h2 {
   color: var(--color-text);
   font-family: "Althite";
   text-align: center;
@@ -382,12 +272,12 @@ a:hover {
   border-radius: 20px;
 }
 
-#welcomeHeader h2 span {
+.heroHeader h2 span {
   font-size: 2vw;
   color: var(--color-secondary);
 }
 
-#welcomeHeader .name {
+.heroHeader .name {
   color: var(--color-secondary);
 }
 
@@ -425,40 +315,6 @@ a:hover {
   z-index: 2;
 }
 
-.socials {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.socials.footer {
-  margin-right: auto;
-  display: flex;
-  padding: 2rem;
-  padding-top: 1rem;
-}
-
-.socials.getintouch {
-  display: flex;
-  align-self: center;
-  scale: 1;
-  margin: auto;
-  padding-top: 20px;
-  padding-bottom: 40px;
-}
-
-.socials.getintouch a {
-  width:50px;
-  height:50px;
-}
-
-.socials.getintouch svg {
-  width:50px;
-  height:50px;
-}
-
 .card img {
   position: absolute;
   border-radius: 13px;
@@ -469,45 +325,6 @@ a:hover {
   scale: 0.95;
 }
 
-.button {
-  padding: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  padding-left: 40px;
-  padding-right: 40px;
-  border-radius: 25px;
-  border: 0px;
-  background-color: var(--color-primary);
-  color: var(--color-text);
-  cursor: pointer;
-}
-
-.button.outline {
-  background-color: var(--color-card);
-  color: var(--color-primary);
-}
-
-.card.gridItem {
-  width: 20rem;
-  height: 20rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.gridItem {
-  display: block;
-  position: relative;
-  overflow: hidden;
-}
-
-.gridItem img {
-  aspect-ratio: 1 / 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
 .model-viewer {
   display: block;
   width: 70%;
@@ -515,36 +332,6 @@ a:hover {
   scale: 1;
   aspect-ratio: 1;
   margin: auto;
-}
-
-.content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(
-    color-mix(in srgb, var(--color-primary), transparent 100%),
-    var(--color-primary)
-  );
-  padding: 1rem;
-  color: white;
-  display: flex;
-}
-
-.gridContentTitle {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.socialSVG .icon {
-  fill: var(--color-primary);
-}
-
-.socialSVG {
-  margin: auto;
-  width: 32px;
-  height: 32px;
 }
 
 #postCategories {
@@ -570,16 +357,6 @@ a:hover {
   width: 100%;
   border-radius: 3px;
   padding: 4px;
-}
-
-.postButtons {
-  display: flex;
-  flex-wrap: wrap;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  gap: 1rem;
-  width: 100%;
-  margin-top: 30px;
 }
 
 .postButton {
@@ -668,6 +445,17 @@ a:hover {
   flex-direction: column;
 }
 
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 20px;
+  aspect-ratio: unset;
+  padding: 0;
+}
+
 @media (min-width: 1024px) {
   #header {
     position: fixed;
@@ -730,10 +518,6 @@ a:hover {
     margin-left: 80px;
   }
 
-  #linksCard {
-    width: 30%;
-  }
-
   img {
     display: block;
     width: 70%;
@@ -773,7 +557,7 @@ a:hover {
     height: 30px;
   }
 
-  #welcomeHeader h1 {
+  .heroHeader h1 {
     font-family: "Althite";
     font-size: 9vw;
     white-space: normal;
@@ -783,7 +567,7 @@ a:hover {
     text-align: left;
   }
 
-  #welcomeHeader h2 {
+  .heroHeader h2 {
     font-family: "Althite";
     text-align: left;
     font-size: 3vw;
@@ -876,5 +660,16 @@ a:hover {
   #valuesSection {
     display: flex;
     flex-direction: row;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 20px;
+    aspect-ratio: unset;
+    padding:0;
   }
 }

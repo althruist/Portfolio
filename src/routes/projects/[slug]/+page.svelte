@@ -1,6 +1,7 @@
 <script>
   import Button from "$lib/components/Button.svelte";
   import Card from "$lib/components/Card.svelte";
+  import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   import { getImage } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { scrollTo } from "$lib/logic/globalFunctions.js";
@@ -25,6 +26,8 @@
       duration: 0.3,
     });
   }
+
+  let screenshots = project.screenshots;
 
   let activeSection = $state("");
 
@@ -116,7 +119,7 @@
     onpointerenter={onEnter}
     onpointerleave={onLeave}
   ></Button>
-  <p id="date">{formatDateTime(project.created)}</p>
+  <p class="date">{formatDateTime(project.created)}</p>
   <h1 id="title">{project.title}</h1>
   <div id="postCategories">
     {#if project.featured}
@@ -149,6 +152,10 @@
       {/each}
     </div>
   </Card>
+  {#if project.screenshots}
+    <CarouselGrid content={screenshots} filter="music" name="Music"></CarouselGrid>
+  {/if}
+
   <div class="post-body">
     {@html renderBody(project.body)}
   </div>
@@ -165,6 +172,30 @@
     padding: 10%;
     padding-top: 4%;
     padding-bottom: 4%;
+  }
+
+  .post-body {
+    white-space: pre-line;
+  }
+
+  .post-body h2 {
+    color: var(--color-text);
+  }
+
+  .post-body h3 {
+    color: var(--color-text);
+  }
+
+  .post-body h4 {
+    color: var(--color-text);
+  }
+
+  .post-body h5 {
+    color: var(--color-text);
+  }
+
+  .post-body h6 {
+    color: var(--color-text);
   }
 
   #mainImage {
@@ -204,6 +235,7 @@
     border: 1px solid var(--color-card-outline);
     align-items: center;
     display: flex;
+    margin-top: 0;
     margin-bottom: 0;
   }
 
@@ -212,8 +244,19 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  .postButtons {
+    display: flex;
+    flex-wrap: wrap;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 30px;
   }
 
   @media (min-width: 1024px) {
