@@ -7,16 +7,7 @@
   import { getCSSVariable, playSound } from "$lib/logic/globalFunctions";
 
   let MorphSVGPlugin;
-
-  import { Observer } from "gsap/all";
-
-  if (typeof window !== "undefined") {
-    gsap.registerPlugin(Observer);
-    import("gsap/MorphSVGPlugin").then((module) => {
-      MorphSVGPlugin = module.default || module.MorphSVGPlugin;
-      gsap.registerPlugin(MorphSVGPlugin);
-    });
-  }
+  let Observer;
 
   let { content = [], id, filter, name } = $props();
 
@@ -338,8 +329,17 @@
     });
   };
 
-  onMount(() => {
+  onMount(async () => {
     startAutoScroll();
+
+    // Dynamically import Observer inside onMount to ensure it only loads on the client
+    const observerModule = await import("gsap/Observer");
+    Observer = observerModule.default || observerModule.Observer;
+    gsap.registerPlugin(Observer);
+
+    const morphModule = await import("gsap/MorphSVGPlugin");
+    MorphSVGPlugin = morphModule.default || morphModule.MorphSVGPlugin;
+    gsap.registerPlugin(MorphSVGPlugin);
 
     if (carousel) {
       touchObserver = Observer.create({
