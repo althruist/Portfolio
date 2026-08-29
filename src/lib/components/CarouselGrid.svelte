@@ -5,9 +5,10 @@
   import { getImage } from "$lib/logic/data";
   import { ObservablePatch } from "@sanity/client";
   import { getCSSVariable, playSound } from "$lib/logic/globalFunctions";
-  import { Observer } from "gsap/Observer";
 
   let MorphSVGPlugin;
+
+  import { Observer } from "gsap/all";
 
   if (typeof window !== "undefined") {
     gsap.registerPlugin(Observer);
