@@ -178,7 +178,7 @@ export function renderBody(body) {
       if (url.includes("youtube.com") || url.includes("youtu.be")) {
         const videoIdMatch = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
         if (videoIdMatch) {
-          embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+          embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}/?rel=0&playsinline=1&loop=1&playlist=${videoIdMatch[1]}&mute=1&autoplay=1`;
         }
       } else if (url.includes("vimeo.com")) {
         const videoIdMatch = url.match(/vimeo\.com\/(\d+)/);
