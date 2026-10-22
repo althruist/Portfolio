@@ -2,7 +2,7 @@
   import { gsap } from "gsap";
   import { onMount, tick, onDestroy } from "svelte";
   import Card from "./Card.svelte";
-  import { getImage } from "$lib/logic/data";
+  import { getImage, getSrcSet } from "$lib/logic/data";
   import { ObservablePatch } from "@sanity/client";
   import { getCSSVariable, playSound } from "$lib/logic/globalFunctions";
 
@@ -483,7 +483,8 @@
       >
         <img
           class="gridImg noSelect"
-          src={getImage(screenshot.asset._ref)}
+          src={getImage(screenshot.asset._ref, 800)}
+          srcset={getSrcSet(screenshot.asset._ref)}
           alt={screenshot.alt}
           oncontextmenu={(e) => e.preventDefault()}
           draggable="false"

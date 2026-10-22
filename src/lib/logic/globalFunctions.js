@@ -1,5 +1,4 @@
 import gsap from "gsap";
-let ScrollToPlugin;
 
 import { Howl } from "howler";
 
@@ -21,12 +20,6 @@ const sounds = {
 };
 
 export function playSound(name, options = {}) {
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-  if (audioCtx.state === "suspended") {
-    return;
-  }
-
   const sound = sounds[name];
   if (!sound) return;
 
@@ -42,13 +35,29 @@ export function getCSSVariable(variable) {
     .trim();
 }
 
-export function scrollTo(place) {
-  if (!gsap) return;
-  gsap.to(window, {
-    duration: 0.3,
-    scrollTo: { y: place, offsetY: 140 },
-    ease: "sine.out",
-  });
+let lenis = null;
+
+export function setLenis(instance) {
+  lenis = instance;
+}
+
+export function scrollTo(target) {
+  if (lenis) {
+    lenis.scrollTo(target, {
+      offset: -140,
+      duration: 0.3,
+      easing: (t) => Math.sin((t * Math.PI) / 2),
+    });
+  } else {
+    const el =
+      typeof target === "string" ? document.querySelector(target) : target;
+    if (el) {
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + window.scrollY - 140,
+        behavior: "smooth",
+      });
+    }
+  }
 }
 
 export function mouseMove(event) {
@@ -63,24 +72,25 @@ export function mouseMove(event) {
 }
 
 export function addNoise(node) {
-  const animateCard = () => {
-    const x = Math.random() * 500;
-    const y = Math.random() * 500;
-    const duration = 0.02;
-
-    gsap.to(node, {
-      backgroundPosition: `${x}px ${y}px`,
-      duration,
-      ease: "linear",
-      onComplete: animateCard,
+  let visible = false,
+    call;
+  const tick = () => {
+    if (!visible) return;
+    gsap.set(node, {
+      backgroundPosition: `${Math.random() * 500}px ${Math.random() * 500}px`,
     });
+    call = gsap.delayedCall(0.07, tick);
   };
-
-  animateCard();
-
+  const io = new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible) tick();
+    else call?.kill();
+  });
+  io.observe(node);
   return {
     destroy() {
-      gsap.killTweensOf(node);
+      io.disconnect();
+      call?.kill();
     },
   };
 }

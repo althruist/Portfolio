@@ -8,15 +8,21 @@ export const client = createClient({
   projectId: projectId,
   dataset: dataset,
   apiVersion: "2025-09-17",
-  useCdn: false,
+  useCdn: true,
 });
 
 const builder = imageUrlBuilder(client);
 
-export function getImage(ref) {
+export function getImage(ref, width) {
   if (!ref) return "";
+  let img = builder.image(ref).quality(75).format("webp").fit("max");
+  if (width) img = img.width(width);
+  return img.url();
+}
 
-  return builder.image(ref).quality(70).format("webp").fit("max").url();
+export function getSrcSet(ref, widths = [400, 800, 1200, 1600, 2000]) {
+  if (!ref) return "";
+  return widths.map((w) => `${getImage(ref, w)} ${w}w`).join(", ");
 }
 
 export function getImageSize(ref) {

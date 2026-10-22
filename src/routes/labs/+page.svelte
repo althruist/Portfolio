@@ -1,40 +1,37 @@
 <script>
-  import { onMount } from "svelte";
-  import { client } from "$lib/logic/data.js";
-  import { renderBody, formatDateTime } from "$lib/logic/formatter";
-  import { getImage } from "$lib/logic/data.js";
+  import { onMount, tick } from "svelte";
+  import { formatDateTime } from "$lib/logic/formatter";
+  import { getImage, getSrcSet } from "$lib/logic/data.js";
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
-  import { goto } from "$app/navigation";
 
-  let posts = [];
+  import headerVideoDay from "$lib/videos/labsday.mp4";
+  import headerVideoNight from "$lib/videos/labsnight.mp4";
 
-  let imgElement;
-  let content;
+  let { data } = $props();
+  const posts = $derived(data.posts);
 
-  let selectedCategory = "All";
+  let selectedCategory = $state("All");
 
-  $: allCategories = [
+  const allCategories = $derived([
     "All",
     ...new Set(posts.flatMap((p) => p.categories?.map((c) => c.title) || [])),
-  ];
+  ]);
 
-  $: filteredPosts =
+  const filteredPosts = $derived(
     selectedCategory === "All"
       ? posts
       : posts.filter((post) =>
           post.categories?.some((cat) => cat.title === selectedCategory),
-        );
+        ),
+  );
 
-  import headerVideoDay from "$lib/videos/labsday.mp4";
-  import headerVideoNight from "$lib/videos/labsnight.mp4";
-  import CarouselGrid from "$lib/components/CarouselGrid.svelte";
   let video;
-  let videoSource;
+  let videoSource = $state();
 
   const MAX_CATEGORIES = 2;
 
@@ -45,16 +42,14 @@
     return { visible, hiddenCount };
   }
 
-  function setVideo() {
+  async function setVideo() {
     videoSource = isDarkMode() ? headerVideoNight : headerVideoDay;
-    if (video) {
-      video.load();
-    }
+    await tick();
+    video?.load();
   }
 
   function animateIn(e) {
     const info = e.currentTarget.querySelector(".info");
-    const img = info.parentElement.querySelector("#mainImage");
     const button = info.querySelector("input");
 
     gsap.to(info, {
@@ -66,18 +61,11 @@
         if (button) button.disabled = false;
       },
     });
-
-    gsap.to(img, {
-      filter: "blur(10px)",
-      ease: "power2.out",
-      duration: 0.3,
-    });
   }
 
   function animateOut(e) {
     const info = e.currentTarget.querySelector(".info");
     const button = info.querySelector("input");
-    const img = info.parentElement.querySelector("#mainImage");
 
     gsap.to(info, {
       opacity: 0,
@@ -88,69 +76,43 @@
         if (button) button.disabled = true;
       },
     });
-
-    gsap.to(img, {
-      filter: "blur(0px)",
-      ease: "power2.out",
-      duration: 0.3,
-    });
-
     if (button) button.disabled = true;
   }
 
-  onMount(async () => {
+  onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const duration = video.duration;
-    let scrollTriggerInstance;
-
-    setVideo();
-
-    const exposure = isDarkMode() ? 1.8 : 1;
-    document
-      .querySelectorAll("model-viewer")
-      .forEach((v) => (v.exposure = exposure));
+    const v = video;
+    let trigger;
 
     const setupScrollScrub = () => {
-      if (!video) return;
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-      }
+      trigger?.kill();
 
-      const videoDuration = video.duration;
-
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: video,
+      trigger = ScrollTrigger.create({
+        trigger: v,
         start: "top top",
         end: "+=950",
         scrub: 1,
         onUpdate: (self) => {
-          if (video) video.currentTime = videoDuration * self.progress;
+          if (!isFinite(v.duration)) return;
+          v.currentTime = v.duration * self.progress;
         },
       });
     };
 
-    if (video.readyState >= 1) {
-      setupScrollScrub();
-    } else {
-      video.addEventListener("loadedmetadata", setupScrollScrub);
-    }
+    v.addEventListener("loadedmetadata", setupScrollScrub);
+    if (v.readyState >= 1) setupScrollScrub();
 
-    posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links, screenshots}',
-    );
-
-    posts.sort((a, b) => {
-      if ((b.featured === true) !== (a.featured === true)) {
-        return (b.featured === true) - (a.featured === true);
-      }
-
-      return new Date(b.created) - new Date(a.created);
-    });
+    setVideo();
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", heroHeader);
     mediaQuery.addEventListener("change", setVideo);
+
+    return () => {
+      trigger?.kill();
+      v.removeEventListener("loadedmetadata", setupScrollScrub);
+      mediaQuery.removeEventListener("change", setVideo);
+    };
   });
 </script>
 
@@ -198,7 +160,8 @@
               id="mainImage"
               loading="lazy"
               fetchpriority="low"
-              src={getImage(post.mainImage.asset._id)}
+              src={getImage(post.mainImage.asset._id, 800)}
+              srcset={getSrcSet(post.mainImage.asset._id)}
               alt={post.mainImage.alt}
             />
             <div class="info">
@@ -241,6 +204,7 @@
 <style>
   #mainImage {
     width: 100%;
+    transition: filter 0.3s ease-out;
   }
 
   .sectionTitle {
@@ -328,6 +292,12 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+  }
+
+  @media (hover: hover) {
+    .imageArea:hover #mainImage {
+      filter: blur(10px);
+    }
   }
 
   @media (min-width: 1024px) {

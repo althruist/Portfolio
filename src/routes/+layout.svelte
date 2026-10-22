@@ -7,28 +7,20 @@
 
   import Header from "$lib/components/Header.svelte";
   import Cursor from "$lib/components/Cursor.svelte";
+  import Socials from "$lib/components/Socials.svelte";
   import { onMount } from "svelte";
   import { injectAnalytics } from "@vercel/analytics/sveltekit";
   import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
-  import Page from "./+page.svelte";
-  import {
-  addNoise,
-    getCSSVariable,
-    isDarkMode,
-    playSound,
-  } from "$lib/logic/globalFunctions";
+  import { addNoise, isDarkMode, setLenis } from "$lib/logic/globalFunctions";
 
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Lenis from "lenis";
-  import Socials from "$lib/components/Socials.svelte";
 
   let { children } = $props();
 
   let background;
-  let transition;
-  let logoTransition;
-  let circlePointer;
   let footer;
-
   let content;
   let smoothWrapper;
 
@@ -46,30 +38,31 @@
     setFavicon(isDarkMode() ? darkFavicon : lightFavicon);
   }
 
-  onMount(async () => {
-    const gsapModule = await import("gsap");
-    const gsap = gsapModule.default;
+  onMount(() => {
+    gsap.registerPlugin(ScrollTrigger);
 
     injectAnalytics();
     injectSpeedInsights();
 
-    const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-    const { ScrollToPlugin } = await import("gsap/ScrollToPlugin");
-
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
     const lenis = new Lenis({ duration: 1 });
+    setLenis(lenis);
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1400);
-    });
+    const raf = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     updateFavicon();
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", updateFavicon);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateFavicon);
+      gsap.ticker.remove(raf);
+      lenis.destroy();
+      setLenis(null);
+    };
   });
 </script>
 

@@ -146,8 +146,6 @@ blockquote {
   border-radius: 20px;
   padding: 10px;
   margin-top: 25px;
-  -webkit-backdrop-filter: blur(50px);
-  backdrop-filter: blur(50px);
   box-shadow: 0px 0px 10px var(--color-shadow);
 }
 
@@ -457,6 +455,13 @@ a:hover {
   padding: 0;
 }
 
+#header,
+.card.footer,
+.tableOfContents {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
 @media (min-width: 1024px) {
   #header {
     position: fixed;
@@ -501,9 +506,7 @@ a:hover {
     border-radius: 20px;
     padding: 10px;
     margin-top: 25px;
-    -webkit-backdrop-filter: blur(50px);
-    backdrop-filter: blur(50px);
-    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.205));
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.205);
   }
 
   .card.fullCard {
@@ -671,6 +674,6 @@ a:hover {
     margin-top: 20px;
     border-radius: 20px;
     aspect-ratio: unset;
-    padding:0;
+    padding: 0;
   }
 }

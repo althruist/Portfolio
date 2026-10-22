@@ -1,21 +1,24 @@
 <script>
   import { onMount, tick } from "svelte";
-  import { client } from "$lib/logic/data.js";
+  import { getSrcSet } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { getImage } from "$lib/logic/data.js";
   import Card from "$lib/components/Card.svelte";
   import Button from "$lib/components/Button.svelte";
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import { addNoise, isDarkMode, disableContextMenu } from "$lib/logic/globalFunctions";
+  import {
+    addNoise,
+    isDarkMode,
+    disableContextMenu,
+  } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { goto } from "$app/navigation";
-
+  let { data } = $props();
+  const posts = $derived(data.posts);
 
   import deerLight from "$lib/images/deer/deerlight.png";
   import deerDark from "$lib/images/deer/deerdark.png";
-
-  let posts = [];
 
   let imgElement;
   let content;
@@ -29,9 +32,9 @@
   let video;
   let aboutVideo;
 
-  let videoSource;
-  let aboutVideoSource;
-  let deerSource;
+  let videoSource = $state();
+  let aboutVideoSource = $state();
+  let deerSource = $state();
 
   let labsSection;
 
@@ -58,7 +61,6 @@
 
   function animateIn(e) {
     const info = e.currentTarget.querySelector(".info");
-    const img = info.parentElement.querySelector("#mainImage");
     const button = info.querySelector("input");
 
     gsap.to(info, {
@@ -70,18 +72,11 @@
         if (button) button.disabled = false;
       },
     });
-
-    gsap.to(img, {
-      filter: "blur(10px)",
-      ease: "power2.out",
-      duration: 0.3,
-    });
   }
 
   function animateOut(e) {
     const info = e.currentTarget.querySelector(".info");
     const button = info.querySelector("input");
-    const img = info.parentElement.querySelector("#mainImage");
 
     gsap.to(info, {
       opacity: 0,
@@ -93,74 +88,61 @@
       },
     });
 
-    gsap.to(img, {
-      filter: "blur(0px)",
-      ease: "power2.out",
-      duration: 0.3,
-    });
-
     if (button) button.disabled = true;
   }
 
-  onMount(async () => {
+  onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
-    let scrollTriggerInstance;
+
+    const v = video;
+    const a = aboutVideo;
+    let triggers = [];
+
+    const setupScrollScrub = () => {
+      triggers.forEach((t) => t.kill());
+
+      triggers = [
+        ScrollTrigger.create({
+          trigger: v,
+          start: "top top",
+          end: "+=650",
+          scrub: 1,
+          onUpdate: (self) => {
+            if (!isFinite(v.duration)) return;
+            v.currentTime = v.duration * self.progress;
+          },
+        }),
+        ScrollTrigger.create({
+          trigger: a,
+          start: "top+=100px bottom",
+          end: "bottom+=400px bottom",
+          invalidateOnRefresh: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            if (!isFinite(a.duration)) return;
+            a.currentTime = a.duration * self.progress;
+          },
+        }),
+      ];
+    };
+
+    v.addEventListener("loadedmetadata", setupScrollScrub);
+    a.addEventListener("loadedmetadata", setupScrollScrub);
+    if (v.readyState >= 1 && a.readyState >= 1) setupScrollScrub();
 
     setThemeMedia();
 
-    const setupScrollScrub = () => {
-      if (!video || !aboutVideo) return;
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-      }
-
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: video,
-        start: "top top",
-        end: "+=650",
-        scrub: 1,
-        onUpdate: (self) => {
-          if (!video || !isFinite(video.duration)) return;
-          video.currentTime = video.duration * self.progress;
-        },
-      });
-
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: aboutVideo,
-        start: "top+=100px bottom",
-        end: "bottom+=400px bottom",
-        invalidateOnRefresh: true,
-        scrub: 1,
-        onUpdate: (self) => {
-          if (!aboutVideo || !isFinite(aboutVideo.duration)) return;
-          aboutVideo.currentTime = aboutVideo.duration * self.progress;
-        },
-      });
-    };
-
-    if (video.readyState >= 1 && aboutVideo.readyState >= 1) {
-      setupScrollScrub();
-    } else {
-      video.addEventListener("loadedmetadata", setupScrollScrub);
-      aboutVideo.addEventListener("loadedmetadata", setupScrollScrub);
-    }
-
-    posts = await client.fetch(
-      '*[_type == "post"]{title,slug,mainImage{asset->{_id,url},alt},categories[]->{title},homepage,featured,subcategories[]->{title},created,body,links, screenshots}',
-    );
-
-    posts.sort((a, b) => {
-      if ((b.featured === true) !== (a.featured === true)) {
-        return (b.featured === true) - (a.featured === true);
-      }
-
-      return new Date(b.created) - new Date(a.created);
-    });
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", heroHeader);
     mediaQuery.addEventListener("change", setThemeMedia);
-    await tick();
-    ScrollTrigger.refresh();
+
+    tick().then(() => ScrollTrigger.refresh());
+
+    return () => {
+      triggers.forEach((t) => t.kill());
+      v.removeEventListener("loadedmetadata", setupScrollScrub);
+      a.removeEventListener("loadedmetadata", setupScrollScrub);
+      mediaQuery.removeEventListener("change", setThemeMedia);
+    };
   });
 </script>
 
@@ -187,58 +169,54 @@
     <h1 class="sectionTitle noSelect">highlighted projects</h1>
     <div class="flexCards">
       {#each posts as post}
-        {#if post.homepage}
-          <Card id={post.slug.current}>
-            <div
-              class="imageArea"
-              onmouseenter={animateIn}
-              onmouseleave={animateOut}
-              role="button"
-              tabindex="0"
-            >
-              <img
-                id="mainImage"
-                loading="lazy"
-                fetchpriority="low"
-                src={getImage(post.mainImage.asset._id)}
-                alt={post.mainImage.alt}
-              />
-              <div class="info noSelect">
-                <div class="infoContent noSelect">
-                  <div class="infoGroup noSelect">
-                    <p class="date">{formatDateTime(post.created)}</p>
-                    <div id="postCategories">
-                      {#if post.featured}
+        <Card id={post.slug.current}>
+          <div
+            class="imageArea"
+            onmouseenter={animateIn}
+            onmouseleave={animateOut}
+            role="button"
+            tabindex="0"
+          >
+            <img
+              id="mainImage"
+              loading="lazy"
+              fetchpriority="low"
+              src={getImage(post.mainImage.asset._id, 800)}
+              srcset={getSrcSet(post.mainImage.asset._id)}
+              alt={post.mainImage.alt}
+            />
+            <div class="info noSelect">
+              <div class="infoContent noSelect">
+                <div class="infoGroup noSelect">
+                  <p class="date">{formatDateTime(post.created)}</p>
+                  <div id="postCategories">
+                    {#if post.featured}
+                      <div>
+                        <p id="featured">Featured</p>
+                      </div>
+                    {/if}
+                    {#if post.categories && post.categories.length > 0}
+                      {#each getCategories(post).visible as category}
                         <div>
-                          <p id="featured">Featured</p>
+                          <p>{category.title}</p>
+                        </div>
+                      {/each}
+
+                      {#if getCategories(post).hiddenCount > 0}
+                        <div>
+                          <p>+{getCategories(post).hiddenCount}</p>
                         </div>
                       {/if}
-                      {#if post.categories && post.categories.length > 0}
-                        {#each getCategories(post).visible as category}
-                          <div>
-                            <p>{category.title}</p>
-                          </div>
-                        {/each}
-
-                        {#if getCategories(post).hiddenCount > 0}
-                          <div>
-                            <p>+{getCategories(post).hiddenCount}</p>
-                          </div>
-                        {/if}
-                      {/if}
-                    </div>
-                    <h1 class="projectTitle noSelect">{post.title}</h1>
+                    {/if}
                   </div>
-                  <Button
-                    id="readmore"
-                    slug={post.slug.current}
-                    text="read more"
-                  ></Button>
+                  <h1 class="projectTitle noSelect">{post.title}</h1>
                 </div>
+                <Button id="readmore" slug={post.slug.current} text="read more"
+                ></Button>
               </div>
             </div>
-          </Card>
-        {/if}
+          </div>
+        </Card>
       {/each}
     </div>
   </section>
@@ -341,10 +319,6 @@
 </div>
 
 <style>
-  #mainImage {
-    width: 100%;
-  }
-
   #aboutVideo {
     width: 90%;
     height: 250px;
@@ -489,6 +463,17 @@
 
   #deerImg {
     display: none;
+  }
+
+  #mainImage {
+    width: 100%;
+    transition: filter 0.3s ease-out;
+  }
+
+  @media (hover: hover) {
+    .imageArea:hover #mainImage {
+      filter: blur(10px);
+    }
   }
 
   @media (min-width: 1024px) {

@@ -2,7 +2,7 @@
   import Button from "$lib/components/Button.svelte";
   import Card from "$lib/components/Card.svelte";
   import CarouselGrid from "$lib/components/CarouselGrid.svelte";
-  import { getImage } from "$lib/logic/data.js";
+  import { getImage, getSrcSet } from "$lib/logic/data.js";
   import { renderBody, formatDateTime } from "$lib/logic/formatter";
   import { scrollTo } from "$lib/logic/globalFunctions.js";
   import gsap from "gsap";
@@ -31,13 +31,14 @@
 
   let activeSection = $state("");
 
-  onMount(async () => {
-    await import("@google/model-viewer");
+  onMount(() => {
+    import("@google/model-viewer").catch(() => {});
 
-    let TOC = document.querySelector(".tableOfContents");
-    let TOCTitle = document.querySelector("#tocTitle");
+    const TOC = document.querySelector(".tableOfContents");
+    const TOCTitle = document.querySelector("#tocTitle");
+    if (!TOC || !TOCTitle) return;
 
-    TOC.addEventListener("pointerenter", () => {
+    const tocEnter = () => {
       if (window.innerWidth >= 1024) {
         gsap.to(TOC, {
           top: `calc(82% + ${-TOC.offsetHeight + 110}px)`,
@@ -50,54 +51,47 @@
           ease: "circ.out",
         });
       }
-    });
+    };
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 1024) {
-        gsap.set(TOCTitle, {
-          marginTop: "15px",
-        });
-      } else {
-        gsap.set(TOCTitle, {
-          marginTop: "-7px",
-        });
-      }
-    });
-
-    TOC.addEventListener("pointerleave", () => {
+    const tocLeave = () => {
       if (window.innerWidth >= 1024) {
-        gsap.to(TOC, {
-          top: "95%",
-          duration: 0.3,
-          ease: "circ.out",
-        });
+        gsap.to(TOC, { top: "95%", duration: 0.3, ease: "circ.out" });
         gsap.to(TOCTitle, {
           marginTop: "-7px",
           duration: 0.4,
           ease: "circ.out",
         });
       }
-    });
-
-    const sections = document.querySelectorAll("section");
-
-    const options = {
-      root: null,
-      rootMargin: "-20% 0px -60% 0px",
-      threshold: 0,
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeSection = entry.target.id;
-        }
+    const onResize = () => {
+      gsap.set(TOCTitle, {
+        marginTop: window.innerWidth < 1024 ? "15px" : "-7px",
       });
-    }, options);
+    };
 
+    TOC.addEventListener("pointerenter", tocEnter);
+    TOC.addEventListener("pointerleave", tocLeave);
+    window.addEventListener("resize", onResize);
+
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) activeSection = entry.target.id;
+        });
+      },
+      { root: null, rootMargin: "-20% 0px -60% 0px", threshold: 0 },
+    );
     sections.forEach((section) => observer.observe(section));
 
-    return () => observer.disconnect();
+    return () => {
+      TOC.removeEventListener("pointerenter", tocEnter);
+      TOC.removeEventListener("pointerleave", tocLeave);
+      window.removeEventListener("resize", onResize);
+      observer.disconnect();
+      gsap.killTweensOf([TOC, TOCTitle]);
+    };
   });
 </script>
 
@@ -108,7 +102,8 @@
   bind:this={mainImage}
   loading="lazy"
   fetchpriority="low"
-  src={getImage(project.mainImage.asset._id)}
+  src={getImage(project.mainImage.asset._id, 800)}
+  srcset={getSrcSet(project.mainImage.asset._id)}
   alt={project.mainImage.alt}
 />
 <div id="content">
@@ -153,7 +148,8 @@
     </div>
   </Card>
   {#if project.screenshots}
-    <CarouselGrid content={screenshots} filter="music" name="Music"></CarouselGrid>
+    <CarouselGrid content={screenshots} filter="music" name="Music"
+    ></CarouselGrid>
   {/if}
 
   <div class="post-body">
