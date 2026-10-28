@@ -155,12 +155,11 @@
       </video>
     </div>
     <div class="headerContent">
-      <h1 class="emphasis noSelect">
-        Heya, i'm <span class="name">Kieran</span>!
+      <h1 class="noSelect">
+        heya, i'm <span class="name">Kieran</span>!
       </h1>
-      <h2 class="emphasis noSelect">
-        A Game Developer, Musician, Content Creator<br />
-        <span>(& a lil' bit of everything else :])</span>
+      <h2 id="headline" class="noSelect">
+        <span>a multidisciplinary game developer</span>
       </h2>
     </div>
   </PageHeader>
@@ -169,7 +168,7 @@
     <h1 class="sectionTitle noSelect">highlighted projects</h1>
     <div class="flexCards">
       {#each posts as post}
-        <Card id={post.slug.current}>
+        <Card id={post.slug.current} className="projectCard">
           <div
             class="imageArea"
             onmouseenter={animateIn}
@@ -323,7 +322,7 @@
     width: 90%;
     height: 250px;
     margin: 20px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -400,7 +399,7 @@
 
   .aboutText {
     font-size: 1.3rem;
-    padding: 20px;
+    padding: var(--padding-card);
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -423,7 +422,7 @@
     width: 92%;
     height: 92%;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -476,7 +475,7 @@
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1064px) {
     .sectionTitle {
       font-family: "Althite";
       font-size: 4rem;
@@ -537,6 +536,10 @@
       line-height: 1.4;
       margin-left: 20px;
       width: 60%;
+    }
+    
+    #headline{
+      padding-left: 0;
     }
   }
 </style>

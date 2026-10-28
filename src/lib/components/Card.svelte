@@ -5,13 +5,15 @@
   import { goto } from "$app/navigation";
   import { addNoise, playSound } from "$lib/logic/globalFunctions";
 
-  let {children, card = $bindable(), id = "", className = "", style = "" } = $props();
+  let {
+    children,
+    card = $bindable(),
+    id = "",
+    className = "",
+    style = "",
+  } = $props();
 
   onMount(() => {
-    if (className != "") {
-      className = ` ${className}`;
-    }
-
     gsap.registerPlugin(ScrollTrigger);
 
     const addBounce = () => {
@@ -89,6 +91,6 @@
   });
 </script>
 
-<div bind:this={card} {id} class="card{className}" {style} use:addNoise>
-{@render children?.()}
+<div bind:this={card} {id} class="card {className}" {style} use:addNoise>
+  {@render children?.()}
 </div>

@@ -1,6 +1,7 @@
 <script>
   import "$lib/styles/fonts.css";
   import "$lib/styles/global.css";
+  import "$lib/styles/variables.css";
 
   import lightFavicon from "$lib/images/SVG/Favicons/Light.ico";
   import darkFavicon from "$lib/images/SVG/Favicons/Dark.ico";
@@ -93,28 +94,6 @@
   />
   <meta name="twitter:image" content="https://althruist.fyi/preview.jpg" />
 </svelte:head>
-
-<link
-  rel="preload"
-  href="/fonts/Althite.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/Lexend.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/Rubik.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
 
 <div id="background-wrapper">
   <div bind:this={background} id="background"></div>

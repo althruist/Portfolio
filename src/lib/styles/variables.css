@@ -1,0 +1,55 @@
+:root {
+  /* colors */
+  --color-basic: rgb(255, 255, 255);
+  --color-primary: rgb(114, 144, 206);
+  --color-secondary: rgb(255, 166, 1);
+  --color-code-text: rgb(20, 15, 7);
+  --color-code-title: rgb(18, 27, 85);
+  --color-background: rgb(228, 237, 255);
+  --color-card: rgba(255, 255, 255, 0.548);
+  --color-hovercard: rgba(196, 215, 255, 0.788);
+  --color-card-outline: rgba(221, 224, 219, 0.815);
+  --color-link: rgb(69, 143, 255);
+  --color-link-active: rgb(255, 191, 16);
+  --color-text: rgb(20, 19, 18);
+  --color-alt-text: rgba(83, 78, 73, 0.596);
+  --color-title-text: rgb(40, 47, 85);
+  --color-shadow: rgba(187, 219, 255, 0.541);
+  --color-button-unselected: rgba(211, 211, 211, 0.438);
+  --color-button-hover-selectable: rgba(218, 189, 146, 0.438);
+  --color-button-text-selected: rgb(83, 53, 28);
+
+  /* images */
+  --image-frosting: url("/images/Frosting.webp");
+
+  /* utilities*/
+  --radius-card: 20px;
+  --padding-card: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* colors */
+    --color-basic: rgb(0, 0, 0);
+    --color-primary: rgb(34, 89, 197);
+    --color-secondary: rgb(255, 108, 75);
+    --color-background: rgb(17, 25, 41);
+    --color-card: rgba(0, 0, 0, 0.548);
+    --color-hovercard: rgba(3, 10, 27, 0.788);
+    --color-code-text: rgb(180, 206, 255);
+    --color-code-title: rgb(123, 255, 176);
+    --color-card-outline: rgba(20, 33, 63, 0.815);
+    --color-link: rgb(183, 124, 223);
+    --color-link-active: rgb(34, 89, 197);
+    --color-text: rgb(255, 238, 221);
+    --color-alt-text: rgba(218, 207, 196, 0.658);
+    --color-title-text: rgb(202, 210, 255);
+    --color-shadow: rgba(8, 11, 53, 0.445);
+    --color-button-unselected: rgba(0, 0, 0, 0.438);
+    --color-button-hover-selectable: rgba(34, 11, 5, 0.699);
+    --color-button-text-selected: rgb(70, 31, 25);
+
+    /* images */
+    --image-frosting: url("/images/FrostingDark.webp");
+  }
+}

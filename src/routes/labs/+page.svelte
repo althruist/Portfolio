@@ -126,22 +126,21 @@
     </div>
     <div class="headerContent">
       <h1 class="noSelect">labs</h1>
-      <h2 class="emphasis noSelect">all my projects in one spot!</h2>
+      <h2 class="noSelect">all my projects in one spot!</h2>
     </div>
   </PageHeader>
 
   <section id="projectsSection">
-    <h1 class="sectionTitle">
-      you selected '{selectedCategory.toLowerCase()}'
-    </h1>
-
-    <Card className="categoryFilters">
+    <Card className="categoryFilters noBounce">
       {#each allCategories as category}
         <Button
           text={category}
           active={selectedCategory === category}
           disableNavigation={true}
           onclick={() => (selectedCategory = category)}
+          className="categoryButton"
+          bounceIntensity="0.3"
+          selectable="true"
         />
       {/each}
     </Card>
@@ -211,7 +210,7 @@
     font-family: "Althite";
     font-size: 2rem;
     margin: auto;
-    padding: 20px;
+    padding: var(--padding-card);
     text-align: center;
     white-space: nowrap;
   }
@@ -267,7 +266,7 @@
     width: 92%;
     height: 92%;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -300,7 +299,7 @@
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1064px) {
     .sectionTitle {
       font-family: "Althite";
       font-size: 4rem;

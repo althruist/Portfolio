@@ -540,7 +540,7 @@
     transform: translateY(-50%);
     pointer-events: auto;
     background-color: var(--color-primary);
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     cursor: pointer;
     padding: 0.5rem 1rem;
     font-size: 1.5rem;
@@ -604,7 +604,7 @@
     color: var(--color-text);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1064px) {
     dialog img {
       width: 90vh;
       height: auto;

@@ -39,7 +39,7 @@
     if (!TOC || !TOCTitle) return;
 
     const tocEnter = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1064) {
         gsap.to(TOC, {
           top: `calc(82% + ${-TOC.offsetHeight + 110}px)`,
           duration: 0.3,
@@ -54,7 +54,7 @@
     };
 
     const tocLeave = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 1064) {
         gsap.to(TOC, { top: "95%", duration: 0.3, ease: "circ.out" });
         gsap.to(TOCTitle, {
           marginTop: "-7px",
@@ -66,7 +66,7 @@
 
     const onResize = () => {
       gsap.set(TOCTitle, {
-        marginTop: window.innerWidth < 1024 ? "15px" : "-7px",
+        marginTop: window.innerWidth < 1064 ? "15px" : "-7px",
       });
     };
 
@@ -222,7 +222,7 @@
   }
 
   .tag1 {
-    padding: 20px !important;
+    padding: var(--padding-card) !important;
     background-color: var(--color-card) !important;
     color: var(--color-text) !important;
     font-weight: bold;
@@ -255,7 +255,7 @@
     margin-top: 30px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: var(1064px)) {
     #title {
       font-size: 300%;
     }

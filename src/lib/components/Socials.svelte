@@ -1,53 +1,59 @@
 <script>
-  import { playSound, getCSSVariable } from "$lib/logic/globalFunctions";
+  import { playSound } from "$lib/logic/globalFunctions";
   import { onMount } from "svelte";
   import gsap from "gsap";
 
   let { variant = "default", container = $bindable() } = $props();
 
-  function resetColors(item) {
-    gsap.set(item, {
-      fill: getCSSVariable("--color-primary"),
-    });
-  }
-
-  onMount(async () => {
+  onMount(() => {
     const socialSVGs = Array.from(container.querySelectorAll(".socialSVG"));
+
+    const cleanup = [];
 
     socialSVGs.forEach((svg) => {
       const parent = svg.parentElement;
 
-      parent.addEventListener("pointerenter", () => {
+      const handleEnter = () => {
         playSound("hover");
-        gsap.to(svg.querySelector(".icon"), {
-          fill: getCSSVariable("--color-primary"),
-          duration: 0.2,
-        });
+
         gsap.to(parent, {
           scale: 1.3,
           duration: 0.2,
+          overwrite: "auto",
         });
-      });
+      };
 
-      parent.addEventListener("pointerdown", () => {
+      const handleDown = () => {
         playSound("openLink");
-      });
+      };
 
-      parent.addEventListener("pointerleave", () => {
-        gsap.to(svg.querySelector(".icon"), {
-          duration: 0.2,
-        });
+      const handleLeave = () => {
         gsap.to(parent, {
           scale: 1,
           duration: 0.2,
+          overwrite: "auto",
         });
+      };
+
+      parent.addEventListener("pointerenter", handleEnter);
+      parent.addEventListener("pointerdown", handleDown);
+      parent.addEventListener("pointerleave", handleLeave);
+
+      cleanup.push(() => {
+        parent.removeEventListener("pointerenter", handleEnter);
+        parent.removeEventListener("pointerdown", handleDown);
+        parent.removeEventListener("pointerleave", handleLeave);
+        gsap.killTweensOf(parent);
       });
     });
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     socialSVGs.forEach((svg) => {
-      mediaQuery.addEventListener("change", resetColors(svg));
+      const icon = svg.querySelector(".icon");
+      gsap.killTweensOf(icon);
+      gsap.set(icon, { clearProps: "fill" });
     });
+
+    return () => cleanup.forEach((fn) => fn());
   });
 </script>
 
@@ -187,7 +193,8 @@
   }
 
   .socialSVG .icon {
-    fill: var(--color-primary);
+    fill: var(--color-title-text);
+    transition: fill 0 ease;
   }
 
   .socialSVG {

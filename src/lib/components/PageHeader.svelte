@@ -1,7 +1,6 @@
+
 <script>
-  import { page } from "$app/state";
   import gsap from "gsap";
-  import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
 
@@ -14,32 +13,35 @@
   } = $props();
 
   onMount(() => {
-    if (className != "") {
-      className = ` ${className}`;
-    }
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.to(pageHeader, {
+    const animation = gsap.to(pageHeader, {
       opacity: 0,
       scrollTrigger: {
+        trigger: pageHeader,
         start: "top top",
         end: "+=500",
         scrub: 0.5,
       },
     });
+
+    return () => {
+      animation.scrollTrigger?.kill();
+      animation.kill();
+    };
   });
 </script>
 
-<div bind:this={pageHeader} {id} class="pageHeader{className}" {style}>
+<div
+  bind:this={pageHeader}
+  {id}
+  class={`pageHeader ${className}`}
+  {style}
+>
   {@render children?.()}
 </div>
 
 <style>
-  div {
-    overflow: hidden;
-    position: relative;
-  }
-
   .pageHeader {
     background-color: var(--color-background);
     height: 80vh;
@@ -49,6 +51,6 @@
     align-content: center;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    position: static;
+    position: relative;
   }
 </style>

@@ -39,7 +39,7 @@
     font-size: 14vw;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: var(1064px)) {
     h1 {
       font-size: 7vw;
     }

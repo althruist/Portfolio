@@ -157,8 +157,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         pointer-events: none;
         z-index: 9999;
         will-change: transform;

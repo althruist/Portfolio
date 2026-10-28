@@ -19,22 +19,35 @@
     onpointerleave,
     onpointerup,
     onclick,
+    bounceIntensity = 1,
+    selectable,
   } = $props();
 
   function resetColors() {
     gsap.set(button, {
       backgroundColor: active
         ? getCSSVariable("--color-secondary")
-        : getCSSVariable("--color-primary"),
+        : selectable
+          ? getCSSVariable("--color-button-unselected")
+          : getCSSVariable("--color-primary"),
+      color: active
+        ? getCSSVariable("--color-button-text-selected")
+        : getCSSVariable("--color-text"),
     });
   }
 
   $effect(() => {
     if (button) {
       gsap.to(button, {
+        color: active
+          ? getCSSVariable("--color-button-text-selected")
+          : getCSSVariable("--color-text"),
+
         backgroundColor: active
           ? getCSSVariable("--color-secondary")
-          : getCSSVariable("--color-primary"),
+          : selectable
+            ? getCSSVariable("--color-button-unselected")
+            : getCSSVariable("--color-primary"),
         duration: 0.2,
         ease: "circ.out",
       });
@@ -80,8 +93,10 @@
       playSound("click");
     }
     gsap.to(button, {
-      backgroundColor: getCSSVariable("--color-primary"),
-      scale: 0.8,
+      backgroundColor: active ? getCSSVariable("--color-secondary") : selectable
+        ? getCSSVariable("--color-button-unselected")
+        : getCSSVariable("--color-primary"),
+      scale: 1 + -0.2 * bounceIntensity,
       duration: 0.2,
       ease: "circ.out",
     });
@@ -90,10 +105,8 @@
     onpointerenter?.();
     playSound("hover");
     gsap.to(button, {
-      backgroundColor: active
-        ? getCSSVariable("--color-primary")
-        : getCSSVariable("--color-secondary"),
-      scale: 0.9,
+      backgroundColor: active ? getCSSVariable("--color-secondary") : selectable ? getCSSVariable("--color-button-hover-selectable") : getCSSVariable("--color-secondary"),
+      scale: 1 + -0.1 * bounceIntensity,
       duration: 0.2,
       ease: "circ.out",
     });
@@ -104,7 +117,7 @@
       .timeline()
       .to(button, {
         backgroundColor: getCSSVariable("--color-secondary"),
-        scale: 1.2,
+        scale: 1 + 0.2 * bounceIntensity,
         duration: 0.24,
         ease: "circ.out",
       })
@@ -119,7 +132,9 @@
     gsap.to(button, {
       backgroundColor: active
         ? getCSSVariable("--color-secondary")
-        : getCSSVariable("--color-primary"),
+        : selectable
+          ? getCSSVariable("--color-button-unselected")
+          : getCSSVariable("--color-primary"),
       scale: 1,
       duration: 0.2,
       ease: "circ.out",
@@ -143,7 +158,7 @@
   }
 
   .button {
-    padding: 20px;
+    padding: var(--padding-card);
     font-size: 20px;
     font-weight: bold;
     padding-left: 40px;
