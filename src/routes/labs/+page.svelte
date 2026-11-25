@@ -189,9 +189,12 @@
                   </div>
                   <h1 class="projectTitle">{post.title}</h1>
                 </div>
-                <Button id="readmore" slug={post.slug.current} text="Read More"
-                ></Button>
               </div>
+              <Button
+                className="projectHitArea"
+                slug={post.slug.current}
+                text={`Open ${post.title}`}
+              />
             </div>
           </div>
         </Card>

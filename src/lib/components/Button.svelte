@@ -4,6 +4,8 @@
   import gsap from "gsap";
   import { goto } from "$app/navigation";
 
+  import Arrow from "$lib/images/SVG/Arrows/arrow.svg";
+
   let {
     button = $bindable(),
     id = "",
@@ -14,6 +16,7 @@
     disableNavigation = false,
     active = false,
     newTab = true,
+    style = "",
     onpointerenter,
     onpointerdown,
     onpointerleave,
@@ -21,6 +24,7 @@
     onclick,
     bounceIntensity = 1,
     selectable,
+    arrowIcon = false,
   } = $props();
 
   function resetColors() {
@@ -77,12 +81,12 @@
   }
 </script>
 
-<input
+<button
   bind:this={button}
   type="button"
   {id}
   class="button interactable {className} {active ? 'active' : ''}"
-  value={text}
+  {style}
   onpointerdown={() => {
     onpointerdown?.();
     if (id == "readmore") {
@@ -93,9 +97,11 @@
       playSound("click");
     }
     gsap.to(button, {
-      backgroundColor: active ? getCSSVariable("--color-secondary") : selectable
-        ? getCSSVariable("--color-button-unselected")
-        : getCSSVariable("--color-primary"),
+      backgroundColor: active
+        ? getCSSVariable("--color-secondary")
+        : selectable
+          ? getCSSVariable("--color-button-unselected")
+          : getCSSVariable("--color-primary"),
       scale: 1 + -0.2 * bounceIntensity,
       duration: 0.2,
       ease: "circ.out",
@@ -105,7 +111,11 @@
     onpointerenter?.();
     playSound("hover");
     gsap.to(button, {
-      backgroundColor: active ? getCSSVariable("--color-secondary") : selectable ? getCSSVariable("--color-button-hover-selectable") : getCSSVariable("--color-secondary"),
+      backgroundColor: active
+        ? getCSSVariable("--color-secondary")
+        : selectable
+          ? getCSSVariable("--color-button-hover-selectable")
+          : getCSSVariable("--color-secondary"),
       scale: 1 + -0.1 * bounceIntensity,
       duration: 0.2,
       ease: "circ.out",
@@ -125,7 +135,8 @@
         scale: 1.0,
         duration: 0.2,
         ease: "sine.out",
-      });
+      })
+      .call(resetColors);
   }}
   onpointerleave={() => {
     onpointerleave?.();
@@ -144,34 +155,48 @@
     onclick?.();
     click();
   }}
-/>
+>
+  <span>{text}</span>
+
+  {#if arrowIcon}
+    <Arrow />
+  {/if}
+</button>
 
 <style>
-  input {
-    white-space: normal;
-    word-wrap: break-word;
+  .button {
     text-align: center;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     user-select: none;
-  }
-
-  .button {
-    padding: var(--padding-card);
-    font-size: 20px;
-    font-weight: bold;
-    padding-left: 40px;
-    padding-right: 40px;
-    border-radius: 25px;
-    border: 0px;
-    background-color: var(--color-primary);
-    color: var(--color-text);
+    padding: var(--padding, var(--padding-card));
+    font-size: var(--font-size, 20px);
+    font-weight: var(--font-weight, bold);
+    padding-left: var(--padding-left, 40px);
+    padding-right: var(--padding-right, 40px);
+    border-radius: var(--border-radius, 25px);
+    border: var(--border, 0px);
+    background-color: var(--background-color, var(--color-primary));
+    color: var(--color, var(--color-text));
+    width: var(--width, auto);
+    height: var(--height, auto);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    gap: 0.3rem;
   }
 
   .button.outline {
     background-color: var(--color-card);
     color: var(--color-primary);
+  }
+
+  .button :global(svg) {
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+    width: 2.5rem;
   }
 </style>

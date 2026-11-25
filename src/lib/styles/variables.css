@@ -25,6 +25,7 @@
   /* utilities*/
   --radius-card: 20px;
   --padding-card: 20px;
+  --width-card: 90%;
 }
 
 @media (prefers-color-scheme: dark) {

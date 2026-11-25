@@ -6,6 +6,8 @@
   import { ObservablePatch } from "@sanity/client";
   import { getCSSVariable, playSound } from "$lib/logic/globalFunctions";
 
+  import Arrow from "$lib/images/SVG/Arrows/arrow.svg?component";
+
   let MorphSVGPlugin;
   let Observer;
 
@@ -332,7 +334,6 @@
   onMount(async () => {
     startAutoScroll();
 
-    // Dynamically import Observer inside onMount to ensure it only loads on the client
     const observerModule = await import("gsap/Observer");
     Observer = observerModule.default || observerModule.Observer;
     gsap.registerPlugin(Observer);
@@ -340,6 +341,15 @@
     const morphModule = await import("gsap/MorphSVGPlugin");
     MorphSVGPlugin = morphModule.default || morphModule.MorphSVGPlugin;
     gsap.registerPlugin(MorphSVGPlugin);
+
+    console.log("Arrow SVG:", arrowLeft.querySelector("svg"));
+
+    console.log("Morph targets:", {
+      normal: arrowLeft.querySelector("#normal"),
+      hover: arrowLeft.querySelector("#hover"),
+      click: arrowLeft.querySelector("#click"),
+      original: arrowLeft.querySelector("#normalOriginal"),
+    });
 
     if (carousel) {
       touchObserver = Observer.create({
@@ -383,35 +393,8 @@
       onpointerup={() => up(arrowLeft)}
       onclick={scrollLeft}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        id="leftArrow"
-        viewBox="0 0 1080 1080"
-      >
-        <path
-          id="normal"
-          d="M226.6,672.4l473.9,273.6c102,58.9,229.4-14.7,229.4-132.4V266.4c0-117.7-127.4-191.3-229.4-132.4L226.6,407.6c-102,58.9-102,206,0,264.9Z"
-        />
-        <path
-          id="normalOriginal"
-          d="M226.6,672.4l473.9,273.6c102,58.9,229.4-14.7,229.4-132.4V266.4c0-117.7-127.4-191.3-229.4-132.4L226.6,407.6c-102,58.9-102,206,0,264.9Z"
-          fill="none"
-          style="display:none"
-        />
-        <path
-          id="hover"
-          d="M267,672.5c-102-58.9-102-206,0-264.9l473.9-273.6c1-.6,2-1.2,3.1-1.7,132.4-72.7,255.7,109.6,139.8,206.4l-35.7,29.8c-106.9,89.3-106.9,253.6,0,342.9l35.7,29.8c115.9,96.8-7.4,279.1-139.8,206.4-1-.6-2-1.1-3.1-1.7l-473.9-273.6h0Z"
-          fill="none"
-          style="display:none"
-        />
-        <path
-          id="click"
-          d="M409.677,658.944C475.94,698.719 518.565,768.385 523.816,845.491C529.067,922.597 496.281,997.398 436.021,1045.79C409.714,1066.796 381.484,1080.117 352.094,1080.117L254.043,1080.117C113.833,1080.117 0,966.285 0,826.075C0,825.984 0,254.043 0,254.043C0,113.833 113.833,0 254.043,0C254.08,0 352.095,0 352.095,0C382.196,0 411.081,13.791 437.885,35.451C496.947,83.322 528.945,156.993 523.616,232.831C518.286,308.67 476.3,377.142 411.124,416.283C363.5,444.927 315.56,473.717 278.267,496.113C263.535,504.96 254.523,520.886 254.523,538.07C254.523,555.255 263.535,571.18 278.267,580.027C315.178,602.193 362.517,630.623 409.677,658.944Z"
-          fill="none"
-          style="display:none"
-        />
-      </svg></button
-    >
+      <Arrow />
+    </button>
     <button
       bind:this={arrowRight}
       aria-label="Scroll Right"
@@ -422,35 +405,8 @@
       onpointerup={() => up(arrowRight)}
       onclick={scrollRight}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        id="leftArrow"
-        viewBox="0 0 1080 1080"
-      >
-        <path
-          id="normal"
-          d="M226.6,672.4l473.9,273.6c102,58.9,229.4-14.7,229.4-132.4V266.4c0-117.7-127.4-191.3-229.4-132.4L226.6,407.6c-102,58.9-102,206,0,264.9Z"
-        />
-        <path
-          id="normalOriginal"
-          d="M226.6,672.4l473.9,273.6c102,58.9,229.4-14.7,229.4-132.4V266.4c0-117.7-127.4-191.3-229.4-132.4L226.6,407.6c-102,58.9-102,206,0,264.9Z"
-          fill="none"
-          style="display:none"
-        />
-        <path
-          id="hover"
-          d="M267,672.5c-102-58.9-102-206,0-264.9l473.9-273.6c1-.6,2-1.2,3.1-1.7,132.4-72.7,255.7,109.6,139.8,206.4l-35.7,29.8c-106.9,89.3-106.9,253.6,0,342.9l35.7,29.8c115.9,96.8-7.4,279.1-139.8,206.4-1-.6-2-1.1-3.1-1.7l-473.9-273.6h0Z"
-          fill="none"
-          style="display:none"
-        />
-        <path
-          id="click"
-          d="M409.677,658.944C475.94,698.719 518.565,768.385 523.816,845.491C529.067,922.597 496.281,997.398 436.021,1045.79C409.714,1066.796 381.484,1080.117 352.094,1080.117L254.043,1080.117C113.833,1080.117 0,966.285 0,826.075C0,825.984 0,254.043 0,254.043C0,113.833 113.833,0 254.043,0C254.08,0 352.095,0 352.095,0C382.196,0 411.081,13.791 437.885,35.451C496.947,83.322 528.945,156.993 523.616,232.831C518.286,308.67 476.3,377.142 411.124,416.283C363.5,444.927 315.56,473.717 278.267,496.113C263.535,504.96 254.523,520.886 254.523,538.07C254.523,555.255 263.535,571.18 278.267,580.027C315.178,602.193 362.517,630.623 409.677,658.944Z"
-          fill="none"
-          style="display:none"
-        />
-      </svg></button
-    >
+      <Arrow />
+    </button>
   </div>
 
   <div class="carousel" bind:this={carousel}>
@@ -558,13 +514,7 @@
     right: 1rem;
   }
 
-  .arrow svg {
-    width: 110%;
-    height: 110%;
-    fill: var(--color-basic);
-  }
-
-  .arrow.right svg {
+  .arrow.right :global(svg) {
     transform: scaleX(-1);
   }
 

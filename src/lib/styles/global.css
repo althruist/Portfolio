@@ -97,12 +97,12 @@ blockquote {
 
 .card {
   position: relative;
-  background-image: var(--frosting);
+  background-image: var(--image-frosting);
   background-color: var(--color-card);
   outline: 1px solid var(--color-card-outline);
   margin: auto;
   aspect-ratio: 1;
-  width: 90%;
+  width: var(--width-card);
   border-radius: var(--radius-card);
   padding: 10px;
   margin-top: 25px;
@@ -110,7 +110,6 @@ blockquote {
 }
 
 .projectCard {
-  height: 90%;
   aspect-ratio: 1/1;
 }
 
@@ -336,7 +335,7 @@ a:hover {
 .aboutCard {
   margin-top: 0;
   aspect-ratio: unset;
-  padding: 0;
+  padding: var(--padding-card) !important;
 }
 
 #featured {
@@ -351,6 +350,21 @@ a:hover {
   position: absolute;
   top: 380px;
   outline: 8px solid var(--color-background);
+}
+
+.projectHitArea {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: none !important;
+  scale: none !important;
+  cursor: pointer;
 }
 
 .tableOfContents {
@@ -476,7 +490,7 @@ a:hover {
   }
 
   .card {
-    width: 90%;
+    width: var(--width-card);
     font-size: larger;
     margin: auto;
     border-radius: var(--radius-card);
@@ -493,7 +507,7 @@ a:hover {
 
   .headerContent {
     position: relative;
-    width: 80%;
+    width: 85%;
     margin: auto;
     margin-left: 80px;
   }
@@ -554,12 +568,6 @@ a:hover {
     line-height: 1.2;
   }
 
-  .aboutCard {
-    margin-top: 0;
-    aspect-ratio: unset;
-    padding: 0;
-  }
-
   .goBack {
     top: 450px;
   }
@@ -610,7 +618,7 @@ a:hover {
     flex-wrap: wrap;
     align-content: flex-start;
     height: fit-content;
-    padding: 12px;
+    padding: 10px;
   }
 
   .heroHeader h2 span {

@@ -1,8 +1,9 @@
-
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { onMount } from "svelte";
+  import Button from "./Button.svelte";
+  import { scrollTo } from "$lib/logic/globalFunctions";
 
   let {
     children,
@@ -10,6 +11,7 @@
     id = "",
     className = "",
     style = "",
+    pageScrollButton = false,
   } = $props();
 
   onMount(() => {
@@ -32,12 +34,7 @@
   });
 </script>
 
-<div
-  bind:this={pageHeader}
-  {id}
-  class={`pageHeader ${className}`}
-  {style}
->
+<div bind:this={pageHeader} {id} class={`pageHeader ${className}`} {style}>
   {@render children?.()}
 </div>
 

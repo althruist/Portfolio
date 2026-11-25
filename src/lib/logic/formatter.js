@@ -183,7 +183,7 @@ export function renderBody(body) {
       } else if (url.includes("vimeo.com")) {
         const videoIdMatch = url.match(/vimeo\.com\/(\d+)/);
         if (videoIdMatch) {
-          embedUrl = `https://player.vimeo.com/video/${videoIdMatch[1]}`;
+          embedUrl = `https://player.vimeo.com/video/${videoIdMatch[1]}?autoplay=true&byline=false&portrait=false&badge=false&dnt=true&muted=true&playsinline=true&title=false`;
         }
       } else {
         embedUrl = url;

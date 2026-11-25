@@ -10,6 +10,7 @@
     addNoise,
     isDarkMode,
     disableContextMenu,
+    scrollTo,
   } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -57,38 +58,6 @@
     if (aboutVideoSource) {
       aboutVideo.load();
     }
-  }
-
-  function animateIn(e) {
-    const info = e.currentTarget.querySelector(".info");
-    const button = info.querySelector("input");
-
-    gsap.to(info, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.3,
-      ease: "power2.out",
-      onComplete: () => {
-        if (button) button.disabled = false;
-      },
-    });
-  }
-
-  function animateOut(e) {
-    const info = e.currentTarget.querySelector(".info");
-    const button = info.querySelector("input");
-
-    gsap.to(info, {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.3,
-      ease: "power2.out",
-      onComplete: () => {
-        if (button) button.disabled = true;
-      },
-    });
-
-    if (button) button.disabled = true;
   }
 
   onMount(() => {
@@ -155,27 +124,37 @@
       </video>
     </div>
     <div class="headerContent">
-      <h1 class="noSelect">
-        heya, i'm <span class="name">Kieran</span>!
-      </h1>
-      <h2 id="headline" class="noSelect">
-        <span>a multidisciplinary game developer</span>
-      </h2>
-    </div>
+      <div id="textAreaHeader">
+        <h1 class="noSelect">
+          heya, i'm <span class="name">Kieran</span>!
+        </h1>
+        <h2 id="headline" class="noSelect">
+          <span>a multidisciplinary game developer</span>
+        </h2>
+      </div>
+
+  <div id="buttonArea">
+    <Button
+      id="scrollButtonHeader"
+      text="let's go!"
+      arrowIcon
+      --padding="15px"
+      --padding-left="15px"
+      --padding-right="15px"
+      --font-size="2rem"
+      onclick={() => scrollTo("#projectsSection")}
+    ></Button>
+  </div>
+</div>
+
   </PageHeader>
 
   <section id="projectsSection">
     <h1 class="sectionTitle noSelect">highlighted projects</h1>
     <div class="flexCards">
       {#each posts as post}
-        <Card id={post.slug.current} className="projectCard">
-          <div
-            class="imageArea"
-            onmouseenter={animateIn}
-            onmouseleave={animateOut}
-            role="button"
-            tabindex="0"
-          >
+        <Card id={post.slug.current} className="projectCard tooltip">
+          <div class="imageArea">
             <img
               id="mainImage"
               loading="lazy"
@@ -201,29 +180,73 @@
                         </div>
                       {/each}
 
-                      {#if getCategories(post).hiddenCount > 0}
-                        <div>
-                          <p>+{getCategories(post).hiddenCount}</p>
-                        </div>
-                      {/if}
-                    {/if}
-                  </div>
-                  <h1 class="projectTitle noSelect">{post.title}</h1>
-                </div>
-                <Button id="readmore" slug={post.slug.current} text="read more"
-                ></Button>
+                  {#if getCategories(post).hiddenCount > 0}
+                    <div>
+                      <p>+{getCategories(post).hiddenCount}</p>
+                    </div>
+                  {/if}
+                {/if}
               </div>
+              <h1 class="projectTitle noSelect">{post.title}</h1>
             </div>
           </div>
-        </Card>
-      {/each}
-    </div>
+          <Button
+            className="projectHitArea"
+            slug={post.slug.current}
+            text={`Open ${post.title}`}
+          />
+        </div>
+      </div>
+    </Card>
+  {/each}
+</div>
+
   </section>
 
   <section id="aboutSection">
     <h1 class="sectionTitle noSelect">who am i?</h1>
     <Card hasSlug={false} className="aboutCard">
       <div id="aboutLayout">
+        <div id="aboutInfo">
+          <div id="aboutIntro">
+            <h1 class="aboutText">I'm Kieran!</h1>
+            <h3 class="aboutText">
+              maltese | game developer | degree student | generalist
+            </h3>
+          </div>
+          <p class="aboutText">
+            I'm currently reading for a <span class="highlightedText"
+              >Bachelor of Science (Hons) in Digital Games Development</span
+            >. Around 2017 (back when I got my first laptop at 10!), I started
+            playing and experimenting with
+            <span class="highlightedText">Roblox</span>
+            and its engine <span class="highlightedText">Roblox Studio</span>,
+            alongside <span class="highlightedText">Blender</span> and
+            <span class="highlightedText">music</span>. Now that I'm studying
+            for the things I've always wished for, I'm expanding my own
+            brand/identity and slowly creating the things I always envisioned
+            during car rides!
+          </p>
+          <p class="aboutText">
+            Throughout the years, I picked up <span class="highlightedText"
+              >Unity</span
+            >
+            and a bit of <span class="highlightedText">Unreal Engine</span>,
+            <span class="highlightedText">A-Frame</span>
+            and <span class="highlightedText">Godot</span>. Some of my games
+            have been acknowledged by
+            <span class="highlightedText">MCAST</span>, developers of
+            <span class="highlightedText">A-Frame</span>, primary school
+            teachers and Malta's Prime Minister!
+          </p>
+          <p class="aboutText">
+            Currently, I'm working on improving my craft, learning just about
+            anything related but not limited to game development (music, art,
+            code, photography, etc!). I'm also working on a few 'secret
+            projects' that are yet to be published, which you should look out
+            for! :)
+          </p>
+        </div>
         <video
           bind:this={aboutVideo}
           muted
@@ -236,74 +259,11 @@
         >
           <source src={aboutVideoSource} type="video/mp4" />
         </video>
-        <p class="noSelect aboutText">
-          I'm <span class="highlightedText">Kieran</span>, known as
-          <span class="highlightedText">althruist</span>
-          online. I am from Malta and I'm currently reading for a
-          <span class="highlightedText"
-            >Bachelor of Science (Hons) in Digital Games Development</span
-          >. <br /><br /> Ever since I got my
-          <span class="highlightedText"> first laptop (9 years ago!)</span>, I
-          have been experimenting with my craft in
-          <span class="highlightedText">
-            game development, Blender and music</span
-          >. Now that I'm studying for the very thing I've always wished for,
-          i'm expanding my own brand/identity and slowly creating the things I
-          always envisioned during car rides!
-        </p>
-
-        <h1>my work ethic</h1>
-        <div id="valuesSection">
-          <Card className="valuesCard"
-            ><h1>originality</h1>
-            <p>
-              I believe that game development is an art. I build my projects
-              with original assets, slowly evolving to my own style.
-            </p></Card
-          >
-          <Card className="valuesCard"
-            ><h1>handcrafted quality</h1>
-            <p>
-              I value the human aspect when designing anything, including games.
-              While I might use modern tools like AI for troubleshooting, I
-              never use generative AI to create assets for me.
-            </p></Card
-          >
-          <Card className="valuesCard"
-            ><h1>modular architecture</h1>
-            <p>
-              Efficiency matters, so when I work on projects, I try my best to
-              make things as modular and reusable as possible, allowing me to
-              make robust frameworks that scale across multiple projects.
-            </p></Card
-          >
-        </div>
-        <p class="aboutText">
-          I've always been a creative nerd. When I was younger, playing games
-          made up most of my free time. This passion started off playing <span
-            class="highlightedText">Minecraft</span
-          >
-          on my PlayStation 4, where I loved making new buildings and exploring (I
-          still do!). Then I moved on to
-          <span class="highlightedText">Roblox</span>
-          which I still work on from time to time making small projects. It's also
-          my first time seeing what coding is like!
-        </p>
-        <br />
-        <p class="aboutText">
-          Nowadays, in my free time, I like to either work on different projects
-          on Blender, take photos, play games, make music, hang out with friends
-          or take a walk, usually in nature areas!
-        </p>
-        <div id="intouchSection">
-          <h1 id="intouch">want to get in touch?</h1>
-          <Socials variant="getintouch"></Socials>
-        </div>
       </div>
     </Card>
   </section>
 
-  <section id="labs" class="card" bind:this={labsSection} use:addNoise>
+  <Card id="labs" bind:this={labsSection}>
     <img
       id="deerImg"
       src={deerSource}
@@ -314,38 +274,80 @@
       want to know more about what i do?
     </h1>
     <Button text="go to labs" link="/labs" id="gotolabs"></Button>
+  </Card>
+
+  <section id="contactme" class="card" use:addNoise>
+    <div id="contactmeinteractive">
+      <h1 class="sectionTitle">wanna have a chat?</h1>
+      <Socials variant="getintouch" />
+    </div>
   </section>
 </div>
 
 <style>
-  #aboutVideo {
-    width: 90%;
-    height: 250px;
-    margin: 20px;
-    border-radius: var(--radius-card);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
   #aboutSection h1 {
     font-family: Althite;
     font-size: 3rem;
   }
 
   #aboutLayout {
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) clamp(80px, 24vw, 150px);
+    gap: 20px 12px;
     align-items: center;
-    display: flex;
+    padding: var(--padding-card);
+    box-sizing: border-box;
   }
 
-  #labs {
+  #aboutInfo {
+    display: contents;
+  }
+
+  #aboutIntro {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  #aboutIntro h1 {
+    font-size: clamp(2rem, 7vw, 4rem) !important;
+    padding: 0;
+    margin: 0 0 12px;
+  }
+
+  #aboutIntro h3 {
+    font-size: clamp(0.85rem, 2.5vw, 1.2rem);
+    padding: 0;
+    margin: 0;
+  }
+
+  #aboutVideo {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/6;
+    object-fit: cover;
+    border-radius: 20px;
+    padding: 0;
+    margin: 0;
+    align-self: center;
+    min-width: 0;
+  }
+
+  #aboutInfo > p {
+    grid-column: 1 / -1;
+    padding: 0;
+    min-width: 0;
+  }
+
+  :global(#labs) {
     margin-top: 30px;
     margin-bottom: 30px;
     aspect-ratio: unset;
-    width: 100%;
-    border-radius: 0;
-    padding: 0;
+    width: var(--width-card);
+    padding: var(--padding-card);
     padding-top: 40px;
     padding-bottom: 40px;
   }
@@ -427,9 +429,12 @@
     text-align: center;
     justify-content: center;
     vertical-align: middle;
-    scale: 0.95;
     padding: 4%;
-    opacity: 0;
+  }
+
+  .info:focus-within {
+    outline: 2px solid currentColor;
+    outline-offset: -4px;
   }
 
   .projectTitle {
@@ -449,17 +454,6 @@
     height: 100%;
   }
 
-  #aboutLayout video {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    mask-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 1) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-
   #deerImg {
     display: none;
   }
@@ -469,7 +463,51 @@
     transition: filter 0.3s ease-out;
   }
 
+  #contactme {
+    width: 100%;
+    border-radius: 0;
+    padding: 50px;
+    box-sizing: border-box;
+    aspect-ratio: unset;
+  }
+
+  #contactmeinteractive h1 {
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 1.1;
+  }
+
+  #buttonArea {
+    width: 30%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #textAreaHeader {
+    width: 100%;
+  }
+
+  .headerContent {
+    display: flex;
+  }
+
+  :global(#scrollButtonHeader) {
+    display: none;
+    margin: auto;
+  }
+
   @media (hover: hover) {
+    .info {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .imageArea:hover .info,
+    .info:focus-within {
+      opacity: 1;
+    }
+
     .imageArea:hover #mainImage {
       filter: blur(10px);
     }
@@ -485,6 +523,63 @@
       white-space: nowrap;
     }
 
+    #aboutInfo {
+      display: block;
+    }
+
+    #aboutIntro h1 {
+      font-size: 5rem !important;
+      padding: var(--padding-card);
+      padding-top: 40px;
+      padding-bottom: 0;
+      margin: 0;
+    }
+
+    #aboutIntro h3 {
+      font-size: 1.3rem;
+      padding: var(--padding-card);
+      margin: 0;
+    }
+
+    #aboutInfo > p {
+      padding: var(--padding-card);
+    }
+
+    #aboutLayout {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    #aboutVideo {
+      aspect-ratio: auto;
+      border-radius: var(--radius-card);
+      width: 30%;
+      height: auto;
+      align-self: stretch;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      margin: 0;
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 60%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
+    #buttonArea {
+      display: flex;
+    }
+
+    :global(#scrollButtonHeader) {
+      display: inline-flex;
+    }
+
     #deerImg {
       display: block;
       width: 300px;
@@ -497,10 +592,6 @@
       -ms-user-select: none;
     }
 
-    #intouchSection {
-      display: flex;
-    }
-
     .projectTitle {
       font-size: 14cqw;
       margin: 0;
@@ -509,7 +600,7 @@
       text-align: left;
     }
 
-    #labs {
+    :global(#labs) {
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -531,15 +622,13 @@
       font-size: 3rem;
     }
 
-    #intouch {
-      font-size: 8rem !important;
-      line-height: 1.4;
-      margin-left: 20px;
-      width: 60%;
+    #contactmeinteractive {
+      width: 50%;
     }
-    
-    #headline{
+
+    #headline {
       padding-left: 0;
+      padding-right: 0;
     }
   }
 </style>
