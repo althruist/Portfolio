@@ -147,7 +147,7 @@
 
     <div class="flexCards">
       {#each filteredPosts as post}
-        <Card id={post.slug.current}>
+        <Card id={post.slug.current} className="projectCard tooltip">
           <div
             class="imageArea"
             onmouseenter={animateIn}
@@ -179,6 +179,11 @@
                           <p>{category.title}</p>
                         </div>
                       {/each}
+                      {#if post.secondaryCategory}
+                        <div>
+                          <p>{post.secondaryCategory.title}</p>
+                        </div>
+                      {/if}
 
                       {#if getCategories(post).hiddenCount > 0}
                         <div>
@@ -191,6 +196,7 @@
                 </div>
               </div>
               <Button
+                id="readmore"
                 className="projectHitArea"
                 slug={post.slug.current}
                 text={`Open ${post.title}`}

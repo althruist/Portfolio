@@ -34,46 +34,6 @@
   onMount(() => {
     import("@google/model-viewer").catch(() => {});
 
-    const TOC = document.querySelector(".tableOfContents");
-    const TOCTitle = document.querySelector("#tocTitle");
-    if (!TOC || !TOCTitle) return;
-
-    const tocEnter = () => {
-      if (window.innerWidth >= 1064) {
-        gsap.to(TOC, {
-          top: `calc(82% + ${-TOC.offsetHeight + 110}px)`,
-          duration: 0.3,
-          ease: "circ.out",
-        });
-        gsap.to(TOCTitle, {
-          marginTop: "15px",
-          duration: 0.4,
-          ease: "circ.out",
-        });
-      }
-    };
-
-    const tocLeave = () => {
-      if (window.innerWidth >= 1064) {
-        gsap.to(TOC, { top: "95%", duration: 0.3, ease: "circ.out" });
-        gsap.to(TOCTitle, {
-          marginTop: "-7px",
-          duration: 0.4,
-          ease: "circ.out",
-        });
-      }
-    };
-
-    const onResize = () => {
-      gsap.set(TOCTitle, {
-        marginTop: window.innerWidth < 1064 ? "15px" : "-7px",
-      });
-    };
-
-    TOC.addEventListener("pointerenter", tocEnter);
-    TOC.addEventListener("pointerleave", tocLeave);
-    window.addEventListener("resize", onResize);
-
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -86,11 +46,7 @@
     sections.forEach((section) => observer.observe(section));
 
     return () => {
-      TOC.removeEventListener("pointerenter", tocEnter);
-      TOC.removeEventListener("pointerleave", tocLeave);
-      window.removeEventListener("resize", onResize);
       observer.disconnect();
-      gsap.killTweensOf([TOC, TOCTitle]);
     };
   });
 </script>
@@ -107,91 +63,82 @@
   alt={project.mainImage.alt}
 />
 <div id="content">
-  <Button
-    text="go back"
-    className="goBack"
-    link="/goback"
-    onpointerenter={onEnter}
-    onpointerleave={onLeave}
-  ></Button>
-  <p class="date">{formatDateTime(project.created)}</p>
-  <h1 id="title">{project.title}</h1>
-  <div id="postCategories">
-    {#if project.featured}
-      <p class="tag" id="featured">Featured</p>
+  <div id="slugHeader">
+    <Button
+      text="go back"
+      className="goBack"
+      link="/goback"
+      onpointerenter={onEnter}
+      onpointerleave={onLeave}
+    ></Button>
+    <p class="date">{formatDateTime(project.created)}</p>
+    <h1 id="title">{project.title}</h1>
+    <div id="postCategories">
+      {#if project.featured}
+        <p class="tag" id="featured">Featured</p>
+      {/if}
+      {#each project.categories as category}
+        <p class="tag">{category.title}</p>
+      {/each}
+    </div>
+    <div id="postSubCategories">
+      {#each project.subcategories as subcategory}
+        <p class="tag1">{subcategory.title}</p>
+      {/each}
+    </div>
+    {#if project.screenshots}
+      <CarouselGrid content={screenshots} filter="music" name="Music"
+      ></CarouselGrid>
     {/if}
-    {#each project.categories as category}
-      <p class="tag">{category.title}</p>
-    {/each}
   </div>
-  <div id="postSubCategories">
-    {#each project.subcategories as subcategory}
-      <p class="tag1">{subcategory.title}</p>
-    {/each}
-  </div>
-  <Card className="noBounce tableOfContents">
-    <h3 class="altText" id="tocTitle">Table Of Contents</h3>
-    <div class="tofButtons">
+  <div id="layout">
+    <aside id="tableofcontents">
+      <div class="postButtons">
+        {#each project.links as button}
+          <Button link={button.url} text={button.label} className="postButton"
+          ></Button>
+        {/each}
+      </div>
       {#each project.body as body}
         {#if body._type === "section"}
           <Button
             text={body.sectiontitle}
-            className="tofButton"
+            className="tocButton"
+            disableNavigation={true}
             active={activeSection ===
               body.sectiontitle.toString().replaceAll(" ", "")}
+            bounceIntensity="0.3"
             onclick={() => {
               scrollTo(`#${body.sectiontitle.toString().replaceAll(" ", "")}`);
             }}
+            selectable="true"
           ></Button>
         {/if}
       {/each}
-    </div>
-  </Card>
-  {#if project.screenshots}
-    <CarouselGrid content={screenshots} filter="music" name="Music"
-    ></CarouselGrid>
-  {/if}
+    </aside>
 
-  <div class="post-body">
-    {@html renderBody(project.body)}
-  </div>
-  <div class="postButtons">
-    {#each project.links as button}
-      <Button link={button.url} text={button.label} className="postButton"
-      ></Button>
-    {/each}
+    <div class="post-body">
+      <div class="postButtons inBody">
+        {#each project.links as button}
+          <Button link={button.url} text={button.label} className="postButton"
+          ></Button>
+        {/each}
+      </div>
+      {@html renderBody(project.body)}
+    </div>
   </div>
 </div>
 
 <style>
-  #content {
-    padding: 10%;
+  #slugHeader {
+    padding: 5%;
     padding-top: 4%;
-    padding-bottom: 4%;
+    padding-bottom: 0;
   }
 
   .post-body {
     white-space: pre-line;
-  }
-
-  .post-body h2 {
-    color: var(--color-text);
-  }
-
-  .post-body h3 {
-    color: var(--color-text);
-  }
-
-  .post-body h4 {
-    color: var(--color-text);
-  }
-
-  .post-body h5 {
-    color: var(--color-text);
-  }
-
-  .post-body h6 {
-    color: var(--color-text);
+    width: 100%;
   }
 
   #mainImage {
@@ -199,10 +146,6 @@
     width: 100%;
     height: 500px;
     object-fit: cover;
-  }
-
-  #date {
-    font-size: larger;
   }
 
   #title {
@@ -246,18 +189,66 @@
   }
 
   .postButtons {
-    display: flex;
-    flex-wrap: wrap;
-    grid-auto-flow: column;
-    grid-auto-columns: auto;
-    gap: 1rem;
+    display: grid;
     width: 100%;
-    margin-top: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr));
+    gap: 1rem;
+    margin: 0px 10px 10px;
   }
 
-  @media (min-width: var(1064px)) {
+  .inBody {
+    display: grid;
+    margin: 0;
+    margin-top: 60px;
+  }
+
+  #tableofcontents {
+    display: none;
+  }
+
+  #layout {
+    padding: 5%;
+    padding-top: 0;
+  }
+
+  @media (min-width: 1064px) {
     #title {
       font-size: 300%;
+    }
+
+    #slugHeader {
+      padding: 10%;
+      padding-top: 4%;
+      padding-bottom: 0;
+    }
+
+    .inBody {
+      display: none;
+    }
+
+    .post-body {
+      width: 95%;
+    }
+
+    #content {
+      padding: 0;
+    }
+
+    #tableofcontents {
+      display: block;
+      position: sticky;
+      top: 10rem;
+      max-height: calc(100dvh - 20rem - 1rem);
+      width: 100%;
+    }
+
+    #layout {
+      display: grid;
+      grid-template-columns: 21rem minmax(0, 1fr);
+      gap: 4rem;
+      align-items: start;
+      margin-top: 2.5rem;
+      padding: 2%;
     }
   }
 </style>

@@ -133,20 +133,19 @@
         </h2>
       </div>
 
-  <div id="buttonArea">
-    <Button
-      id="scrollButtonHeader"
-      text="let's go!"
-      arrowIcon
-      --padding="15px"
-      --padding-left="15px"
-      --padding-right="15px"
-      --font-size="2rem"
-      onclick={() => scrollTo("#projectsSection")}
-    ></Button>
-  </div>
-</div>
-
+      <div id="buttonArea">
+        <Button
+          id="scrollButtonHeader"
+          text="let's go!"
+          arrowIcon
+          --padding="15px"
+          --padding-left="15px"
+          --padding-right="15px"
+          --font-size="2rem"
+          onclick={() => scrollTo("#projectsSection")}
+        ></Button>
+      </div>
+    </div>
   </PageHeader>
 
   <section id="projectsSection">
@@ -180,27 +179,27 @@
                         </div>
                       {/each}
 
-                  {#if getCategories(post).hiddenCount > 0}
-                    <div>
-                      <p>+{getCategories(post).hiddenCount}</p>
-                    </div>
-                  {/if}
-                {/if}
+                      {#if getCategories(post).hiddenCount > 0}
+                        <div>
+                          <p>+{getCategories(post).hiddenCount}</p>
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
+                  <h1 class="projectTitle noSelect">{post.title}</h1>
+                </div>
               </div>
-              <h1 class="projectTitle noSelect">{post.title}</h1>
+              <Button
+                id="readmore"
+                className="projectHitArea"
+                slug={post.slug.current}
+                text={`Open ${post.title}`}
+              />
             </div>
           </div>
-          <Button
-            className="projectHitArea"
-            slug={post.slug.current}
-            text={`Open ${post.title}`}
-          />
-        </div>
-      </div>
-    </Card>
-  {/each}
-</div>
-
+        </Card>
+      {/each}
+    </div>
   </section>
 
   <section id="aboutSection">
@@ -210,9 +209,9 @@
         <div id="aboutInfo">
           <div id="aboutIntro">
             <h1 class="aboutText">I'm Kieran!</h1>
-            <h3 class="aboutText">
+            <h2 class="aboutText">
               maltese | game developer | degree student | generalist
-            </h3>
+            </h2>
           </div>
           <p class="aboutText">
             I'm currently reading for a <span class="highlightedText"

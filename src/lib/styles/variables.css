@@ -1,7 +1,7 @@
 :root {
   /* colors */
   --color-basic: rgb(255, 255, 255);
-  --color-primary: rgb(114, 144, 206);
+  --color-primary: rgb(87, 135, 230);
   --color-secondary: rgb(255, 166, 1);
   --color-code-text: rgb(20, 15, 7);
   --color-code-title: rgb(18, 27, 85);
@@ -9,7 +9,7 @@
   --color-card: rgba(255, 255, 255, 0.548);
   --color-hovercard: rgba(196, 215, 255, 0.788);
   --color-card-outline: rgba(221, 224, 219, 0.815);
-  --color-link: rgb(69, 143, 255);
+  --color-link: rgb(0, 102, 255);
   --color-link-active: rgb(255, 191, 16);
   --color-text: rgb(20, 19, 18);
   --color-alt-text: rgba(83, 78, 73, 0.596);
@@ -32,9 +32,9 @@
   :root {
     /* colors */
     --color-basic: rgb(0, 0, 0);
-    --color-primary: rgb(34, 89, 197);
+    --color-primary: rgb(36, 76, 161);
     --color-secondary: rgb(255, 108, 75);
-    --color-background: rgb(17, 25, 41);
+    --color-background: rgb(17, 28, 41);
     --color-card: rgba(0, 0, 0, 0.548);
     --color-hovercard: rgba(3, 10, 27, 0.788);
     --color-code-text: rgb(180, 206, 255);

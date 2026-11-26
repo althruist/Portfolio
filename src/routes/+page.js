@@ -7,6 +7,7 @@ export async function load() {
       slug,
       mainImage{asset->{_id}, alt},
       categories[]->{title},
+      secondaryCategory->{title},
       featured,
       created
     }`,
