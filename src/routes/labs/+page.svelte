@@ -8,6 +8,7 @@
   import { isDarkMode } from "$lib/logic/globalFunctions";
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { goto } from "$app/navigation";
 
   import headerVideoDay from "$lib/videos/labsday.mp4";
   import headerVideoNight from "$lib/videos/labsnight.mp4";
@@ -34,6 +35,23 @@
   let videoSource = $state();
 
   const MAX_CATEGORIES = 2;
+
+  let revealedSlug = $state(null);
+
+  function handleCardTap(e, slug) {
+    if (!window.matchMedia("(hover: none)").matches) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (revealedSlug === slug) {
+      goto(`/projects/${slug}`);
+      return;
+    }
+
+    revealedSlug = slug;
+    animateIn(e);
+  }
 
   function getCategories(post) {
     if (!post.categories) return { visible: [], hiddenCount: 0 };
@@ -154,6 +172,7 @@
             onmouseleave={animateOut}
             role="button"
             tabindex="0"
+            onclickcapture={(e) => handleCardTap(e, post.slug.current)}
           >
             <img
               id="mainImage"

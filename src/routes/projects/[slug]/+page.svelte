@@ -137,8 +137,11 @@
   }
 
   .post-body {
-    white-space: pre-line;
     width: 100%;
+  }
+
+  .post-body :global(p){
+    white-space: pre-line;
   }
 
   #mainImage {

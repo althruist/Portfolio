@@ -290,17 +290,6 @@ a:hover {
   scale: 0.95;
 }
 
-.model-viewer {
-  display: block;
-  width: 70%;
-  height: 100%;
-  scale: 1;
-  aspect-ratio: 1;
-  margin: auto;
-  background-color: var(--color-card);
-  border-radius: var(--radius-card);
-}
-
 #postCategories {
   display: grid;
   grid-auto-flow: column;
@@ -471,6 +460,16 @@ a:hover {
   height: 100%;
   width: 100% !important;
   border-radius: 10px !important;
+}
+
+.model-viewer {
+  display: block;
+  width: 70%;
+  height: auto;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  background-color: var(--color-card);
+  border-radius: var(--radius-card);
 }
 
 @media (min-width: 1064px) {
